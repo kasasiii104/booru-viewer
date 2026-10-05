@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch video and GIF posts. Does not download media files."""
+"""Fetch 3D-tool videos and GIFs. Does not download media files."""
 
 import json
 import os
@@ -13,8 +13,17 @@ DATA = ROOT / "data"
 VIDEOS = DATA / "videos.json"
 STATE = DATA / "state.json"
 
-NG = ("futanari", "futa", "dickgirl", "newhalf", "bestiality", "zoophilia", "beastiality")
-QUERY = "video ~ animated_gif -futanari -futa -dickgirl -bestiality -zoophilia -beastiality"
+NG = (
+    "futanari", "futa", "dickgirl", "newhalf",
+    "bestiality", "zoophilia", "beastiality",
+    "yaoi", "gay", "males_only", "bara",
+)
+TOOLS = {
+    "source_filmmaker", "sfm", "blender", "blender_(medium)",
+    "mmd", "mikumikudance", "daz_studio", "koikatsu",
+    "honey_select", "xps", "xnalara", "cinema_4d",
+}
+QUERY = "source_filmmaker ~ blender ~ mmd ~ mikumikudance ~ daz_studio ~ koikatsu -futanari -yaoi -gay -bestiality"
 UA = "booru-viewer/1.0"
 
 
@@ -29,8 +38,13 @@ def get(url):
 
 
 def blocked(tags):
-    text = " ".join(tags).lower()
-    return any(word in text.split() or word in text for word in NG)
+    words = {tag.lower() for tag in tags}
+    return any(word in words for word in NG)
+
+
+def wanted(tags):
+    words = {tag.lower() for tag in tags}
+    return bool(words & TOOLS) and not blocked(tags)
 
 
 def load():
@@ -63,9 +77,9 @@ def danbooru(state):
     login = os.environ.get("DANBOORU_LOGIN", "")
     key = os.environ.get("DANBOORU_API_KEY", "")
     found = []
-    for tags in ("video", "animated_gif"):
+    for tags in ("source_filmmaker", "blender", "mmd", "mikumikudance", "daz_studio", "koikatsu"):
         page = 1
-        while page <= 5:
+        while page <= 3:
             params = {"tags": tags, "limit": 100, "page": page}
             if login and key:
                 params["login"] = login
@@ -76,7 +90,8 @@ def danbooru(state):
                 break
             for row in rows:
                 post_tags = (row.get("tag_string") or "").split()
-                if blocked(post_tags) or not row.get("file_url"):
+                ext = (row.get("file_ext") or "").lower()
+                if ext not in {"mp4", "webm", "gif"} or not wanted(post_tags) or not row.get("file_url"):
                     continue
                 found.append({
                     "source": "danbooru",
@@ -99,7 +114,7 @@ def danbooru(state):
     return found
 
 
-def gelbooru_like(name, endpoint, user_key, api_key, id_field):
+def gelbooru_like(name, endpoint, user_key, api_key):
     user = os.environ.get(user_key, "")
     key = os.environ.get(api_key, "")
     if not user or not key:
@@ -107,7 +122,7 @@ def gelbooru_like(name, endpoint, user_key, api_key, id_field):
         return []
     host = "rule34.xxx" if name == "rule34" else "gelbooru.com"
     found = []
-    for pid in range(5):
+    for pid in range(3):
         params = {
             "page": "dapi", "s": "post", "q": "index", "json": 1,
             "tags": QUERY, "limit": 100, "pid": pid,
@@ -122,8 +137,10 @@ def gelbooru_like(name, endpoint, user_key, api_key, id_field):
             break
         for row in rows:
             tags = str(row.get("tags") or "").split()
-            file_url = row.get("file_url")
-            if blocked(tags) or not file_url:
+            file_url = row.get("file_url") or ""
+            if not wanted(tags) or not file_url:
+                continue
+            if not file_url.lower().endswith((".mp4", ".webm", ".gif")) and "video" not in tags and "animated" not in tags:
                 continue
             found.append({
                 "source": name,
@@ -148,13 +165,9 @@ def main():
     items, state = load()
     fresh = []
     fresh.extend(danbooru(state))
-    fresh.extend(gelbooru_like(
-        "gelbooru", "https://gelbooru.com/index.php",
-        "GELBOORU_USER_ID", "GELBOORU_API_KEY", "id"))
-    fresh.extend(gelbooru_like(
-        "rule34", "https://api.rule34.xxx/index.php",
-        "RULE34_USER_ID", "RULE34_API_KEY", "id"))
-    merged = keep_best(items + fresh)
+    fresh.extend(gelbooru_like("gelbooru", "https://gelbooru.com/index.php", "GELBOORU_USER_ID", "GELBOORU_API_KEY"))
+    fresh.extend(gelbooru_like("rule34", "https://api.rule34.xxx/index.php", "RULE34_USER_ID", "RULE34_API_KEY"))
+    merged = [item for item in keep_best(items + fresh) if wanted(item.get("tags") or [])]
     save(merged, state)
     print(f"catalog {len(merged)} items, added batch {len(fresh)}")
 
