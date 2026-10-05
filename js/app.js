@@ -23,7 +23,11 @@ function workTags(item) {
   const tags = norm(item.tags);
   return state.taxonomy.works.filter((work) => work.tags.some((t) => tags.includes(t))).map((work) => work.id);
 }
-function characterTags(item) { return norm(item.tags).map(knownCharacter).filter(Boolean).map((c) => c.id); }
+function characterTags(item) {
+  const tagged = norm(item.character_tags);
+  if (tagged.length) return tagged;
+  return norm(item.tags).map(knownCharacter).filter(Boolean).map((c) => c.id);
+}
 function label(item) {
   const works = workTags(item);
   const characters = characterTags(item);
@@ -102,7 +106,13 @@ function renderGrid() {
     const time = document.createElement("span");
     time.className = "time";
     time.textContent = clock(item.duration);
-    if (time.textContent) thumb.appendChild(time);
+    thumb.appendChild(time);
+    if (!item.duration && item.file_url) {
+      const probe = document.createElement("video");
+      probe.preload = "metadata";
+      probe.src = item.file_url;
+      probe.onloadedmetadata = () => { time.textContent = clock(probe.duration); probe.removeAttribute("src"); probe.load(); };
+    }
     const title = document.createElement("h2");
     title.textContent = names.name;
     const sub = document.createElement("p");
