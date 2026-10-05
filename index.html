@@ -4,18 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viewer</title>
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
   <header class="top">
     <button id="menu" class="icon" type="button" aria-label="作品">☰</button>
     <div class="brand">Viewer</div>
     <input id="q" type="search" placeholder="作品、キャラ、タグを検索" autocomplete="off">
-    <div class="sorts">
-      <button type="button" class="sort is-on" data-sort="score">人気順</button>
-      <button type="button" class="sort" data-sort="new">新着</button>
-    </div>
   </header>
+  <div class="toolbar">
+    <button type="button" class="sort is-on" data-sort="score">人気順</button>
+    <button type="button" class="sort" data-sort="rating">評価順</button>
+    <button type="button" class="sort" data-sort="new">新着</button>
+    <button type="button" id="favs" class="sort">お気に入り</button>
+  </div>
   <div class="layout">
     <nav id="works" class="side"></nav>
     <main>
@@ -31,11 +33,12 @@
       <div class="meta">
         <h1 id="title"></h1>
         <p id="sub"></p>
+        <button type="button" id="fav" class="sort">お気に入り</button>
         <a id="origin" href="#" target="_blank" rel="noreferrer">元のページで開く</a>
         <div id="tagbox"></div>
       </div>
     </div>
   </div>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>
