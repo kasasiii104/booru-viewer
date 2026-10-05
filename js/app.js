@@ -160,8 +160,8 @@ $("close").onclick = () => {
 };
 
 Promise.all([
-  fetch("data/videos.json").then((r) => r.json()),
-  fetch("data/taxonomy.json").then((r) => r.json())
+  fetch("data/videos.json?v=" + Date.now()).then((r) => r.json()),
+  fetch("data/taxonomy.json?v=" + Date.now()).then((r) => r.json())
 ]).then(([items, taxonomy]) => {
   state.items = Array.isArray(items) ? items : [];
   state.taxonomy = taxonomy;
