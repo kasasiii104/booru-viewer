@@ -21,9 +21,11 @@ NG = (
 TOOLS = {
     "source_filmmaker", "sfm", "blender", "blender_(medium)",
     "mmd", "mikumikudance", "daz_studio", "koikatsu",
-    "honey_select", "xps", "xnalara", "cinema_4d",
+    "honey_select", "xps", "xnalara", "cinema_4d", "3d",
 }
-QUERY = "source_filmmaker ~ blender ~ mmd ~ mikumikudance ~ daz_studio ~ koikatsu -futanari -yaoi -gay -bestiality"
+GAMES = {"overwatch", "nier_automata", "nier", "dead_or_alive", "marie_rose"}
+FLAT = {"anime_screenshot", "official_art", "manga", "comic", "sketch", "traditional_media", "pixel_art", "anime_coloring"}
+QUERY = "( source_filmmaker ~ blender ~ mmd ~ overwatch ~ nier_automata ~ dead_or_alive ) ( video ~ animated_gif ) -futanari -yaoi -gay -bestiality"
 UA = "booru-viewer/1.0"
 
 
@@ -44,7 +46,11 @@ def blocked(tags):
 
 def wanted(tags):
     words = {tag.lower() for tag in tags}
-    return bool(words & TOOLS) and not blocked(tags)
+    if blocked(tags):
+        return False
+    if words & TOOLS:
+        return True
+    return bool(words & GAMES) and not (words & FLAT)
 
 
 def load():
@@ -77,7 +83,7 @@ def danbooru(state):
     login = os.environ.get("DANBOORU_LOGIN", "")
     key = os.environ.get("DANBOORU_API_KEY", "")
     found = []
-    for tags in ("source_filmmaker", "blender", "mmd", "mikumikudance", "daz_studio", "koikatsu"):
+    for tags in ("source_filmmaker", "blender", "mmd", "overwatch", "nier_automata", "dead_or_alive"):
         page = 1
         while page <= 3:
             params = {"tags": tags, "limit": 100, "page": page}
