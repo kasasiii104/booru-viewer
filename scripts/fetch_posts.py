@@ -20,8 +20,12 @@ UA = "booru-viewer/1.0"
 
 def get(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=40) as res:
-        return json.loads(res.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=40) as res:
+            return json.loads(res.read().decode("utf-8"))
+    except Exception as exc:
+        print(f"request failed: {exc}")
+        return None
 
 
 def blocked(tags):
@@ -54,37 +58,38 @@ def keep_best(items):
 def danbooru(state):
     login = os.environ.get("DANBOORU_LOGIN", "")
     key = os.environ.get("DANBOORU_API_KEY", "")
-    page = 1
     found = []
-    while page <= 5:
-        params = {"tags": QUERY, "limit": 100, "page": page}
-        if login and key:
-            params["login"] = login
-            params["api_key"] = key
-        url = "https://danbooru.donmai.us/posts.json?" + urllib.parse.urlencode(params)
-        rows = get(url)
-        if not rows:
-            break
-        for row in rows:
-            tags = (row.get("tag_string") or "").split()
-            if blocked(tags) or not row.get("file_url"):
-                continue
-            found.append({
-                "source": "danbooru",
-                "source_id": row["id"],
-                "md5": row.get("md5"),
-                "score": row.get("score") or 0,
-                "rating": row.get("rating"),
-                "tags": tags,
-                "width": row.get("image_width"),
-                "height": row.get("image_height"),
-                "file_url": row.get("file_url"),
-                "preview_url": row.get("preview_file_url"),
-                "post_url": f"https://danbooru.donmai.us/posts/{row['id']}",
-                "created_at": row.get("created_at"),
-            })
-        page += 1
-        time.sleep(1)
+    for tags in ("video", "animated_gif"):
+        page = 1
+        while page <= 5:
+            params = {"tags": tags, "limit": 100, "page": page}
+            if login and key:
+                params["login"] = login
+                params["api_key"] = key
+            url = "https://danbooru.donmai.us/posts.json?" + urllib.parse.urlencode(params)
+            rows = get(url)
+            if not rows:
+                break
+            for row in rows:
+                post_tags = (row.get("tag_string") or "").split()
+                if blocked(post_tags) or not row.get("file_url"):
+                    continue
+                found.append({
+                    "source": "danbooru",
+                    "source_id": row["id"],
+                    "md5": row.get("md5"),
+                    "score": row.get("score") or 0,
+                    "rating": row.get("rating"),
+                    "tags": post_tags,
+                    "width": row.get("image_width"),
+                    "height": row.get("image_height"),
+                    "file_url": row.get("file_url"),
+                    "preview_url": row.get("preview_file_url"),
+                    "post_url": f"https://danbooru.donmai.us/posts/{row['id']}",
+                    "created_at": row.get("created_at"),
+                })
+            page += 1
+            time.sleep(1)
     state["danbooru"] = max([item["source_id"] for item in found], default=state.get("danbooru", 0))
     return found
 
@@ -105,6 +110,8 @@ def gelbooru_like(name, endpoint, user_key, api_key, id_field):
         }
         url = endpoint + "?" + urllib.parse.urlencode(params)
         payload = get(url)
+        if not payload:
+            break
         rows = payload if isinstance(payload, list) else payload.get("post", [])
         if not rows:
             break
