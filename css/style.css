@@ -10,8 +10,10 @@ button, input { font: inherit; }
 .icon { width: 36px; height: 36px; border-radius: 50%; }
 #q { flex: 1; min-width: 0; background: #121212; color: var(--text); border: 1px solid #303030; border-radius: 18px; padding: 8px 12px; }
 .sort.is-on { background: white; color: #111; }
-.layout { display: grid; grid-template-columns: 220px 1fr; }
-.side { position: sticky; top: 104px; height: calc(100vh - 104px); overflow: auto; padding: 8px; }
+.layout { display: grid; grid-template-columns: 420px 1fr; }
+.shelves { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: sticky; top: 104px; height: calc(100vh - 104px); padding: 8px; }
+.shelf { overflow: auto; background: #171717; border-radius: 12px; padding: 8px; }
+.time { position: absolute; right: 6px; bottom: 6px; background: rgba(0,0,0,.72); border-radius: 4px; padding: 1px 4px; font-size: 11px; }
 .heading { margin: 14px 8px 4px; color: var(--muted); font-size: 12px; }
 .work { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: var(--text); border-radius: 8px; padding: 8px 10px; cursor: pointer; }
 .work.is-on { background: #272727; }
@@ -39,7 +41,7 @@ button, input { font: inherit; }
 .empty { color: var(--muted); padding: 20px 12px; }
 @media (max-width: 800px) {
   .layout { grid-template-columns: 1fr; }
-  .side { display: none; position: fixed; z-index: 4; top: 56px; width: min(280px, 86vw); height: calc(100vh - 56px); background: #0f0f0f; }
-  .side.is-open { display: block; }
+  .shelves { display: none; position: fixed; z-index: 4; top: 56px; width: min(360px, 92vw); height: calc(100vh - 56px); background: #0f0f0f; }
+  .shelves.is-open { display: grid; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

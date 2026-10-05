@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viewer</title>
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
   <header class="top">
@@ -19,7 +19,10 @@
     <button type="button" id="favs" class="sort">お気に入り</button>
   </div>
   <div class="layout">
-    <nav id="works" class="side"></nav>
+    <nav class="shelves">
+      <section id="work-shelf" class="shelf"></section>
+      <section id="char-shelf" class="shelf"></section>
+    </nav>
     <main>
       <p id="count" class="count"></p>
       <div id="grid" class="grid"></div>
@@ -39,6 +42,6 @@
       </div>
     </div>
   </div>
-  <script src="js/app.js?v=5"></script>
+  <script src="js/app.js?v=6"></script>
 </body>
 </html>
