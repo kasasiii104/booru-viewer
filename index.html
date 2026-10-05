@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ビューアー</title>
+  <title>Viewer</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header class="top">
+    <button id="menu" class="icon" type="button" aria-label="作品">☰</button>
     <div class="brand">Viewer</div>
-    <input id="q" type="search" placeholder="作品、キャラ、タグ" autocomplete="off">
+    <input id="q" type="search" placeholder="作品、キャラ、タグを検索" autocomplete="off">
     <div class="sorts">
       <button type="button" class="sort is-on" data-sort="score">人気順</button>
       <button type="button" class="sort" data-sort="new">新着</button>
@@ -21,17 +22,18 @@
       <div id="chips" class="chips"></div>
       <p id="count" class="count"></p>
       <div id="grid" class="grid"></div>
-      <p id="empty" class="empty" hidden>該当する作品がありません。取得スクリプトを回すと一覧が増えます。</p>
+      <p id="empty" class="empty" hidden>該当する作品がありません。</p>
     </main>
   </div>
   <div id="modal" class="modal" hidden>
-    <div class="sheet">
+    <div class="watch">
       <button type="button" id="close" class="close">閉じる</button>
-      <div id="stage"></div>
+      <div id="stage" class="stage"></div>
       <div class="meta">
         <h1 id="title"></h1>
         <p id="sub"></p>
         <a id="origin" href="#" target="_blank" rel="noreferrer">元のページで開く</a>
+        <div id="tagbox"></div>
       </div>
     </div>
   </div>
