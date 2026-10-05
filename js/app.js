@@ -2,76 +2,68 @@ const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, w
 const TOOLS = ["source_filmmaker", "sfm", "blender", "blender_(medium)", "mmd", "mikumikudance", "daz_studio", "koikatsu", "honey_select", "xps", "xnalara", "cinema_4d"];
 const $ = (id) => document.getElementById(id);
 
-function norm(tags) {
-  return (tags || []).map((t) => String(t).toLowerCase()).filter(Boolean);
-}
-function pretty(tag) {
-  return String(tag || "").replaceAll("_", " ");
-}
-function ja(tag) {
-  const key = String(tag || "").toLowerCase();
-  return state.names[key] || pretty(key);
-}
+function norm(tags) { return (tags || []).map((t) => String(t).toLowerCase()).filter(Boolean); }
+function ja(tag) { return state.names[String(tag || "").toLowerCase()] || String(tag || "").replaceAll("_", " "); }
+function knownCharacter(tag) { return state.taxonomy.characters.find((c) => c.id === tag || c.tags.includes(tag)); }
 function workTags(item) {
   const copyright = norm(item.copyright_tags);
   if (copyright.length) return copyright;
   const tags = norm(item.tags);
   return state.taxonomy.works.filter((work) => work.tags.some((t) => tags.includes(t))).map((work) => work.id);
 }
+function characterTags(item) {
+  return norm(item.tags).map(knownCharacter).filter(Boolean).map((c) => c.id);
+}
 function label(item) {
-  const tags = norm(item.tags);
-  const character = state.taxonomy.characters.find((c) => c.tags.some((t) => tags.includes(t)));
   const works = workTags(item);
+  const characters = characterTags(item);
   return {
-    name: character ? character.name : ja(tags.find((t) => !TOOLS.includes(t)) || "無題"),
+    name: characters.length ? characters.map(ja).join(" / ") : "動画",
     workName: works.length ? works.map(ja).join(" / ") : "未分類",
-    works
+    works, characters
   };
 }
-function shelves() {
-  const counts = new Map();
-  state.items.forEach((item) => workTags(item).forEach((tag) => counts.set(tag, (counts.get(tag) || 0) + 1)));
-  return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([tag, count]) => ({ id: tag, name: ja(tag), count }));
+function counts(pick) {
+  const map = new Map();
+  state.items.forEach((item) => pick(item).forEach((tag) => map.set(tag, (map.get(tag) || 0) + 1)));
+  return [...map.entries()].sort((a, b) => b[1] - a[1]).map(([id, count]) => ({ id, name: ja(id), count }));
 }
 function filtered() {
   const q = state.q.trim().toLowerCase();
   const rows = state.items.filter((item) => {
-    const works = workTags(item);
-    const tags = norm(item.tags);
-    const character = state.taxonomy.characters.find((c) => c.tags.some((t) => tags.includes(t)));
-    if (state.work === "uncategorized" && works.length) return false;
-    if (state.work !== "all" && state.work !== "uncategorized" && !works.includes(state.work)) return false;
-    if (state.character && (!character || character.id !== state.character)) return false;
+    const names = label(item);
+    if (state.work === "uncategorized" && names.works.length) return false;
+    if (state.work !== "all" && state.work !== "uncategorized" && !names.works.includes(state.work)) return false;
+    if (state.character && !names.characters.includes(state.character)) return false;
     if (!q) return true;
-    return [label(item).name, label(item).workName, ...works.map(ja), ...tags].join(" ").toLowerCase().includes(q);
+    return [names.name, names.workName, ...norm(item.tags).map(ja)].join(" ").toLowerCase().includes(q);
   });
   rows.sort((a, b) => state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : (b.score || 0) - (a.score || 0));
   return rows;
 }
+function button(id, text, active, onClick) {
+  const el = document.createElement("button");
+  el.className = "work" + (active ? " is-on" : "");
+  el.textContent = text;
+  el.onclick = onClick;
+  return el;
+}
 function renderNav() {
   const nav = $("works");
   nav.innerHTML = "";
-  const add = (id, text) => {
-    const button = document.createElement("button");
-    button.className = "work" + (state.work === id ? " is-on" : "");
-    button.textContent = text;
-    button.onclick = () => { state.work = id; state.character = ""; nav.classList.remove("is-open"); render(); };
-    nav.appendChild(button);
-  };
-  add("all", "ホーム");
-  add("uncategorized", "未分類");
-  shelves().forEach((work) => add(work.id, work.name + "  " + work.count));
-}
-function renderChips() {
-  const box = $("chips");
-  box.innerHTML = "";
-  state.taxonomy.characters.filter((c) => state.work === "all" || c.work === state.work || c.tags.includes(state.work)).forEach((character) => {
-    const button = document.createElement("button");
-    button.className = "chip" + (state.character === character.id ? " is-on" : "");
-    button.textContent = character.name;
-    button.onclick = () => { state.character = state.character === character.id ? "" : character.id; render(); };
-    box.appendChild(button);
-  });
+  const close = () => nav.classList.remove("is-open");
+  nav.appendChild(button("all", "ホーム", state.work === "all" && !state.character, () => { state.work = "all"; state.character = ""; close(); render(); }));
+  const works = document.createElement("div");
+  works.className = "heading";
+  works.textContent = "作品";
+  nav.appendChild(works);
+  nav.appendChild(button("uncategorized", "未分類", state.work === "uncategorized", () => { state.work = "uncategorized"; state.character = ""; close(); render(); }));
+  counts(workTags).forEach((work) => nav.appendChild(button(work.id, work.name + "  " + work.count, state.work === work.id, () => { state.work = work.id; state.character = ""; close(); render(); })));
+  const characters = document.createElement("div");
+  characters.className = "heading";
+  characters.textContent = "キャラ";
+  nav.appendChild(characters);
+  counts(characterTags).forEach((character) => nav.appendChild(button(character.id, character.name + "  " + character.count, state.character === character.id, () => { state.character = state.character === character.id ? "" : character.id; close(); render(); })));
 }
 function renderGrid() {
   const rows = filtered();
@@ -81,22 +73,26 @@ function renderGrid() {
   grid.innerHTML = "";
   rows.forEach((item) => {
     const names = label(item);
-    const card = document.createElement("article");
+    const card = document.createElement("button");
     card.className = "card";
     const thumb = document.createElement("div");
     thumb.className = "thumb";
     if (item.preview_url) thumb.style.backgroundImage = "url(" + JSON.stringify(item.preview_url) + ")";
+    const play = document.createElement("span");
+    play.className = "play";
+    play.textContent = "▶";
+    thumb.appendChild(play);
     const title = document.createElement("h2");
-    title.textContent = names.name + " / " + names.workName;
+    title.textContent = names.name;
     const sub = document.createElement("p");
-    sub.textContent = (item.source || "") + " · スコア " + (item.score || 0);
+    sub.textContent = names.workName + " · スコア " + (item.score || 0);
     card.append(thumb, title, sub);
     card.onclick = () => openItem(item);
     grid.appendChild(card);
   });
 }
 function tagGroup(title, tags) {
-  const unique = [...new Set(tags)].slice(0, 16);
+  const unique = [...new Set(tags)].slice(0, 18);
   if (!unique.length) return null;
   const group = document.createElement("section");
   group.className = "group";
@@ -108,7 +104,7 @@ function tagGroup(title, tags) {
     const chip = document.createElement("button");
     chip.className = "tag";
     chip.textContent = ja(tag);
-    chip.onclick = () => { $("q").value = ja(tag); state.q = ja(tag); closeWatch(); renderGrid(); };
+    chip.onclick = () => { $("q").value = ""; state.q = ""; state.work = title === "作品" ? tag : state.work; state.character = title === "キャラ" ? tag : ""; closeWatch(); render(); };
     list.appendChild(chip);
   });
   group.append(heading, list);
@@ -117,30 +113,33 @@ function tagGroup(title, tags) {
 function openItem(item) {
   const names = label(item);
   const tags = norm(item.tags);
-  $("title").textContent = names.name + " / " + names.workName;
-  $("sub").textContent = (item.source || "") + " · スコア " + (item.score || 0);
+  $("title").textContent = names.name;
+  $("sub").textContent = names.workName + " · スコア " + (item.score || 0);
   $("origin").href = item.post_url || item.file_url;
   const stage = $("stage");
   stage.innerHTML = "";
   const video = document.createElement("video");
   video.controls = true;
   video.playsInline = true;
-  video.autoplay = true;
+  video.preload = "none";
+  video.poster = item.preview_url || "";
   video.src = item.file_url;
   if (String(item.file_url).toLowerCase().includes(".gif")) video.loop = true;
+  const play = document.createElement("button");
+  play.className = "play";
+  play.textContent = "▶";
+  play.onclick = () => { play.remove(); video.play(); };
   video.onerror = () => { stage.innerHTML = "<p>この場では再生できません。元のページを開いてください。</p>"; };
-  stage.appendChild(video);
+  stage.append(video, play);
   const box = $("tagbox");
   box.innerHTML = "";
-  [tagGroup("作品", names.works), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", tags.filter((t) => !TOOLS.includes(t) && !names.works.includes(t)))]
+  [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", tags.filter((t) => !TOOLS.includes(t) && !names.works.includes(t) && !names.characters.includes(t)))]
     .filter(Boolean).forEach((group) => box.appendChild(group));
   $("modal").hidden = false;
+  window.scrollTo(0, 0);
 }
-function closeWatch() {
-  $("stage").innerHTML = "";
-  $("modal").hidden = true;
-}
-function render() { renderNav(); renderChips(); renderGrid(); }
+function closeWatch() { $("stage").innerHTML = ""; $("modal").hidden = true; }
+function render() { renderNav(); renderGrid(); }
 $("q").addEventListener("input", (event) => { state.q = event.target.value; renderGrid(); });
 document.querySelectorAll(".sort").forEach((button) => {
   button.onclick = () => {
@@ -151,6 +150,7 @@ document.querySelectorAll(".sort").forEach((button) => {
 });
 $("close").onclick = closeWatch;
 $("menu").onclick = () => $("works").classList.toggle("is-open");
+window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); window.scrollTo(0, 0); });
 Promise.all([
   fetch("data/videos.json?v=" + Date.now()).then((r) => r.json()),
   fetch("data/taxonomy.json?v=" + Date.now()).then((r) => r.json()),
@@ -159,7 +159,7 @@ Promise.all([
   state.items = Array.isArray(items) ? items : [];
   state.taxonomy = taxonomy;
   state.names = names || {};
-  taxonomy.works.forEach((work) => work.tags.forEach((tag) => { state.names[tag] = work.name; }));
-  taxonomy.characters.forEach((character) => character.tags.forEach((tag) => { state.names[tag] = character.name; }));
+  taxonomy.works.forEach((work) => { state.names[work.id] = work.name; work.tags.forEach((tag) => { state.names[tag] = work.name; }); });
+  taxonomy.characters.forEach((character) => { state.names[character.id] = character.name; character.tags.forEach((tag) => { state.names[tag] = character.name; }); });
   render();
 }).catch(() => { $("empty").hidden = false; $("empty").textContent = "データを読めませんでした。"; });
