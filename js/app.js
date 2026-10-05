@@ -103,15 +103,12 @@ function renderGrid() {
     star.textContent = saved.has(keyOf(item)) ? "★" : "☆";
     star.onclick = (event) => { event.stopPropagation(); toggleFav(item); };
     thumb.append(play, star);
-    const time = document.createElement("span");
-    time.className = "time";
-    time.textContent = clock(item.duration);
-    thumb.appendChild(time);
-    if (!item.duration && item.file_url) {
-      const probe = document.createElement("video");
-      probe.preload = "metadata";
-      probe.src = item.file_url;
-      probe.onloadedmetadata = () => { time.textContent = clock(probe.duration); probe.removeAttribute("src"); probe.load(); };
+    const shown = clock(item.duration);
+    if (shown) {
+      const time = document.createElement("span");
+      time.className = "time";
+      time.textContent = shown;
+      thumb.appendChild(time);
     }
     const title = document.createElement("h2");
     title.textContent = names.name;
@@ -158,7 +155,7 @@ function openItem(item) {
   const video = document.createElement("video");
   video.controls = true;
   video.playsInline = true;
-  video.preload = "metadata";
+  video.preload = "none";
   video.poster = item.preview_url || "";
   video.src = item.file_url;
   if (String(item.file_url).toLowerCase().includes(".gif")) video.loop = true;
