@@ -1,3 +1,15 @@
 {
-  "danbooru": 12311141
+  "danbooru": 12311141,
+  "history": {
+    "danbooru": {
+      "source_filmmaker": "done",
+      "blender": "done",
+      "mmd": "done",
+      "overwatch": 5,
+      "nier_automata": 5,
+      "dead_or_alive": 5
+    },
+    "gelbooru": "done",
+    "rule34": 4
+  }
 }
