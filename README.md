@@ -20,7 +20,7 @@ API キーはリポジトリの Secrets に置きます。フロントには入�
 python scripts/fetch_posts.py
 ```
 
-GitHub Actions は 6 時間ごとに同じスクリプトを実行し、`data/videos.json` を更新します。Actions タブから手動実行もできます。
+GitHub Actions は 1 時間ごとに同じスクリプトを実行し、`data/videos.json` を更新します。1回あたり各サイト最大500件です。Actions タブから手動実行もできます。
 
 ## 重複と除外
 
