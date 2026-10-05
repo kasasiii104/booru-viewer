@@ -3,12 +3,26 @@ const state = { items: [], taxonomy: { works: [], characters: [] }, work: "all",
 const $ = (id) => document.getElementById(id);
 
 function norm(tags) {
-  return (tags || []).map((t) => String(t).toLowerCase());
+  return (tags || []).map((t) => String(t).toLowerCase()).filter(Boolean);
 }
 
-function matchWork(item) {
+function pretty(tag) {
+  return String(tag || "").replaceAll("_", " ");
+}
+
+function nameFor(tag) {
+  const key = String(tag || "").toLowerCase();
+  const known = state.taxonomy.works.find((work) => work.id === key || work.tags.some((t) => t === key));
+  return known ? known.name : pretty(key);
+}
+
+function workTags(item) {
+  const copyright = norm(item.copyright_tags);
+  if (copyright.length) return copyright;
   const tags = norm(item.tags);
-  return state.taxonomy.works.find((w) => w.tags.some((t) => tags.includes(t)));
+  return state.taxonomy.works
+    .filter((work) => work.tags.some((t) => tags.includes(t)))
+    .map((work) => work.id);
 }
 
 function matchCharacter(item) {
@@ -18,21 +32,32 @@ function matchCharacter(item) {
 
 function label(item) {
   const character = matchCharacter(item);
-  const work = matchWork(item);
+  const works = workTags(item);
   const name = character ? character.name : (item.tags || []).slice(0, 2).join(" ");
-  const workName = work ? work.name : "未分類";
-  return { name: name || "無題", workName };
+  const workName = works.length ? works.map(nameFor).join(" / ") : "未分類";
+  return { name: name || "無題", workName, works };
+}
+
+function shelves() {
+  const counts = new Map();
+  state.items.forEach((item) => {
+    workTags(item).forEach((tag) => counts.set(tag, (counts.get(tag) || 0) + 1));
+  });
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || nameFor(a[0]).localeCompare(nameFor(b[0]), "ja"))
+    .map(([tag, count]) => ({ id: tag, name: nameFor(tag), count }));
 }
 
 function filtered() {
   const q = state.q.trim().toLowerCase();
   let rows = state.items.filter((item) => {
-    const work = matchWork(item);
+    const works = workTags(item);
     const character = matchCharacter(item);
-    if (state.work !== "all" && (!work || work.id !== state.work)) return false;
+    if (state.work === "uncategorized" && works.length) return false;
+    if (state.work !== "all" && state.work !== "uncategorized" && !works.includes(state.work)) return false;
     if (state.character && (!character || character.id !== state.character)) return false;
     if (!q) return true;
-    const hay = [label(item).name, label(item).workName, ...(item.tags || [])].join(" ").toLowerCase();
+    const hay = [label(item).name, label(item).workName, ...works, ...(item.tags || [])].join(" ").toLowerCase();
     return hay.includes(q);
   });
   rows.sort((a, b) => state.sort === "new"
@@ -44,24 +69,22 @@ function filtered() {
 function renderNav() {
   const nav = $("works");
   nav.innerHTML = "";
-  const all = document.createElement("button");
-  all.className = "work" + (state.work === "all" ? " is-on" : "");
-  all.textContent = "すべて";
-  all.onclick = () => { state.work = "all"; state.character = ""; render(); };
-  nav.appendChild(all);
-  state.taxonomy.works.forEach((work) => {
+  const add = (id, text) => {
     const button = document.createElement("button");
-    button.className = "work" + (state.work === work.id ? " is-on" : "");
-    button.textContent = work.name;
-    button.onclick = () => { state.work = work.id; state.character = ""; render(); };
+    button.className = "work" + (state.work === id ? " is-on" : "");
+    button.textContent = text;
+    button.onclick = () => { state.work = id; state.character = ""; render(); };
     nav.appendChild(button);
-  });
+  };
+  add("all", "すべて");
+  add("uncategorized", "未分類");
+  shelves().forEach((work) => add(work.id, work.name));
 }
 
 function renderChips() {
   const box = $("chips");
   box.innerHTML = "";
-  const chars = state.taxonomy.characters.filter((c) => state.work === "all" || c.work === state.work);
+  const chars = state.taxonomy.characters.filter((c) => state.work === "all" || c.work === state.work || c.tags.includes(state.work));
   chars.forEach((character) => {
     const button = document.createElement("button");
     button.className = "chip" + (state.character === character.id ? " is-on" : "");

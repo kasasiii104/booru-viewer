@@ -51,7 +51,11 @@ def keep_best(items):
         key = item.get("md5") or f"{item['source']}:{item['source_id']}"
         current = best.get(key)
         if current is None or (item.get("score") or 0) > (current.get("score") or 0):
+            if current and current.get("copyright_tags") and not item.get("copyright_tags"):
+                item["copyright_tags"] = current["copyright_tags"]
             best[key] = item
+        elif item.get("copyright_tags") and not current.get("copyright_tags"):
+            current["copyright_tags"] = item["copyright_tags"]
     return list(best.values())
 
 
@@ -81,6 +85,7 @@ def danbooru(state):
                     "score": row.get("score") or 0,
                     "rating": row.get("rating"),
                     "tags": post_tags,
+                    "copyright_tags": (row.get("tag_string_copyright") or "").split(),
                     "width": row.get("image_width"),
                     "height": row.get("image_height"),
                     "file_url": row.get("file_url"),
@@ -127,6 +132,7 @@ def gelbooru_like(name, endpoint, user_key, api_key, id_field):
                 "score": int(row.get("score") or 0),
                 "rating": row.get("rating"),
                 "tags": tags,
+                "copyright_tags": [],
                 "width": int(row.get("width") or 0),
                 "height": int(row.get("height") or 0),
                 "file_url": file_url,
