@@ -50,6 +50,12 @@ function filtered() {
   rows.sort((a, b) => state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : state.sort === "rating" ? ratingValue(b) - ratingValue(a) || (b.score || 0) - (a.score || 0) : (b.score || 0) - (a.score || 0));
   return rows;
 }
+function clock(seconds) {
+  const value = Number(seconds);
+  if (!value || !isFinite(value)) return "";
+  const total = Math.round(value);
+  return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
+}
 function button(text, active, onClick) {
   const el = document.createElement("button");
   el.className = "work" + (active ? " is-on" : "");
@@ -57,22 +63,19 @@ function button(text, active, onClick) {
   el.onclick = onClick;
   return el;
 }
+function fillShelf(id, title, rows, active, onPick) {
+  const shelf = $(id);
+  shelf.innerHTML = "";
+  const heading = document.createElement("div");
+  heading.className = "heading";
+  heading.textContent = title;
+  shelf.appendChild(heading);
+  rows.forEach((row) => shelf.appendChild(button(row.name + "  " + row.count, active(row), () => onPick(row))));
+}
 function renderNav() {
-  const nav = $("works");
-  nav.innerHTML = "";
-  const close = () => nav.classList.remove("is-open");
-  nav.appendChild(button("ホーム", state.work === "all" && !state.character, () => { state.work = "all"; state.character = ""; close(); render(); }));
-  const works = document.createElement("div");
-  works.className = "heading";
-  works.textContent = "作品";
-  nav.appendChild(works);
-  nav.appendChild(button("未分類", state.work === "uncategorized", () => { state.work = "uncategorized"; state.character = ""; close(); render(); }));
-  counts(workTags).forEach((work) => nav.appendChild(button(work.name + "  " + work.count, state.work === work.id, () => { state.work = work.id; state.character = ""; close(); render(); })));
-  const characters = document.createElement("div");
-  characters.className = "heading";
-  characters.textContent = "キャラ";
-  nav.appendChild(characters);
-  counts(characterTags).forEach((character) => nav.appendChild(button(character.name + "  " + character.count, state.character === character.id, () => { state.character = state.character === character.id ? "" : character.id; close(); render(); })));
+  const close = () => document.querySelector(".shelves").classList.remove("is-open");
+  fillShelf("work-shelf", "作品", [{ id: "all", name: "ホーム", count: state.items.length }, { id: "uncategorized", name: "未分類", count: "" }, ...counts(workTags)], (row) => state.work === row.id && !state.character, (row) => { state.work = row.id; state.character = ""; close(); render(); });
+  fillShelf("char-shelf", "キャラ", [{ id: "", name: "すべて", count: "" }, ...counts(characterTags)], (row) => state.character === row.id, (row) => { state.character = row.id; close(); render(); });
 }
 function renderGrid() {
   const rows = filtered();
@@ -96,6 +99,10 @@ function renderGrid() {
     star.textContent = saved.has(keyOf(item)) ? "★" : "☆";
     star.onclick = (event) => { event.stopPropagation(); toggleFav(item); };
     thumb.append(play, star);
+    const time = document.createElement("span");
+    time.className = "time";
+    time.textContent = clock(item.duration);
+    if (time.textContent) thumb.appendChild(time);
     const title = document.createElement("h2");
     title.textContent = names.name;
     const sub = document.createElement("p");
@@ -133,7 +140,7 @@ function openItem(item) {
   const names = label(item);
   const tags = norm(item.tags);
   $("title").textContent = names.name;
-  $("sub").textContent = names.workName + " · スコア " + (item.score || 0);
+  $("sub").textContent = [names.workName, "スコア " + (item.score || 0), clock(item.duration)].filter(Boolean).join(" · ");
   $("origin").href = item.post_url || item.file_url;
   markFav(item);
   const stage = $("stage");
@@ -141,7 +148,7 @@ function openItem(item) {
   const video = document.createElement("video");
   video.controls = true;
   video.playsInline = true;
-  video.preload = "none";
+  video.preload = "metadata";
   video.poster = item.preview_url || "";
   video.src = item.file_url;
   if (String(item.file_url).toLowerCase().includes(".gif")) video.loop = true;
@@ -149,6 +156,7 @@ function openItem(item) {
   play.className = "play";
   play.textContent = "▶";
   play.onclick = () => { play.remove(); video.play(); };
+  video.onloadedmetadata = () => { $("sub").textContent = [names.workName, "スコア " + (item.score || 0), clock(video.duration)].filter(Boolean).join(" · "); };
   video.onerror = () => { stage.innerHTML = "<p>この場では再生できません。元のページを開いてください。</p>"; };
   stage.append(video, play);
   const box = $("tagbox");
@@ -170,7 +178,7 @@ document.querySelectorAll(".sort[data-sort]").forEach((button) => {
 $("favs").onclick = () => { state.favOnly = !state.favOnly; render(); };
 $("fav").onclick = () => { if (state.current) toggleFav(state.current); };
 $("close").onclick = closeWatch;
-$("menu").onclick = () => $("works").classList.toggle("is-open");
+$("menu").onclick = () => document.querySelector(".shelves").classList.toggle("is-open");
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
 Promise.all([
   fetch("data/videos.json?v=" + Date.now()).then((r) => r.json()),
