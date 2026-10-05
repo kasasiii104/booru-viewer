@@ -1,0 +1,34 @@
+name: update catalog
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: fetch metadata
+        env:
+          DANBOORU_LOGIN: ${{ secrets.DANBOORU_LOGIN }}
+          DANBOORU_API_KEY: ${{ secrets.DANBOORU_API_KEY }}
+          GELBOORU_USER_ID: ${{ secrets.GELBOORU_USER_ID }}
+          GELBOORU_API_KEY: ${{ secrets.GELBOORU_API_KEY }}
+          RULE34_USER_ID: ${{ secrets.RULE34_USER_ID }}
+          RULE34_API_KEY: ${{ secrets.RULE34_API_KEY }}
+        run: python scripts/fetch_posts.py
+      - name: commit catalog
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/videos.json data/state.json
+          git diff --staged --quiet || git commit -m "Update catalog"
+          git push

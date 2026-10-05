@@ -1,0 +1,17 @@
+{
+  "works": [
+    {"id": "overwatch", "name": "オーバーウォッチ", "tags": ["overwatch"]},
+    {"id": "nier_automata", "name": "ニーア オートマタ", "tags": ["nier_automata", "nier"]},
+    {"id": "dead_or_alive", "name": "デッド オア アライブ", "tags": ["dead_or_alive"]}
+  ],
+  "characters": [
+    {"id": "mercy", "name": "マーシー", "work": "overwatch", "tags": ["mercy"]},
+    {"id": "dva", "name": "D.Va", "work": "overwatch", "tags": ["d.va", "dva"]},
+    {"id": "widowmaker", "name": "ウィドウメイカー", "work": "overwatch", "tags": ["widowmaker"]},
+    {"id": "tracer", "name": "トレーサー", "work": "overwatch", "tags": ["tracer"]},
+    {"id": "pharah", "name": "ファラ", "work": "overwatch", "tags": ["pharah"]},
+    {"id": "2b", "name": "2B", "work": "nier_automata", "tags": ["yorha_2b", "2b"]},
+    {"id": "a2", "name": "A2", "work": "nier_automata", "tags": ["yorha_a2", "a2"]},
+    {"id": "marie_rose", "name": "マリー・ローズ", "work": "dead_or_alive", "tags": ["marie_rose"]}
+  ]
+}
