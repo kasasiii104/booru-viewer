@@ -1,4 +1,4 @@
-const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", tag: "", sort: "score", q: "", favOnly: false, loop: true, current: null };
+const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", tag: "", sort: "score", q: "", panel: "", panelQ: "", favOnly: false, loop: true, current: null, preview: null };
 const TOOLS = ["source_filmmaker", "sfm", "blender", "blender_(medium)", "mmd", "mikumikudance", "daz_studio", "koikatsu", "honey_select", "xps", "xnalara", "cinema_4d"];
 const $ = (id) => document.getElementById(id);
 const favKey = "booru-viewer-favs";
@@ -57,7 +57,7 @@ function filtered() {
     if (!q) return true;
     return [names.name, names.workName, ...norm(item.tags).map(ja)].join(" ").toLowerCase().includes(q);
   });
-  rows.sort((a, b) => Number(isFav(b)) - Number(isFav(a)) || (state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : state.sort === "rating" ? ratingValue(b) - ratingValue(a) || (b.score || 0) - (a.score || 0) : (b.score || 0) - (a.score || 0)));
+  rows.sort((a, b) => state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : state.sort === "rating" ? ratingValue(b) - ratingValue(a) || (b.score || 0) - (a.score || 0) : (b.score || 0) - (a.score || 0));
   return rows;
 }
 function clock(seconds) {
@@ -66,27 +66,61 @@ function clock(seconds) {
   const total = Math.round(value);
   return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0");
 }
-function button(text, active, onClick) {
-  const el = document.createElement("button");
-  el.className = "work" + (active ? " is-on" : "");
-  el.textContent = text;
-  el.onclick = onClick;
-  return el;
+function stopPreview() {
+  if (state.preview) { state.preview.pause(); state.preview.remove(); state.preview = null; }
 }
-function fillShelf(id, title, rows, active, onPick) {
-  const shelf = $(id);
-  shelf.innerHTML = "";
-  const heading = document.createElement("div");
-  heading.className = "heading";
-  heading.textContent = title;
-  shelf.appendChild(heading);
-  rows.forEach((row) => shelf.appendChild(button(row.name + "  " + row.count, active(row), () => onPick(row))));
+function playPreview(item, thumb) {
+  stopPreview();
+  const video = document.createElement("video");
+  video.playsInline = true;
+  video.loop = true;
+  video.controls = false;
+  video.src = item.file_url;
+  video.onerror = () => { video.remove(); state.preview = null; };
+  thumb.querySelector(".play")?.remove();
+  thumb.appendChild(video);
+  state.preview = video;
+  video.play();
 }
-function renderNav() {
-  const close = () => document.querySelector(".shelves").classList.remove("is-open");
-  fillShelf("work-shelf", "作品", [{ id: "all", name: "ホーム", count: state.items.length }, { id: "uncategorized", name: "未分類", count: "" }, ...counts(workTags)], (row) => state.work === row.id && !state.character && !state.tag, (row) => { state.work = row.id; state.character = ""; state.tag = ""; close(); render(); });
-  fillShelf("char-shelf", "キャラ", [{ id: "", name: "すべて", count: "" }, ...counts(characterTags)], (row) => state.character === row.id, (row) => { state.character = row.id; close(); render(); });
-  fillShelf("tag-shelf", "タグ", [{ id: "", name: "すべて", count: "" }, ...counts(plainTags).slice(0, 80)], (row) => state.tag === row.id, (row) => { state.tag = row.id; close(); render(); });
+function renderPicked() {
+  const box = $("picked");
+  box.innerHTML = "";
+  const chips = [];
+  if (state.work !== "all") chips.push(["作品: " + (state.work === "uncategorized" ? "未分類" : ja(state.work)), () => { state.work = "all"; render(); }]);
+  if (state.character) chips.push(["キャラ: " + ja(state.character), () => { state.character = ""; render(); }]);
+  if (state.tag) chips.push(["タグ: " + ja(state.tag), () => { state.tag = ""; render(); }]);
+  chips.forEach(([text, clear]) => {
+    const chip = document.createElement("button");
+    chip.className = "chip";
+    chip.textContent = text + " ×";
+    chip.onclick = clear;
+    box.appendChild(chip);
+  });
+}
+function renderPanel() {
+  const panel = $("panel");
+  panel.hidden = !state.panel;
+  document.querySelectorAll("[data-panel]").forEach((button) => button.classList.toggle("is-on", button.dataset.panel === state.panel));
+  if (!state.panel) return;
+  const source = state.panel === "work" ? [{ id: "all", name: "すべて", count: state.items.length }, { id: "uncategorized", name: "未分類", count: "" }, ...counts(workTags)] : state.panel === "character" ? [{ id: "", name: "すべて", count: "" }, ...counts(characterTags)] : [{ id: "", name: "すべて", count: "" }, ...counts(plainTags)];
+  const q = state.panelQ.trim().toLowerCase();
+  const rows = source.filter((row) => !q || row.name.toLowerCase().includes(q) || row.id.includes(q)).slice(0, 60);
+  const list = $("panel-list");
+  list.innerHTML = "";
+  rows.forEach((row) => {
+    const button = document.createElement("button");
+    const active = state.panel === "work" ? state.work === row.id : state.panel === "character" ? state.character === row.id : state.tag === row.id;
+    button.className = "work" + (active ? " is-on" : "");
+    button.textContent = row.name + (row.count === "" ? "" : "  " + row.count);
+    button.onclick = () => {
+      if (state.panel === "work") state.work = row.id;
+      if (state.panel === "character") state.character = row.id;
+      if (state.panel === "tag") state.tag = row.id;
+      state.panel = "";
+      render();
+    };
+    list.appendChild(button);
+  });
 }
 function renderGrid() {
   const all = filtered();
@@ -109,7 +143,11 @@ function renderGrid() {
     star.className = "star";
     star.textContent = isFav(item) ? "★" : "☆";
     star.onclick = (event) => { event.stopPropagation(); toggleFav(item); };
-    thumb.append(play, star);
+    const more = document.createElement("button");
+    more.className = "more";
+    more.textContent = "詳細";
+    more.onclick = (event) => { event.stopPropagation(); openItem(item); };
+    thumb.append(play, star, more);
     const shown = clock(item.duration);
     if (shown) {
       const time = document.createElement("span");
@@ -117,12 +155,12 @@ function renderGrid() {
       time.textContent = shown;
       thumb.appendChild(time);
     }
+    thumb.onclick = () => playPreview(item, thumb);
     const title = document.createElement("h2");
     title.textContent = names.name;
     const sub = document.createElement("p");
     sub.textContent = names.workName + " · " + (item.score || 0);
     card.append(thumb, title, sub);
-    card.onclick = () => openItem(item);
     grid.appendChild(card);
   });
 }
@@ -150,6 +188,7 @@ function tagGroup(title, tags) {
   return group;
 }
 function openItem(item) {
+  stopPreview();
   state.current = item;
   const names = label(item);
   const tags = norm(item.tags);
@@ -196,13 +235,22 @@ function closeWatch() {
   $("modal").hidden = true;
   document.body.classList.remove("is-open");
 }
-function render() { $("favs").classList.toggle("is-on", state.favOnly); renderNav(); renderGrid(); }
+function render() { $("favs").classList.toggle("is-on", state.favOnly); renderPicked(); renderPanel(); renderGrid(); }
 $("q").addEventListener("input", (event) => { state.q = event.target.value; renderGrid(); });
+$("panel-q").addEventListener("input", (event) => { state.panelQ = event.target.value; renderPanel(); });
 document.querySelectorAll(".sort[data-sort]").forEach((button) => {
   button.onclick = () => {
     state.sort = button.dataset.sort;
     document.querySelectorAll(".sort[data-sort]").forEach((el) => el.classList.toggle("is-on", el === button));
     renderGrid();
+  };
+});
+document.querySelectorAll("[data-panel]").forEach((button) => {
+  button.onclick = () => {
+    state.panel = state.panel === button.dataset.panel ? "" : button.dataset.panel;
+    state.panelQ = "";
+    $("panel-q").value = "";
+    renderPanel();
   };
 });
 $("favs").onclick = () => { state.favOnly = !state.favOnly; render(); };
@@ -216,7 +264,6 @@ $("loop").onclick = () => {
 $("close").onclick = (event) => { event.stopPropagation(); closeWatch(); };
 $("close-bar").onclick = (event) => { event.stopPropagation(); closeWatch(); };
 $("modal").onclick = (event) => { if (event.target === $("modal")) closeWatch(); };
-$("menu").onclick = () => document.querySelector(".shelves").classList.toggle("is-open");
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
 Promise.all([
   fetch("data/videos.json?v=" + Date.now()).then((r) => r.json()),
