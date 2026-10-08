@@ -10,7 +10,7 @@
       "honey_select video rating:e": "done"
     },
     "gelbooru": {
-      "3d video rating:explicit": 130,
+      "3d video rating:explicit": 140,
       "source_filmmaker video rating:explicit": "done",
       "blender video rating:explicit": "done",
       "mmd video rating:explicit": "done",
@@ -19,7 +19,7 @@
       "honey_select video rating:explicit": "done"
     },
     "rule34": {
-      "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality": 150
+      "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality": 160
     }
   }
 }
