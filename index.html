@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viewer</title>
-  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
   <header class="top">
-    <button id="menu" class="icon" type="button" aria-label="作品">☰</button>
     <div class="brand">Viewer</div>
     <input id="q" type="search" placeholder="作品、キャラ、タグを検索" autocomplete="off">
   </header>
@@ -17,19 +16,20 @@
     <button type="button" class="sort" data-sort="rating">評価順</button>
     <button type="button" class="sort" data-sort="new">新着</button>
     <button type="button" id="favs" class="sort">お気に入り</button>
+    <button type="button" class="sort" data-panel="work">作品</button>
+    <button type="button" class="sort" data-panel="character">キャラ</button>
+    <button type="button" class="sort" data-panel="tag">タグ</button>
   </div>
-  <div class="layout">
-    <nav class="shelves">
-      <section id="work-shelf" class="shelf"></section>
-      <section id="char-shelf" class="shelf"></section>
-      <section id="tag-shelf" class="shelf"></section>
-    </nav>
-    <main>
-      <p id="count" class="count"></p>
-      <div id="grid" class="grid"></div>
-      <p id="empty" class="empty" hidden>該当する作品がありません。</p>
-    </main>
-  </div>
+  <div id="picked" class="picked"></div>
+  <section id="panel" class="panel" hidden>
+    <input id="panel-q" type="search" placeholder="棚の中を絞り込む" autocomplete="off">
+    <div id="panel-list" class="panel-list"></div>
+  </section>
+  <main>
+    <p id="count" class="count"></p>
+    <div id="grid" class="grid"></div>
+    <p id="empty" class="empty" hidden>該当する作品がありません。</p>
+  </main>
   <div id="modal" class="modal" hidden>
     <button type="button" id="close" class="close" aria-label="閉じる">×</button>
     <div class="watch">
@@ -45,6 +45,6 @@
     </div>
     <button type="button" id="close-bar" class="close-bar">閉じる</button>
   </div>
-  <script src="js/app.js?v=12"></script>
+  <script src="js/app.js?v=13"></script>
 </body>
 </html>
