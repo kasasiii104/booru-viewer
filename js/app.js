@@ -157,14 +157,23 @@ function openItem(item) {
   video.controls = true;
   video.playsInline = true;
   video.loop = state.loop;
-  video.preload = "auto";
+  video.preload = "none";
   video.poster = item.preview_url || "";
   video.src = item.file_url;
-  const play = document.createElement("button");
+  const play = document.createElement("span");
   play.className = "play";
   play.textContent = "▶";
-  play.hidden = true;
-  play.onclick = () => { play.hidden = true; video.play(); };
+  let startY = 0;
+  let moved = false;
+  stage.onpointerdown = (event) => { startY = event.clientY; moved = false; };
+  stage.onpointermove = (event) => { if (Math.abs(event.clientY - startY) > 12) moved = true; };
+  stage.onpointerup = (event) => {
+    const dy = event.clientY - startY;
+    if (dy > 70) { closeWatch(); return; }
+    if (moved) return;
+    play.remove();
+    video.play();
+  };
   video.onloadedmetadata = () => { $("sub").textContent = [names.workName, "スコア " + (item.score || 0), clock(video.duration)].filter(Boolean).join(" · "); };
   video.onerror = () => { stage.innerHTML = "<p>この場では再生できません。元のページを開いてください。</p>"; };
   stage.append(video, play);
@@ -173,10 +182,14 @@ function openItem(item) {
   [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", tags.filter((t) => !TOOLS.includes(t) && !names.works.includes(t) && !names.characters.includes(t)))]
     .filter(Boolean).forEach((group) => box.appendChild(group));
   $("modal").hidden = false;
-  const started = video.play();
-  if (started) started.catch(() => { play.hidden = false; });
+  document.body.classList.add("is-open");
 }
-function closeWatch() { state.current = null; $("stage").innerHTML = ""; $("modal").hidden = true; }
+function closeWatch() {
+  state.current = null;
+  $("stage").innerHTML = "";
+  $("modal").hidden = true;
+  document.body.classList.remove("is-open");
+}
 function render() { $("favs").classList.toggle("is-on", state.favOnly); renderNav(); renderGrid(); }
 $("q").addEventListener("input", (event) => { state.q = event.target.value; renderGrid(); });
 document.querySelectorAll(".sort[data-sort]").forEach((button) => {
@@ -194,7 +207,8 @@ $("loop").onclick = () => {
   const video = $("stage").querySelector("video");
   if (video) video.loop = state.loop;
 };
-$("close").onclick = closeWatch;
+$("close").onclick = (event) => { event.stopPropagation(); closeWatch(); };
+$("modal").onclick = (event) => { if (event.target === $("modal")) closeWatch(); };
 $("menu").onclick = () => document.querySelector(".shelves").classList.toggle("is-open");
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
 Promise.all([
