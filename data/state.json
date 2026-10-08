@@ -1,7 +1,16 @@
 {
   "history": {
-    "danbooru": {},
-    "gelbooru": 0,
-    "rule34": 0
+    "danbooru": {
+      "3d video": 11,
+      "3d animated_gif": "done",
+      "source_filmmaker video": "done",
+      "blender video": "done",
+      "mmd video": "done",
+      "daz_studio video": "done",
+      "koikatsu video": "done",
+      "honey_select video": "done"
+    },
+    "gelbooru": "done",
+    "rule34": 10
   }
 }
