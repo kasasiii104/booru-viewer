@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch current and historical 3D-tool videos. Does not download media files."""
+"""Fetch current and historical 3D videos. Does not download media files."""
 
 import json
 import os
@@ -23,12 +23,14 @@ TOOLS = {
     "mmd", "mikumikudance", "daz_studio", "koikatsu",
     "honey_select", "xps", "xnalara", "cinema_4d", "3d",
 }
-GAMES = {"overwatch", "nier_automata", "nier", "dead_or_alive", "marie_rose"}
 FLAT = {"anime_screenshot", "official_art", "manga", "comic", "sketch", "traditional_media", "pixel_art", "anime_coloring"}
-DANBOORU_TAGS = ("source_filmmaker", "blender", "mmd", "overwatch", "nier_automata", "dead_or_alive")
-QUERY = "( source_filmmaker ~ blender ~ mmd ~ overwatch ~ nier_automata ~ dead_or_alive ) ( video ~ animated_gif ) -futanari -yaoi -gay -bestiality"
+DANBOORU_TAGS = (
+    "3d video", "3d animated_gif", "source_filmmaker video", "blender video",
+    "mmd video", "daz_studio video", "koikatsu video", "honey_select video",
+)
+QUERY = "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) -futanari -yaoi -gay -bestiality"
 UA = "booru-viewer/1.0"
-STEP = 4
+STEP = 10
 
 
 def get(url):
@@ -48,11 +50,7 @@ def blocked(tags):
 
 def wanted(tags):
     words = {tag.lower() for tag in tags}
-    if blocked(tags):
-        return False
-    if words & TOOLS:
-        return True
-    return bool(words & GAMES) and not (words & FLAT)
+    return bool(words & TOOLS) and not blocked(tags) and not (words & FLAT)
 
 
 def load():
@@ -91,7 +89,7 @@ def danbooru_page(tags, page, login, key):
         params["login"] = login
         params["api_key"] = key
     rows = get("https://danbooru.donmai.us/posts.json?" + urllib.parse.urlencode(params))
-    time.sleep(1)
+    time.sleep(0.6)
     return rows or []
 
 
@@ -157,7 +155,7 @@ def gelbooru_like(name, endpoint, user_key, api_key, state):
             "user_id": user, "api_key": key,
         }
         payload = get(endpoint + "?" + urllib.parse.urlencode(params))
-        time.sleep(1)
+        time.sleep(0.6)
         rows = payload if isinstance(payload, list) else (payload or {}).get("post", [])
         if not rows:
             done = True
