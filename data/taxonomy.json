@@ -1,17 +1,25 @@
 {
   "works": [
-    {"id": "overwatch", "name": "オーバーウォッチ", "tags": ["overwatch"]},
-    {"id": "nier_automata", "name": "ニーア オートマタ", "tags": ["nier_automata", "nier"]},
-    {"id": "dead_or_alive", "name": "デッド オア アライブ", "tags": ["dead_or_alive"]}
+    {"id": "overwatch", "name": "オーバーウォッチ", "tags": ["overwatch", "overwatch_1", "overwatch_2"]},
+    {"id": "nier_automata", "name": "ニーア オートマタ", "tags": ["nier_automata", "nier", "nier:automata", "nier_(series)"]},
+    {"id": "dead_or_alive", "name": "デッド オア アライブ", "tags": ["dead_or_alive", "dead_or_alive_5", "dead_or_alive_6", "dead_or_alive_xtreme", "dead_or_alive_xtreme_venus_vacation", "doa"]}
   ],
   "characters": [
-    {"id": "mercy", "name": "マーシー", "work": "overwatch", "tags": ["mercy"]},
-    {"id": "dva", "name": "D.Va", "work": "overwatch", "tags": ["d.va", "dva"]},
-    {"id": "widowmaker", "name": "ウィドウメイカー", "work": "overwatch", "tags": ["widowmaker"]},
-    {"id": "tracer", "name": "トレーサー", "work": "overwatch", "tags": ["tracer"]},
-    {"id": "pharah", "name": "ファラ", "work": "overwatch", "tags": ["pharah"]},
-    {"id": "2b", "name": "2B", "work": "nier_automata", "tags": ["yorha_2b", "2b"]},
-    {"id": "a2", "name": "A2", "work": "nier_automata", "tags": ["yorha_a2", "a2"]},
-    {"id": "marie_rose", "name": "マリー・ローズ", "work": "dead_or_alive", "tags": ["marie_rose"]}
+    {"id": "mercy", "name": "マーシー", "work": "overwatch", "tags": ["mercy", "mercy_(overwatch)"]},
+    {"id": "dva", "name": "D.Va", "work": "overwatch", "tags": ["d.va", "dva", "d.va_(overwatch)", "classic_d.va", "academy_d.va", "black_cat_d.va"]},
+    {"id": "widowmaker", "name": "ウィドウメイカー", "work": "overwatch", "tags": ["widowmaker", "widowmaker_(overwatch)", "cote_d'azur_widowmaker"]},
+    {"id": "tracer", "name": "トレーサー", "work": "overwatch", "tags": ["tracer", "tracer_(overwatch)"]},
+    {"id": "pharah", "name": "ファラ", "work": "overwatch", "tags": ["pharah", "pharah_(overwatch)"]},
+    {"id": "kiriko", "name": "キリコ", "work": "overwatch", "tags": ["kiriko", "kiriko_(overwatch)"]},
+    {"id": "mei", "name": "メイ", "work": "overwatch", "tags": ["mei", "mei_(overwatch)"]},
+    {"id": "sombra", "name": "ソンブラ", "work": "overwatch", "tags": ["sombra", "sombra_(overwatch)"]},
+    {"id": "2b", "name": "2B", "work": "nier_automata", "tags": ["yorha_2b", "2b", "2b_(nier:automata)"]},
+    {"id": "a2", "name": "A2", "work": "nier_automata", "tags": ["yorha_a2", "a2", "a2_(nier:automata)"]},
+    {"id": "9s", "name": "9S", "work": "nier_automata", "tags": ["yorha_9s", "9s", "9s_(nier:automata)"]},
+    {"id": "marie_rose", "name": "マリー・ローズ", "work": "dead_or_alive", "tags": ["marie_rose", "marie_rose_(doa)"]},
+    {"id": "honoka", "name": "ほのか", "work": "dead_or_alive", "tags": ["honoka", "honoka_(doa)"]},
+    {"id": "kasumi", "name": "かすみ", "work": "dead_or_alive", "tags": ["kasumi", "kasumi_(doa)"]},
+    {"id": "ayane", "name": "あやね", "work": "dead_or_alive", "tags": ["ayane", "ayane_(doa)"]},
+    {"id": "nyotengu", "name": "女天狗", "work": "dead_or_alive", "tags": ["nyotengu", "nyotengu_(doa)"]}
   ]
 }
