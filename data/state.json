@@ -1,14 +1,6 @@
 {
   "history": {
     "danbooru": {
-      "3d video": 11,
-      "3d animated_gif": "done",
-      "source_filmmaker video": "done",
-      "blender video": "done",
-      "mmd video": "done",
-      "daz_studio video": "done",
-      "koikatsu video": "done",
-      "honey_select video": "done",
       "3d video rating:e": 11,
       "source_filmmaker video rating:e": "done",
       "blender video rating:e": "done",
@@ -18,6 +10,8 @@
       "honey_select video rating:e": "done"
     },
     "gelbooru": {},
-    "rule34": 20
+    "rule34": {
+      "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality": 20
+    }
   }
 }
