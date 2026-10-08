@@ -1,7 +1,7 @@
 {
   "history": {
     "danbooru": {
-      "3d video rating:e": 31,
+      "3d video rating:e": 41,
       "source_filmmaker video rating:e": "done",
       "blender video rating:e": "done",
       "mmd video rating:e": "done",
@@ -10,8 +10,8 @@
       "honey_select video rating:e": "done"
     },
     "gelbooru": {
-      "3d video rating:explicit": 20,
-      "source_filmmaker video rating:explicit": 20,
+      "3d video rating:explicit": 30,
+      "source_filmmaker video rating:explicit": 30,
       "blender video rating:explicit": "done",
       "mmd video rating:explicit": "done",
       "daz_studio video rating:explicit": "done",
@@ -19,7 +19,7 @@
       "honey_select video rating:explicit": "done"
     },
     "rule34": {
-      "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality": 40
+      "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality": 50
     }
   }
 }
