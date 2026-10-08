@@ -1,4 +1,4 @@
-const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", sort: "score", q: "", favOnly: false, current: null };
+const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", sort: "score", q: "", favOnly: false, loop: true, current: null };
 const TOOLS = ["source_filmmaker", "sfm", "blender", "blender_(medium)", "mmd", "mikumikudance", "daz_studio", "koikatsu", "honey_select", "xps", "xnalara", "cinema_4d"];
 const $ = (id) => document.getElementById(id);
 const favKey = "booru-viewer-favs";
@@ -82,9 +82,9 @@ function renderNav() {
   fillShelf("char-shelf", "キャラ", [{ id: "", name: "すべて", count: "" }, ...counts(characterTags)], (row) => state.character === row.id, (row) => { state.character = row.id; close(); render(); });
 }
 function renderGrid() {
-  const rows = filtered();
+  const rows = filtered().slice(0, 240);
   const saved = favs();
-  $("count").textContent = rows.length + " 件";
+  $("count").textContent = filtered().length + " 件";
   $("empty").hidden = rows.length > 0;
   const grid = $("grid");
   grid.innerHTML = "";
@@ -150,19 +150,21 @@ function openItem(item) {
   $("sub").textContent = [names.workName, "スコア " + (item.score || 0), clock(item.duration)].filter(Boolean).join(" · ");
   $("origin").href = item.post_url || item.file_url;
   markFav(item);
+  $("loop").classList.toggle("is-on", state.loop);
   const stage = $("stage");
   stage.innerHTML = "";
   const video = document.createElement("video");
   video.controls = true;
   video.playsInline = true;
-  video.preload = "none";
+  video.loop = state.loop;
+  video.preload = "auto";
   video.poster = item.preview_url || "";
   video.src = item.file_url;
-  if (String(item.file_url).toLowerCase().includes(".gif")) video.loop = true;
   const play = document.createElement("button");
   play.className = "play";
   play.textContent = "▶";
-  play.onclick = () => { play.remove(); video.play(); };
+  play.hidden = true;
+  play.onclick = () => { play.hidden = true; video.play(); };
   video.onloadedmetadata = () => { $("sub").textContent = [names.workName, "スコア " + (item.score || 0), clock(video.duration)].filter(Boolean).join(" · "); };
   video.onerror = () => { stage.innerHTML = "<p>この場では再生できません。元のページを開いてください。</p>"; };
   stage.append(video, play);
@@ -171,6 +173,8 @@ function openItem(item) {
   [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", tags.filter((t) => !TOOLS.includes(t) && !names.works.includes(t) && !names.characters.includes(t)))]
     .filter(Boolean).forEach((group) => box.appendChild(group));
   $("modal").hidden = false;
+  const started = video.play();
+  if (started) started.catch(() => { play.hidden = false; });
 }
 function closeWatch() { state.current = null; $("stage").innerHTML = ""; $("modal").hidden = true; }
 function render() { $("favs").classList.toggle("is-on", state.favOnly); renderNav(); renderGrid(); }
@@ -184,6 +188,12 @@ document.querySelectorAll(".sort[data-sort]").forEach((button) => {
 });
 $("favs").onclick = () => { state.favOnly = !state.favOnly; render(); };
 $("fav").onclick = () => { if (state.current) toggleFav(state.current); };
+$("loop").onclick = () => {
+  state.loop = !state.loop;
+  $("loop").classList.toggle("is-on", state.loop);
+  const video = $("stage").querySelector("video");
+  if (video) video.loop = state.loop;
+};
 $("close").onclick = closeWatch;
 $("menu").onclick = () => document.querySelector(".shelves").classList.toggle("is-open");
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
