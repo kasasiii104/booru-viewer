@@ -1,15 +1,17 @@
-const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", sort: "score", q: "", favOnly: false, loop: true, current: null };
+const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", tag: "", sort: "score", q: "", favOnly: false, loop: true, current: null };
 const TOOLS = ["source_filmmaker", "sfm", "blender", "blender_(medium)", "mmd", "mikumikudance", "daz_studio", "koikatsu", "honey_select", "xps", "xnalara", "cinema_4d"];
 const $ = (id) => document.getElementById(id);
 const favKey = "booru-viewer-favs";
 
 function favs() { try { return new Set(JSON.parse(localStorage.getItem(favKey) || "[]")); } catch { return new Set(); } }
 function saveFavs(set) { localStorage.setItem(favKey, JSON.stringify([...set])); }
-function keyOf(item) { return item.md5 || item.source + ":" + item.source_id; }
+function ids(item) { return [item.md5, item.source + ":" + item.source_id].filter(Boolean); }
+function isFav(item) { const saved = favs(); return ids(item).some((id) => saved.has(id)); }
 function toggleFav(item) {
   const set = favs();
-  const key = keyOf(item);
-  set.has(key) ? set.delete(key) : set.add(key);
+  const keys = ids(item);
+  if (keys.some((key) => set.has(key))) keys.forEach((key) => set.delete(key));
+  else keys.forEach((key) => set.add(key));
   saveFavs(set);
   render();
   if (state.current) markFav(state.current);
@@ -28,6 +30,10 @@ function characterTags(item) {
   if (tagged.length) return tagged;
   return norm(item.tags).map(knownCharacter).filter(Boolean).map((c) => c.id);
 }
+function plainTags(item) {
+  const used = new Set([...workTags(item), ...characterTags(item), ...TOOLS]);
+  return norm(item.tags).filter((tag) => !used.has(tag));
+}
 function label(item) {
   const works = workTags(item);
   const characters = characterTags(item);
@@ -41,17 +47,17 @@ function counts(pick) {
 }
 function filtered() {
   const q = state.q.trim().toLowerCase();
-  const saved = favs();
   const rows = state.items.filter((item) => {
     const names = label(item);
-    if (state.favOnly && !saved.has(keyOf(item))) return false;
+    if (state.favOnly && !isFav(item)) return false;
     if (state.work === "uncategorized" && names.works.length) return false;
     if (state.work !== "all" && state.work !== "uncategorized" && !names.works.includes(state.work)) return false;
     if (state.character && !names.characters.includes(state.character)) return false;
+    if (state.tag && !norm(item.tags).includes(state.tag)) return false;
     if (!q) return true;
     return [names.name, names.workName, ...norm(item.tags).map(ja)].join(" ").toLowerCase().includes(q);
   });
-  rows.sort((a, b) => state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : state.sort === "rating" ? ratingValue(b) - ratingValue(a) || (b.score || 0) - (a.score || 0) : (b.score || 0) - (a.score || 0));
+  rows.sort((a, b) => Number(isFav(b)) - Number(isFav(a)) || (state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : state.sort === "rating" ? ratingValue(b) - ratingValue(a) || (b.score || 0) - (a.score || 0) : (b.score || 0) - (a.score || 0)));
   return rows;
 }
 function clock(seconds) {
@@ -78,13 +84,14 @@ function fillShelf(id, title, rows, active, onPick) {
 }
 function renderNav() {
   const close = () => document.querySelector(".shelves").classList.remove("is-open");
-  fillShelf("work-shelf", "作品", [{ id: "all", name: "ホーム", count: state.items.length }, { id: "uncategorized", name: "未分類", count: "" }, ...counts(workTags)], (row) => state.work === row.id && !state.character, (row) => { state.work = row.id; state.character = ""; close(); render(); });
+  fillShelf("work-shelf", "作品", [{ id: "all", name: "ホーム", count: state.items.length }, { id: "uncategorized", name: "未分類", count: "" }, ...counts(workTags)], (row) => state.work === row.id && !state.character && !state.tag, (row) => { state.work = row.id; state.character = ""; state.tag = ""; close(); render(); });
   fillShelf("char-shelf", "キャラ", [{ id: "", name: "すべて", count: "" }, ...counts(characterTags)], (row) => state.character === row.id, (row) => { state.character = row.id; close(); render(); });
+  fillShelf("tag-shelf", "タグ", [{ id: "", name: "すべて", count: "" }, ...counts(plainTags).slice(0, 80)], (row) => state.tag === row.id, (row) => { state.tag = row.id; close(); render(); });
 }
 function renderGrid() {
-  const rows = filtered().slice(0, 240);
-  const saved = favs();
-  $("count").textContent = filtered().length + " 件";
+  const all = filtered();
+  const rows = state.favOnly ? all : all.slice(0, 240);
+  $("count").textContent = all.length + " 件";
   $("empty").hidden = rows.length > 0;
   const grid = $("grid");
   grid.innerHTML = "";
@@ -100,7 +107,7 @@ function renderGrid() {
     play.textContent = "▶";
     const star = document.createElement("button");
     star.className = "star";
-    star.textContent = saved.has(keyOf(item)) ? "★" : "☆";
+    star.textContent = isFav(item) ? "★" : "☆";
     star.onclick = (event) => { event.stopPropagation(); toggleFav(item); };
     thumb.append(play, star);
     const shown = clock(item.duration);
@@ -120,8 +127,8 @@ function renderGrid() {
   });
 }
 function markFav(item) {
-  $("fav").textContent = favs().has(keyOf(item)) ? "★ お気に入り済み" : "☆ お気に入り";
-  $("fav").classList.toggle("is-on", favs().has(keyOf(item)));
+  $("fav").textContent = isFav(item) ? "★ お気に入り済み" : "☆ お気に入り";
+  $("fav").classList.toggle("is-on", isFav(item));
 }
 function tagGroup(title, tags) {
   const unique = [...new Set(tags)].slice(0, 18);
@@ -136,7 +143,7 @@ function tagGroup(title, tags) {
     const chip = document.createElement("button");
     chip.className = "tag";
     chip.textContent = ja(tag);
-    chip.onclick = () => { state.q = ""; $("q").value = ""; state.work = title === "作品" ? tag : state.work; state.character = title === "キャラ" ? tag : ""; closeWatch(); render(); };
+    chip.onclick = () => { state.q = ""; $("q").value = ""; state.work = title === "作品" ? tag : state.work; state.character = title === "キャラ" ? tag : ""; state.tag = title === "タグ" ? tag : ""; closeWatch(); render(); };
     list.appendChild(chip);
   });
   group.append(heading, list);
@@ -168,8 +175,7 @@ function openItem(item) {
   stage.onpointerdown = (event) => { startY = event.clientY; moved = false; };
   stage.onpointermove = (event) => { if (Math.abs(event.clientY - startY) > 12) moved = true; };
   stage.onpointerup = (event) => {
-    const dy = event.clientY - startY;
-    if (dy > 70) { closeWatch(); return; }
+    if (event.clientY - startY > 70) { closeWatch(); return; }
     if (moved) return;
     play.remove();
     video.play();
@@ -179,7 +185,7 @@ function openItem(item) {
   stage.append(video, play);
   const box = $("tagbox");
   box.innerHTML = "";
-  [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", tags.filter((t) => !TOOLS.includes(t) && !names.works.includes(t) && !names.characters.includes(t)))]
+  [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", tags.filter((t) => TOOLS.includes(t))), tagGroup("タグ", plainTags(item))]
     .filter(Boolean).forEach((group) => box.appendChild(group));
   $("modal").hidden = false;
   document.body.classList.add("is-open");
@@ -208,6 +214,7 @@ $("loop").onclick = () => {
   if (video) video.loop = state.loop;
 };
 $("close").onclick = (event) => { event.stopPropagation(); closeWatch(); };
+$("close-bar").onclick = (event) => { event.stopPropagation(); closeWatch(); };
 $("modal").onclick = (event) => { if (event.target === $("modal")) closeWatch(); };
 $("menu").onclick = () => document.querySelector(".shelves").classList.toggle("is-open");
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
