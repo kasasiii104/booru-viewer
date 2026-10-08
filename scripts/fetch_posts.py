@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch current and historical 3D videos. Does not download media files."""
+"""Fetch current and historical erotic 3D videos. Does not download media files."""
 
 import json
 import os
@@ -24,11 +24,27 @@ TOOLS = {
     "honey_select", "xps", "xnalara", "cinema_4d", "3d",
 }
 FLAT = {"anime_screenshot", "official_art", "manga", "comic", "sketch", "traditional_media", "pixel_art", "anime_coloring"}
+ANIME = {
+    "vocaloid", "hatsune_miku", "touhou", "hololive", "kantai_collection",
+    "idolmaster", "love_live!", "love_live", "precure", "naruto", "one_piece",
+    "bleach", "dragon_ball", "fate_(series)", "fate/stay_night", "umamusume",
+    "bocchi_the_rock!", "spy_x_family", "konosuba", "re:zero", "sword_art_online",
+    "kimetsu_no_yaiba", "jujutsu_kaisen", "boku_no_hero_academia", "pokemon",
+    "gintama", "jojo's_bizarre_adventure", "attack_on_titan", "shingeki_no_kyojin",
+    "neon_genesis_evangelion", "sailor_moon", "pretty_cure", "project_sekai",
+    "bang_dream!", "chainsaw_man", "oshi_no_ko", "frieren", "sousou_no_frieren",
+}
+EROTIC = {
+    "sex", "vaginal", "penis", "nude", "completely_nude", "pussy", "oral",
+    "fellatio", "paizuri", "cum", "creampie", "nipples", "masturbation",
+    "anus", "sex_from_behind", "penetration", "vaginal_penetration",
+}
 DANBOORU_TAGS = (
-    "3d video", "3d animated_gif", "source_filmmaker video", "blender video",
-    "mmd video", "daz_studio video", "koikatsu video", "honey_select video",
+    "3d video rating:e", "source_filmmaker video rating:e", "blender video rating:e",
+    "mmd video rating:e", "daz_studio video rating:e", "koikatsu video rating:e",
+    "honey_select video rating:e",
 )
-QUERY = "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) -futanari -yaoi -gay -bestiality"
+QUERY = "( 3d ~ source_filmmaker ~ blender ~ mmd ~ daz_studio ~ koikatsu ) ( video ~ animated_gif ) rating:explicit -futanari -yaoi -gay -bestiality"
 UA = "booru-viewer/1.0"
 STEP = 10
 
@@ -43,14 +59,22 @@ def get(url):
         return None
 
 
-def blocked(tags):
-    words = {tag.lower() for tag in tags}
-    return any(word in words for word in NG)
+def words_of(tags):
+    return {str(tag).lower() for tag in tags}
 
 
-def wanted(tags):
-    words = {tag.lower() for tag in tags}
-    return bool(words & TOOLS) and not blocked(tags) and not (words & FLAT)
+def blocked(words):
+    return any(word in words for word in NG) or any(word in words for word in ANIME) or bool(words & FLAT)
+
+
+def wanted(tags, rating=""):
+    words = words_of(tags)
+    if not (words & TOOLS) or blocked(words):
+        return False
+    level = str(rating or "").lower()
+    if level in {"s", "g", "safe"}:
+        return False
+    return level in {"e", "q", "explicit", "questionable"} or bool(words & EROTIC)
 
 
 def load():
@@ -112,14 +136,15 @@ def danbooru(state):
             for row in rows:
                 post_tags = (row.get("tag_string") or "").split()
                 ext = (row.get("file_ext") or "").lower()
-                if ext not in {"mp4", "webm", "gif"} or not wanted(post_tags) or not row.get("file_url"):
+                rating = row.get("rating")
+                if ext not in {"mp4", "webm", "gif"} or not wanted(post_tags, rating) or not row.get("file_url"):
                     continue
                 found.append({
                     "source": "danbooru",
                     "source_id": row["id"],
                     "md5": row.get("md5"),
                     "score": row.get("score") or 0,
-                    "rating": row.get("rating"),
+                    "rating": rating,
                     "tags": post_tags,
                     "copyright_tags": (row.get("tag_string_copyright") or "").split(),
                     "character_tags": (row.get("tag_string_character") or "").split(),
@@ -163,7 +188,8 @@ def gelbooru_like(name, endpoint, user_key, api_key, state):
         for row in rows:
             tags = str(row.get("tags") or "").split()
             file_url = row.get("file_url") or ""
-            if not wanted(tags) or not file_url:
+            rating = row.get("rating")
+            if not wanted(tags, rating) or not file_url:
                 continue
             if not file_url.lower().endswith((".mp4", ".webm", ".gif")) and "video" not in tags and "animated" not in tags:
                 continue
@@ -172,7 +198,7 @@ def gelbooru_like(name, endpoint, user_key, api_key, state):
                 "source_id": int(row.get("id")),
                 "md5": row.get("md5") or row.get("hash"),
                 "score": int(row.get("score") or 0),
-                "rating": row.get("rating"),
+                "rating": rating,
                 "tags": tags,
                 "copyright_tags": [],
                 "character_tags": [],
@@ -194,7 +220,7 @@ def main():
     fresh.extend(danbooru(state))
     fresh.extend(gelbooru_like("gelbooru", "https://gelbooru.com/index.php", "GELBOORU_USER_ID", "GELBOORU_API_KEY", state))
     fresh.extend(gelbooru_like("rule34", "https://api.rule34.xxx/index.php", "RULE34_USER_ID", "RULE34_API_KEY", state))
-    merged = [item for item in keep_best(items + fresh) if wanted(item.get("tags") or [])]
+    merged = [item for item in keep_best(items + fresh) if wanted(item.get("tags") or [], item.get("rating"))]
     save(merged, state)
     print(f"catalog {len(merged)} items, added batch {len(fresh)}")
     print("history", json.dumps(state.get("history"), ensure_ascii=False))
