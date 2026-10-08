@@ -1,6 +1,9 @@
 function blockedHost(item) {
   return item && (item.source === "gelbooru" || String(item.file_url || "").includes("gelbooru.com"));
 }
+function localThumb(item) {
+  return item && item.preview_url && !String(item.preview_url).includes("gelbooru.com");
+}
 const openItemDirect = openItem;
 openItem = function (item) {
   if (!blockedHost(item)) {
@@ -15,7 +18,18 @@ openItem = function (item) {
   $("origin").href = item.post_url || item.file_url;
   $("origin").textContent = "Gelbooruで再生";
   markFav(item);
-  $("stage").innerHTML = "<p>Gelbooruは他サイトからの埋め込みを拒否しています。上のリンクから再生できます。</p>";
+  const stage = $("stage");
+  stage.innerHTML = "";
+  if (localThumb(item)) {
+    const img = document.createElement("img");
+    img.src = item.preview_url;
+    img.alt = "";
+    img.style.width = "100%";
+    stage.appendChild(img);
+  }
+  const note = document.createElement("p");
+  note.textContent = "動画はGelbooruが埋め込みを拒否しています。上のリンクから再生できます。";
+  stage.appendChild(note);
   const box = $("tagbox");
   box.innerHTML = "";
   [tagGroup("作品", names.works), tagGroup("キャラ", names.characters), tagGroup("制作", norm(item.tags).filter((tag) => TOOLS.includes(tag))), tagGroup("タグ", plainTags(item))]
@@ -32,10 +46,11 @@ renderGrid = function () {
     if (!item || !blockedHost(item)) return;
     const thumb = card.querySelector(".thumb");
     if (!thumb) return;
+    thumb.onclick = () => openItem(item);
+    if (localThumb(item)) return;
     thumb.classList.add("external");
     thumb.style.backgroundImage = "";
     const play = thumb.querySelector(".play");
-    if (play) play.textContent = "Gelbooruで開く";
-    thumb.onclick = () => openItem(item);
+    if (play) play.textContent = "Gelbooru";
   });
 };
