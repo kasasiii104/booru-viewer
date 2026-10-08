@@ -8,9 +8,16 @@
       "mmd video": "done",
       "daz_studio video": "done",
       "koikatsu video": "done",
-      "honey_select video": "done"
+      "honey_select video": "done",
+      "3d video rating:e": 11,
+      "source_filmmaker video rating:e": "done",
+      "blender video rating:e": "done",
+      "mmd video rating:e": "done",
+      "daz_studio video rating:e": "done",
+      "koikatsu video rating:e": "done",
+      "honey_select video rating:e": "done"
     },
     "gelbooru": "done",
-    "rule34": 10
+    "rule34": 20
   }
 }
