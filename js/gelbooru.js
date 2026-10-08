@@ -18,7 +18,8 @@ openItem = function (item) {
 const renderGridDirect = renderGrid;
 renderGrid = function () {
   renderGridDirect();
-  const rows = (state.favOnly ? filtered() : filtered().slice(0, 240));
+  const all = filtered();
+  const rows = all.slice(0, state.visible || all.length);
   [...$("grid").children].forEach((card, index) => {
     const item = rows[index];
     if (!item || !blockedHost(item)) return;
