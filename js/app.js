@@ -5,7 +5,7 @@ const favKey = "booru-viewer-favs";
 
 function favs() { try { return new Set(JSON.parse(localStorage.getItem(favKey) || "[]")); } catch { return new Set(); } }
 function saveFavs(set) { localStorage.setItem(favKey, JSON.stringify([...set])); }
-function ids(item) { return [item.md5, item.source + ":" + item.source_id].filter(Boolean); }
+function ids(item) { return [item.md5, item.source + ":" + item.source_id, item.file_url].filter(Boolean); }
 function isFav(item) { const saved = favs(); return ids(item).some((id) => saved.has(id)); }
 function toggleFav(item) {
   const set = favs();
@@ -18,20 +18,16 @@ function toggleFav(item) {
 }
 function norm(tags) { return (tags || []).map((t) => String(t).toLowerCase()).filter(Boolean); }
 function ja(tag) { return state.names[String(tag || "").toLowerCase()] || String(tag || "").replaceAll("_", " "); }
-function knownCharacter(tag) { return state.taxonomy.characters.find((c) => c.id === tag || c.tags.includes(tag)); }
 function workTags(item) {
-  const copyright = norm(item.copyright_tags);
-  if (copyright.length) return copyright;
-  const tags = norm(item.tags);
-  return state.taxonomy.works.filter((work) => work.tags.some((t) => tags.includes(t))).map((work) => work.id);
+  const tags = new Set([...norm(item.copyright_tags), ...norm(item.tags)]);
+  return state.taxonomy.works.filter((work) => work.tags.some((tag) => tags.has(tag))).map((work) => work.id);
 }
 function characterTags(item) {
-  const tagged = norm(item.character_tags);
-  if (tagged.length) return tagged;
-  return norm(item.tags).map(knownCharacter).filter(Boolean).map((c) => c.id);
+  const tags = new Set([...norm(item.character_tags), ...norm(item.tags)]);
+  return state.taxonomy.characters.filter((character) => character.tags.some((tag) => tags.has(tag))).map((character) => character.id);
 }
 function plainTags(item) {
-  const used = new Set([...workTags(item), ...characterTags(item), ...TOOLS]);
+  const used = new Set([...workTags(item), ...characterTags(item), ...TOOLS, ...state.taxonomy.works.flatMap((work) => work.tags), ...state.taxonomy.characters.flatMap((character) => character.tags)]);
   return norm(item.tags).filter((tag) => !used.has(tag));
 }
 function label(item) {
@@ -128,6 +124,7 @@ function renderGrid() {
   const all = filtered();
   const rows = state.favOnly ? all : all.slice(0, 240);
   $("count").textContent = all.length + " 件";
+  $("favs").textContent = "お気に入り " + state.items.filter(isFav).length;
   $("empty").hidden = rows.length > 0;
   const grid = $("grid");
   grid.innerHTML = "";
