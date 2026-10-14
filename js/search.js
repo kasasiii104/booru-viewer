@@ -11,39 +11,29 @@ function buildSearchMaps() {
   });
   state.searchMaps = { works, characters };
 }
-function bareTag(tag) {
-  return String(tag).toLowerCase().replace(/_\([^)]+\)$/, "").replace(/_\(cosplay\)$/, "");
-}
-function characterId(tag) {
+function lookup(map, tag) {
   const raw = String(tag).toLowerCase();
-  const maps = state.searchMaps.characters;
-  if (maps.has(raw)) return maps.get(raw);
-  const bare = bareTag(raw);
-  if (maps.has(bare)) return maps.get(bare);
-  for (const [alias, id] of maps) {
-    if (alias.length < 2) continue;
-    if (raw === alias || bare === alias || raw.startsWith(alias + "_") || raw.endsWith("_" + alias) || raw.includes("_" + alias + "_") || raw.includes("_(" + alias)) return id;
+  if (map.has(raw)) return map.get(raw);
+  const bare = raw.replace(/_\([^)]+\)$/, "");
+  if (map.has(bare)) return map.get(bare);
+  const parts = raw.split(/[_()]+/);
+  for (const part of parts) {
+    if (part.length >= 2 && map.has(part)) return map.get(part);
   }
   return "";
 }
-function workId(tag) {
-  const raw = String(tag).toLowerCase();
-  const maps = state.searchMaps.works;
-  if (maps.has(raw)) return maps.get(raw);
-  const bare = bareTag(raw);
-  return maps.get(bare) || "";
-}
 function indexItem(item) {
   if (item._ready) return;
+  if (!state.searchMaps) buildSearchMaps();
   const works = [];
   const characters = [];
   const seenWork = new Set();
   const seenCharacter = new Set();
   const tags = [...(item.copyright_tags || []), ...(item.character_tags || []), ...(item.tags || [])];
   tags.forEach((raw) => {
-    const work = workId(raw);
+    const work = lookup(state.searchMaps.works, raw);
     if (work && !seenWork.has(work)) { seenWork.add(work); works.push(work); }
-    const character = characterId(raw);
+    const character = lookup(state.searchMaps.characters, raw);
     if (character && !seenCharacter.has(character)) { seenCharacter.add(character); characters.push(character); }
   });
   item._works = works;
@@ -53,8 +43,23 @@ function indexItem(item) {
   item._ready = true;
 }
 function indexItems() {
-  if (!state.searchMaps) buildSearchMaps();
   state.items.forEach(indexItem);
+}
+function indexLater() {
+  if (state.indexing) return;
+  state.indexing = true;
+  let index = 0;
+  const step = () => {
+    const end = Math.min(index + 2500, state.items.length);
+    for (; index < end; index += 1) indexItem(state.items[index]);
+    if (index < state.items.length) {
+      (window.requestIdleCallback || ((fn) => setTimeout(fn, 40)))(step);
+      return;
+    }
+    state.indexing = false;
+    state.shelf = null;
+  };
+  (window.requestIdleCallback || ((fn) => setTimeout(fn, 40)))(step);
 }
 function shelfCounts() {
   indexItems();
@@ -69,7 +74,7 @@ function shelfCounts() {
     item._characters.forEach((id) => characters.set(id, (characters.get(id) || 0) + 1));
     (item.tags || []).forEach((tag) => {
       const key = String(tag).toLowerCase();
-      if (state.searchMaps.works.has(key) || state.searchMaps.characters.has(bareTag(key))) return;
+      if (lookup(state.searchMaps.works, key) || lookup(state.searchMaps.characters, key)) return;
       tags.set(key, (tags.get(key) || 0) + 1);
     });
   });
@@ -77,7 +82,6 @@ function shelfCounts() {
   state.shelf = { n: state.items.length, works: rows(works), characters: rows(characters), tags: rows(tags), uncategorized };
   return state.shelf;
 }
-const labelDirect = label;
 label = function (item) {
   if (!item._ready) indexItem(item);
   return {
@@ -88,6 +92,8 @@ label = function (item) {
   };
 };
 filtered = function () {
+  const needs = state.q || state.character || state.tag || state.favOnly || (state.work && state.work !== "all");
+  if (!needs) return state.items.slice().sort((a, b) => state.sort === "new" ? String(b.created_at).localeCompare(String(a.created_at)) : (b.score || 0) - (a.score || 0));
   indexItems();
   const q = state.q.trim().toLowerCase();
   const characterName = state.character ? ja(state.character).toLowerCase() : "";
@@ -139,3 +145,4 @@ search.addEventListener("input", (event) => {
   clearTimeout(timer);
   timer = setTimeout(() => { state.q = event.target.value; state.visible = 240; renderGrid(); }, 250);
 });
+setTimeout(indexLater, 800);
