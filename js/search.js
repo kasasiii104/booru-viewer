@@ -74,7 +74,11 @@ function shelfCounts() {
     item._characters.forEach((id) => characters.set(id, (characters.get(id) || 0) + 1));
     (item.tags || []).forEach((tag) => {
       const key = String(tag).toLowerCase();
-      if (lookup(state.searchMaps.works, key) || lookup(state.searchMaps.characters, key)) return;
+      if (lookup(state.searchMaps.works, key)) return;
+      tags.set(key, (tags.get(key) || 0) + 1);
+    });
+    (item.character_tags || []).forEach((tag) => {
+      const key = String(tag).toLowerCase();
       tags.set(key, (tags.get(key) || 0) + 1);
     });
   });
@@ -90,6 +94,10 @@ label = function (item) {
     works: item._works,
     characters: item._characters
   };
+};
+plainTags = function (item) {
+  const used = new Set([...workTags(item), ...TOOLS, ...state.taxonomy.works.flatMap((work) => work.tags)]);
+  return [...new Set([...(item.tags || []), ...(item.character_tags || [])].map((tag) => String(tag).toLowerCase()).filter((tag) => !used.has(tag)))];
 };
 filtered = function () {
   const needs = state.q || state.character || state.tag || state.favOnly || (state.work && state.work !== "all");
