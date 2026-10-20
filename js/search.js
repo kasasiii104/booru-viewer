@@ -9,7 +9,7 @@ function buildSearchMaps() {
     characters.set(character.id, character.id);
     character.tags.forEach((tag) => characters.set(String(tag).toLowerCase(), character.id));
   });
-  state.searchMaps = { works, characters };
+  state.searchMaps = { works, characters, stamp: state.taxonomy.works.length + ":" + state.taxonomy.characters.length };
 }
 function lookup(map, tag) {
   const raw = String(tag).toLowerCase();
@@ -23,8 +23,9 @@ function lookup(map, tag) {
   return "";
 }
 function indexItem(item) {
-  if (item._ready) return;
+  if (!state.taxonomy.works.length) return;
   if (!state.searchMaps) buildSearchMaps();
+  if (item._ready && item._stamp === state.searchMaps.stamp) return;
   const works = [];
   const characters = [];
   const seenWork = new Set();
@@ -40,12 +41,18 @@ function indexItem(item) {
   item._characters = characters;
   item._tagSet = new Set(tags.map((tag) => String(tag).toLowerCase()));
   item._text = [works.map(ja).join(" "), characters.map(ja).join(" "), ...tags.map(ja)].join(" ").toLowerCase();
+  item._stamp = state.searchMaps.stamp;
   item._ready = true;
 }
 function indexItems() {
+  if (!state.taxonomy.works.length) return;
   state.items.forEach(indexItem);
 }
 function indexLater() {
+  if (!state.taxonomy.works.length || !state.items.length) {
+    setTimeout(indexLater, 500);
+    return;
+  }
   if (state.indexing) return;
   state.indexing = true;
   let index = 0;
@@ -62,37 +69,33 @@ function indexLater() {
   (window.requestIdleCallback || ((fn) => setTimeout(fn, 40)))(step);
 }
 function shelfCounts() {
+  if (!state.searchMaps || state.searchMaps.stamp !== state.taxonomy.works.length + ":" + state.taxonomy.characters.length) buildSearchMaps();
   indexItems();
-  if (state.shelf && state.shelf.n === state.items.length) return state.shelf;
-  const works = new Map();
-  const characters = new Map();
+  if (state.shelf && state.shelf.n === state.items.length && state.shelf.stamp === state.searchMaps.stamp) return state.shelf;
+  const works = new Map(state.taxonomy.works.map((work) => [work.id, 0]));
+  const characters = new Map(state.taxonomy.characters.map((character) => [character.id, 0]));
   const tags = new Map();
   let uncategorized = 0;
   state.items.forEach((item) => {
     if (!item._works.length) uncategorized += 1;
     item._works.forEach((id) => works.set(id, (works.get(id) || 0) + 1));
     item._characters.forEach((id) => characters.set(id, (characters.get(id) || 0) + 1));
-    (item.tags || []).forEach((tag) => {
-      const key = String(tag).toLowerCase();
-      if (lookup(state.searchMaps.works, key)) return;
-      tags.set(key, (tags.get(key) || 0) + 1);
-    });
-    (item.character_tags || []).forEach((tag) => {
+    [...(item.tags || []), ...(item.character_tags || [])].forEach((tag) => {
       const key = String(tag).toLowerCase();
       tags.set(key, (tags.get(key) || 0) + 1);
     });
   });
   const rows = (map) => [...map.entries()].sort((a, b) => b[1] - a[1]).map(([id, count]) => ({ id, name: ja(id), count }));
-  state.shelf = { n: state.items.length, works: rows(works), characters: rows(characters), tags: rows(tags), uncategorized };
+  state.shelf = { n: state.items.length, stamp: state.searchMaps.stamp, works: rows(works), characters: rows(characters), tags: rows(tags), uncategorized };
   return state.shelf;
 }
 label = function (item) {
-  if (!item._ready) indexItem(item);
+  if (!item._ready || item._stamp !== (state.searchMaps && state.searchMaps.stamp)) indexItem(item);
   return {
-    name: item._characters.length ? item._characters.map(ja).join(" / ") : "動画",
-    workName: item._works.length ? item._works.map(ja).join(" / ") : "未分類",
-    works: item._works,
-    characters: item._characters
+    name: item._characters && item._characters.length ? item._characters.map(ja).join(" / ") : "動画",
+    workName: item._works && item._works.length ? item._works.map(ja).join(" / ") : "未分類",
+    works: item._works || [],
+    characters: item._characters || []
   };
 };
 plainTags = function (item) {
@@ -126,7 +129,7 @@ renderPanel = function () {
     ? [{ id: "all", name: "すべて", count: state.items.length }, { id: "uncategorized", name: "未分類", count: shelf.uncategorized }, ...shelf.works]
     : state.panel === "character" ? [{ id: "", name: "すべて", count: "" }, ...shelf.characters] : [{ id: "", name: "すべて", count: "" }, ...shelf.tags];
   const q = state.panelQ.trim().toLowerCase();
-  const rows = source.filter((row) => !q || row.name.toLowerCase().includes(q) || row.id.includes(q)).slice(0, 80);
+  const rows = source.filter((row) => !q || row.name.toLowerCase().includes(q) || row.id.includes(q)).slice(0, 120);
   const list = $("panel-list");
   list.innerHTML = "";
   rows.forEach((row) => {
