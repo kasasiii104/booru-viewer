@@ -1,223 +1,3064 @@
 {
   "works": [
-{"id": "overwatch", "name": "オーバーウォッチ", "tags": ["overwatch", "overwatch_1", "overwatch_2"]},
-{"id": "nier_automata", "name": "ニーア オートマタ", "tags": ["nier_automata", "nier", "nier:automata", "nier:_automata", "nier_(series)"]},
-{"id": "dead_or_alive", "name": "デッド オア アライブ", "tags": ["dead_or_alive", "dead_or_alive_5", "dead_or_alive_6", "dead_or_alive_xtreme", "dead_or_alive_xtreme_venus_vacation", "doa", "doahdm"]},
-{"id": "zenless_zone_zero", "name": "ゼンレスゾーンゼロ", "tags": ["zenless_zone_zero", "zenless_zone_zero_(series)"]},
-{"id": "genshin_impact", "name": "原神", "tags": ["genshin_impact"]},
-{"id": "final_fantasy_vii", "name": "ファイナルファンタジーVII", "tags": ["final_fantasy_vii", "final_fantasy_vii_remake", "final_fantasy_vii_rebirth", "ff7"]},
-{"id": "final_fantasy", "name": "ファイナルファンタジー", "tags": ["final_fantasy", "final_fantasy_xiv", "final_fantasy_xv", "final_fantasy_xvi"]},
-{"id": "marvel", "name": "マーベル", "tags": ["marvel", "marvel_rivals", "marvel_comics", "x-men", "spider-man_(series)"]},
-{"id": "resident_evil", "name": "バイオハザード", "tags": ["resident_evil", "resident_evil_2", "resident_evil_2_(remake)", "resident_evil_4", "resident_evil_4_(remake)", "resident_evil_4_remake", "resident_evil_6", "resident_evil_8:_village"]},
-{"id": "honkai_star_rail", "name": "崩壊：スターレイル", "tags": ["honkai:_star_rail", "honkai_(series)"]},
-{"id": "street_fighter", "name": "ストリートファイター", "tags": ["street_fighter", "street_fighter_6", "street_fighter_v"]},
-{"id": "stellar_blade", "name": "ステラーブレイド", "tags": ["stellar_blade"]},
-{"id": "tekken", "name": "鉄拳", "tags": ["tekken", "tekken_7", "tekken_8"]},
-{"id": "league_of_legends", "name": "リーグ・オブ・レジェンド", "tags": ["league_of_legends", "league_of_legends:_wild_rift"]},
-{"id": "zelda", "name": "ゼルダの伝説", "tags": ["the_legend_of_zelda", "the_legend_of_zelda:_breath_of_the_wild", "the_legend_of_zelda:_tears_of_the_kingdom"]},
-{"id": "fortnite", "name": "フォートナイト", "tags": ["fortnite", "fortnite:_battle_royale"]},
-{"id": "persona", "name": "ペルソナ", "tags": ["persona", "persona_3", "persona_4", "persona_5"]},
-{"id": "metroid", "name": "メトロイド", "tags": ["metroid", "metroid_dread"]},
-{"id": "tomb_raider", "name": "トゥームレイダー", "tags": ["tomb_raider"]},
-{"id": "wuthering_waves", "name": "鳴潮", "tags": ["wuthering_waves"]},
-{"id": "elden_ring", "name": "エルデンリング", "tags": ["elden_ring"]},
-{"id": "fire_emblem", "name": "ファイアーエムブレム", "tags": ["fire_emblem", "fire_emblem:_three_houses"]},
-{"id": "xenoblade", "name": "ゼノブレイド", "tags": ["xenoblade_chronicles_(series)", "xenoblade_chronicles_2", "xenoblade_chronicles_3"]},
-{"id": "king_of_fighters", "name": "ザ・キング・オブ・ファイターズ", "tags": ["the_king_of_fighters", "fatal_fury"]},
-{"id": "ninja_gaiden", "name": "忍者龍剣伝", "tags": ["ninja_gaiden"]},
-{"id": "girls_frontline", "name": "ドールズフロントライン", "tags": ["girls'_frontline", "girls'_frontline_2:_exilium"]},
-{"id": "witcher", "name": "ウィッチャー", "tags": ["the_witcher_(series)", "the_witcher_3"]},
-{"id": "baldurs_gate", "name": "バルダーズ・ゲート", "tags": ["baldur's_gate", "baldur's_gate_3", "dungeons_&_dragons"]},
-{"id": "guilty_gear", "name": "ギルティギア", "tags": ["guilty_gear", "guilty_gear_strive"]},
-{"id": "last_of_us", "name": "ラスト・オブ・アス", "tags": ["the_last_of_us", "the_last_of_us_part_ii"]},
-{"id": "bayonetta", "name": "ベヨネッタ", "tags": ["bayonetta", "bayonetta_(series)"]},
-{"id": "splatoon", "name": "スプラトゥーン", "tags": ["splatoon", "splatoon_2", "splatoon_3"]},
-{"id": "monster_hunter", "name": "モンスターハンター", "tags": ["monster_hunter", "monster_hunter_(series)"]},
-{"id": "cyberpunk", "name": "サイバーパンク", "tags": ["cyberpunk_2077", "cyberpunk_(series)"]},
-{"id": "azur_lane", "name": "アズールレーン", "tags": ["azur_lane"]},
-{"id": "blue_archive", "name": "ブルーアーカイブ", "tags": ["blue_archive"]},
-{"id": "rainbow_six", "name": "レインボーシックス", "tags": ["rainbow_six_siege"]},
-{"id": "life_is_strange", "name": "ライフ イズ ストレンジ", "tags": ["life_is_strange_(series)"]},
-{"id": "valorant", "name": "ヴァロラント", "tags": ["valorant"]},
-{"id": "fnaf", "name": "FNAF", "tags": ["five_nights_at_freddy's"]},
-{"id": "tera", "name": "TERA", "tags": ["tera_online"]},
-{"id": "granblue", "name": "グランブルーファンタジー", "tags": ["granblue_fantasy"]},
-{"id": "detroit", "name": "デトロイト", "tags": ["detroit:_become_human"]},
-{"id": "miside", "name": "MiSide", "tags": ["miside"]},
-{"id": "mass_effect", "name": "マスエフェクト", "tags": ["mass_effect"]},
-{"id": "mario", "name": "マリオ", "tags": ["super_mario_bros.", "mario_(series)"]}
-],
+    {
+      "id": "overwatch",
+      "name": "オーバーウォッチ",
+      "tags": [
+        "overwatch",
+        "overwatch_1",
+        "overwatch_2"
+      ]
+    },
+    {
+      "id": "nier_automata",
+      "name": "ニーア オートマタ",
+      "tags": [
+        "nier_automata",
+        "nier",
+        "nier:automata",
+        "nier:_automata",
+        "nier_(series)"
+      ]
+    },
+    {
+      "id": "dead_or_alive",
+      "name": "デッド オア アライブ",
+      "tags": [
+        "dead_or_alive",
+        "dead_or_alive_5",
+        "dead_or_alive_6",
+        "dead_or_alive_xtreme",
+        "dead_or_alive_xtreme_venus_vacation",
+        "doa",
+        "doahdm"
+      ]
+    },
+    {
+      "id": "zenless_zone_zero",
+      "name": "ゼンレスゾーンゼロ",
+      "tags": [
+        "zenless_zone_zero",
+        "zenless_zone_zero_(series)"
+      ]
+    },
+    {
+      "id": "genshin_impact",
+      "name": "原神",
+      "tags": [
+        "genshin_impact"
+      ]
+    },
+    {
+      "id": "final_fantasy_vii",
+      "name": "ファイナルファンタジーVII",
+      "tags": [
+        "final_fantasy_vii",
+        "final_fantasy_vii_remake",
+        "final_fantasy_vii_rebirth",
+        "ff7"
+      ]
+    },
+    {
+      "id": "final_fantasy",
+      "name": "ファイナルファンタジー",
+      "tags": [
+        "final_fantasy",
+        "final_fantasy_xiv",
+        "final_fantasy_xv",
+        "final_fantasy_xvi"
+      ]
+    },
+    {
+      "id": "marvel",
+      "name": "マーベル",
+      "tags": [
+        "marvel",
+        "marvel_rivals",
+        "marvel_comics",
+        "x-men",
+        "spider-man_(series)"
+      ]
+    },
+    {
+      "id": "resident_evil",
+      "name": "バイオハザード",
+      "tags": [
+        "resident_evil",
+        "resident_evil_2",
+        "resident_evil_2_(remake)",
+        "resident_evil_4",
+        "resident_evil_4_(remake)",
+        "resident_evil_4_remake",
+        "resident_evil_6",
+        "resident_evil_8:_village",
+        "resident_evil_requiem",
+        "resident_evil_village",
+        "resident_evil_3:_nemesis",
+        "resident_evil_3_(remake)"
+      ]
+    },
+    {
+      "id": "honkai_star_rail",
+      "name": "崩壊：スターレイル",
+      "tags": [
+        "honkai:_star_rail",
+        "honkai_(series)"
+      ]
+    },
+    {
+      "id": "street_fighter",
+      "name": "ストリートファイター",
+      "tags": [
+        "street_fighter",
+        "street_fighter_6",
+        "street_fighter_v"
+      ]
+    },
+    {
+      "id": "stellar_blade",
+      "name": "ステラーブレイド",
+      "tags": [
+        "stellar_blade"
+      ]
+    },
+    {
+      "id": "tekken",
+      "name": "鉄拳",
+      "tags": [
+        "tekken",
+        "tekken_7",
+        "tekken_8",
+        "tekken_5"
+      ]
+    },
+    {
+      "id": "league_of_legends",
+      "name": "リーグ・オブ・レジェンド",
+      "tags": [
+        "league_of_legends",
+        "league_of_legends:_wild_rift"
+      ]
+    },
+    {
+      "id": "zelda",
+      "name": "ゼルダの伝説",
+      "tags": [
+        "the_legend_of_zelda",
+        "the_legend_of_zelda:_breath_of_the_wild",
+        "the_legend_of_zelda:_tears_of_the_kingdom",
+        "the_legend_of_zelda:_twilight_princess"
+      ]
+    },
+    {
+      "id": "fortnite",
+      "name": "フォートナイト",
+      "tags": [
+        "fortnite",
+        "fortnite:_battle_royale"
+      ]
+    },
+    {
+      "id": "persona",
+      "name": "ペルソナ",
+      "tags": [
+        "persona",
+        "persona_3",
+        "persona_4",
+        "persona_5"
+      ]
+    },
+    {
+      "id": "metroid",
+      "name": "メトロイド",
+      "tags": [
+        "metroid",
+        "metroid_dread"
+      ]
+    },
+    {
+      "id": "tomb_raider",
+      "name": "トゥームレイダー",
+      "tags": [
+        "tomb_raider",
+        "tomb_raider_(reboot)"
+      ]
+    },
+    {
+      "id": "wuthering_waves",
+      "name": "鳴潮",
+      "tags": [
+        "wuthering_waves"
+      ]
+    },
+    {
+      "id": "elden_ring",
+      "name": "エルデンリング",
+      "tags": [
+        "elden_ring"
+      ]
+    },
+    {
+      "id": "fire_emblem",
+      "name": "ファイアーエムブレム",
+      "tags": [
+        "fire_emblem",
+        "fire_emblem:_three_houses"
+      ]
+    },
+    {
+      "id": "xenoblade",
+      "name": "ゼノブレイド",
+      "tags": [
+        "xenoblade_chronicles_(series)",
+        "xenoblade_chronicles_2",
+        "xenoblade_chronicles_3"
+      ]
+    },
+    {
+      "id": "king_of_fighters",
+      "name": "ザ・キング・オブ・ファイターズ",
+      "tags": [
+        "the_king_of_fighters",
+        "fatal_fury"
+      ]
+    },
+    {
+      "id": "ninja_gaiden",
+      "name": "忍者龍剣伝",
+      "tags": [
+        "ninja_gaiden"
+      ]
+    },
+    {
+      "id": "girls_frontline",
+      "name": "ドールズフロントライン",
+      "tags": [
+        "girls'_frontline",
+        "girls'_frontline_2:_exilium"
+      ]
+    },
+    {
+      "id": "witcher",
+      "name": "ウィッチャー",
+      "tags": [
+        "the_witcher_(series)",
+        "the_witcher_3"
+      ]
+    },
+    {
+      "id": "baldurs_gate",
+      "name": "バルダーズ・ゲート",
+      "tags": [
+        "baldur's_gate",
+        "baldur's_gate_3",
+        "dungeons_&_dragons"
+      ]
+    },
+    {
+      "id": "guilty_gear",
+      "name": "ギルティギア",
+      "tags": [
+        "guilty_gear",
+        "guilty_gear_strive"
+      ]
+    },
+    {
+      "id": "last_of_us",
+      "name": "ラスト・オブ・アス",
+      "tags": [
+        "the_last_of_us",
+        "the_last_of_us_part_ii",
+        "the_last_of_us_(series)"
+      ]
+    },
+    {
+      "id": "bayonetta",
+      "name": "ベヨネッタ",
+      "tags": [
+        "bayonetta",
+        "bayonetta_(series)"
+      ]
+    },
+    {
+      "id": "splatoon",
+      "name": "スプラトゥーン",
+      "tags": [
+        "splatoon",
+        "splatoon_2",
+        "splatoon_3",
+        "splatoon_(series)"
+      ]
+    },
+    {
+      "id": "monster_hunter",
+      "name": "モンスターハンター",
+      "tags": [
+        "monster_hunter",
+        "monster_hunter_(series)",
+        "monster_hunter_rise",
+        "monster_hunter:_world"
+      ]
+    },
+    {
+      "id": "cyberpunk",
+      "name": "サイバーパンク",
+      "tags": [
+        "cyberpunk_2077",
+        "cyberpunk_(series)"
+      ]
+    },
+    {
+      "id": "azur_lane",
+      "name": "アズールレーン",
+      "tags": [
+        "azur_lane"
+      ]
+    },
+    {
+      "id": "blue_archive",
+      "name": "ブルーアーカイブ",
+      "tags": [
+        "blue_archive"
+      ]
+    },
+    {
+      "id": "rainbow_six",
+      "name": "レインボーシックス",
+      "tags": [
+        "rainbow_six_siege"
+      ]
+    },
+    {
+      "id": "life_is_strange",
+      "name": "ライフ イズ ストレンジ",
+      "tags": [
+        "life_is_strange_(series)"
+      ]
+    },
+    {
+      "id": "valorant",
+      "name": "ヴァロラント",
+      "tags": [
+        "valorant"
+      ]
+    },
+    {
+      "id": "fnaf",
+      "name": "FNAF",
+      "tags": [
+        "five_nights_at_freddy's"
+      ]
+    },
+    {
+      "id": "tera",
+      "name": "TERA",
+      "tags": [
+        "tera_online"
+      ]
+    },
+    {
+      "id": "granblue",
+      "name": "グランブルーファンタジー",
+      "tags": [
+        "granblue_fantasy"
+      ]
+    },
+    {
+      "id": "detroit",
+      "name": "デトロイト",
+      "tags": [
+        "detroit:_become_human"
+      ]
+    },
+    {
+      "id": "miside",
+      "name": "MiSide",
+      "tags": [
+        "miside"
+      ]
+    },
+    {
+      "id": "mass_effect",
+      "name": "マスエフェクト",
+      "tags": [
+        "mass_effect",
+        "mass_effect_(series)"
+      ]
+    },
+    {
+      "id": "mario",
+      "name": "マリオ",
+      "tags": [
+        "super_mario_bros.",
+        "mario_(series)"
+      ]
+    },
+    {
+      "id": "kpop_demon_hunters",
+      "name": "KPop Demon Hunters",
+      "tags": [
+        "kpop_demon_hunters"
+      ]
+    },
+    {
+      "id": "dc",
+      "name": "DC",
+      "tags": [
+        "dc_comics",
+        "batman_(series)"
+      ]
+    },
+    {
+      "id": "nikke",
+      "name": "勝利の女神：NIKKE",
+      "tags": [
+        "goddess_of_victory:_nikke"
+      ]
+    },
+    {
+      "id": "arknights",
+      "name": "アークナイツ",
+      "tags": [
+        "arknights",
+        "arknights:_endfield"
+      ]
+    },
+    {
+      "id": "soulcalibur",
+      "name": "ソウルキャリバー",
+      "tags": [
+        "soulcalibur"
+      ]
+    },
+    {
+      "id": "blazblue",
+      "name": "ブレイブルー",
+      "tags": [
+        "blazblue"
+      ]
+    },
+    {
+      "id": "fallout",
+      "name": "Fallout",
+      "tags": [
+        "fallout"
+      ]
+    },
+    {
+      "id": "avatar",
+      "name": "アバター",
+      "tags": [
+        "avatar_legends"
+      ]
+    },
+    {
+      "id": "star_wars",
+      "name": "スター・ウォーズ",
+      "tags": [
+        "star_wars"
+      ]
+    },
+    {
+      "id": "honkai_impact",
+      "name": "崩壊3rd",
+      "tags": [
+        "honkai_impact_3rd"
+      ]
+    },
+    {
+      "id": "warcraft",
+      "name": "ウォークラフト",
+      "tags": [
+        "warcraft"
+      ]
+    },
+    {
+      "id": "metal_gear",
+      "name": "メタルギア",
+      "tags": [
+        "metal_gear",
+        "metal_gear_solid"
+      ]
+    },
+    {
+      "id": "code_vein",
+      "name": "CODE VEIN",
+      "tags": [
+        "code_vein"
+      ]
+    },
+    {
+      "id": "nioh",
+      "name": "仁王",
+      "tags": [
+        "nioh"
+      ]
+    },
+    {
+      "id": "apex",
+      "name": "エーペックス",
+      "tags": [
+        "apex_legends"
+      ]
+    },
+    {
+      "id": "walking_dead",
+      "name": "ウォーキング・デッド",
+      "tags": [
+        "the_walking_dead"
+      ]
+    },
+    {
+      "id": "shantae",
+      "name": "シャンティ",
+      "tags": [
+        "shantae"
+      ]
+    },
+    {
+      "id": "lollipop",
+      "name": "ロリポップチェーンソー",
+      "tags": [
+        "lollipop_chainsaw"
+      ]
+    },
+    {
+      "id": "first_descendant",
+      "name": "The First Descendant",
+      "tags": [
+        "the_first_descendant"
+      ]
+    },
+    {
+      "id": "sonic",
+      "name": "ソニック",
+      "tags": [
+        "sonic",
+        "sonic_the_hedgehog",
+        "sonic_(series)"
+      ]
+    }
+  ],
   "characters": [
-{"id": "mercy", "name": "マーシー", "work": "overwatch", "tags": ["mercy", "mercy_(overwatch)", "formalwear_mercy", "witch_mercy", "captain_amari"]},
-{"id": "dva", "name": "D.Va", "work": "overwatch", "tags": ["d.va", "dva", "d.va_(overwatch)", "classic_d.va", "academy_d.va", "black_cat_d.va", "overwatch_2_d.va", "shooting_star_d.va", "waveracer_d.va", "cruiser_d.va", "d.va_(overwatch_2_suit)"]},
-{"id": "widowmaker", "name": "ウィドウメイカー", "work": "overwatch", "tags": ["widowmaker", "widowmaker_(overwatch)", "cote_d'azur_widowmaker"]},
-{"id": "tracer", "name": "トレーサー", "work": "overwatch", "tags": ["tracer", "tracer_(overwatch)"]},
-{"id": "pharah", "name": "ファラ", "work": "overwatch", "tags": ["pharah", "pharah_(overwatch)"]},
-{"id": "kiriko", "name": "キリコ", "work": "overwatch", "tags": ["kiriko", "kiriko_(overwatch)", "witch_kiriko", "sukajan_kiriko", "athleisure_kiriko"]},
-{"id": "mei", "name": "メイ", "work": "overwatch", "tags": ["mei", "mei_(overwatch)"]},
-{"id": "sombra", "name": "ソンブラ", "work": "overwatch", "tags": ["sombra", "sombra_(overwatch)"]},
-{"id": "juno", "name": "ジュノ", "work": "overwatch", "tags": ["juno", "juno_(overwatch)"]},
-{"id": "ashe", "name": "アッシュ", "work": "overwatch", "tags": ["ashe", "ashe_(overwatch)"]},
-{"id": "brigitte", "name": "ブリギッテ", "work": "overwatch", "tags": ["brigitte", "brigitte_(overwatch)"]},
-{"id": "ana", "name": "アナ", "work": "overwatch", "tags": ["ana", "ana_(overwatch)"]},
-{"id": "symmetra", "name": "シンメトラ", "work": "overwatch", "tags": ["symmetra", "symmetra_(overwatch)"]},
-{"id": "domina", "name": "ドミナ", "work": "overwatch", "tags": ["domina", "domina_(overwatch)"]},
-{"id": "2b", "name": "2B", "work": "nier_automata", "tags": ["yorha_2b", "2b", "2b_(nier:automata)", "2b_(nier_automata)"]},
-{"id": "a2", "name": "A2", "work": "nier_automata", "tags": ["yorha_a2", "a2", "a2_(nier:automata)"]},
-{"id": "9s", "name": "9S", "work": "nier_automata", "tags": ["yorha_9s", "9s", "9s_(nier:automata)"]},
-{"id": "commander", "name": "司令官", "work": "nier_automata", "tags": ["commander_(nier:automata)"]},
-{"id": "marie_rose", "name": "マリー・ローズ", "work": "dead_or_alive", "tags": ["marie_rose", "marie_rose_(doa)"]},
-{"id": "honoka", "name": "ほのか", "work": "dead_or_alive", "tags": ["honoka", "honoka_(doa)"]},
-{"id": "kasumi", "name": "かすみ", "work": "dead_or_alive", "tags": ["kasumi", "kasumi_(doa)"]},
-{"id": "ayane", "name": "あやね", "work": "dead_or_alive", "tags": ["ayane", "ayane_(doa)"]},
-{"id": "nyotengu", "name": "女天狗", "work": "dead_or_alive", "tags": ["nyotengu", "nyotengu_(doa)"]},
-{"id": "christie", "name": "クリスティ", "work": "dead_or_alive", "tags": ["christie", "christie_(doa)"]},
-{"id": "hitomi", "name": "ヒトミ", "work": "dead_or_alive", "tags": ["hitomi", "hitomi_(doa)"]},
-{"id": "helena", "name": "エレナ", "work": "dead_or_alive", "tags": ["helena_douglas", "helena_(doa)"]},
-{"id": "tamaki", "name": "たまき", "work": "dead_or_alive", "tags": ["tamaki", "tamaki_(doa)"]},
-{"id": "nanami", "name": "ななみ", "work": "dead_or_alive", "tags": ["nanami", "nanami_(doa)"]},
-{"id": "nico", "name": "ニコ", "work": "dead_or_alive", "tags": ["nico", "nico_(doa)"]},
-{"id": "misaki", "name": "みさき", "work": "dead_or_alive", "tags": ["misaki", "misaki_(doa)"]},
-{"id": "tina", "name": "ティナ", "work": "dead_or_alive", "tags": ["tina_armstrong", "tina_(doa)"]},
-{"id": "lei_fang", "name": "レイファン", "work": "dead_or_alive", "tags": ["lei_fang", "lei_fang_(doa)"]},
-{"id": "fiona", "name": "フィオナ", "work": "dead_or_alive", "tags": ["fiona", "fiona_(doa)"]},
-{"id": "sayuri", "name": "さゆり", "work": "dead_or_alive", "tags": ["sayuri", "sayuri_(doa)"]},
-{"id": "nagisa", "name": "なぎさ", "work": "dead_or_alive", "tags": ["nagisa", "nagisa_(doa)"]},
-{"id": "wise", "name": "ワイズ", "work": "zenless_zone_zero", "tags": ["wise", "wise_(zenless_zone_zero)"]},
-{"id": "belle", "name": "ベル", "work": "zenless_zone_zero", "tags": ["belle", "belle_(zenless_zone_zero)"]},
-{"id": "jane_doe", "name": "ジェーン・ドゥ", "work": "zenless_zone_zero", "tags": ["jane_doe", "jane_doe_(zenless_zone_zero)"]},
-{"id": "zhu_yuan", "name": "朱鳶", "work": "zenless_zone_zero", "tags": ["zhu_yuan", "zhu_yuan_(zenless_zone_zero)"]},
-{"id": "burnice", "name": "バーニス", "work": "zenless_zone_zero", "tags": ["burnice_white", "burnice"]},
-{"id": "caesar", "name": "シーザー", "work": "zenless_zone_zero", "tags": ["caesar_king", "caesar_king_(zenless_zone_zero)"]},
-{"id": "aria", "name": "アリア", "work": "zenless_zone_zero", "tags": ["aria", "aria_(zenless_zone_zero)"]},
-{"id": "cecilia", "name": "セシリア", "work": "zenless_zone_zero", "tags": ["cecilia", "cecilia_(zenless_zone_zero)"]},
-{"id": "ellen", "name": "エレン", "work": "zenless_zone_zero", "tags": ["ellen_joe"]},
-{"id": "evelyn", "name": "イヴリン", "work": "zenless_zone_zero", "tags": ["evelyn_chevalier"]},
-{"id": "nicole", "name": "ニコール", "work": "zenless_zone_zero", "tags": ["nicole_demara"]},
-{"id": "luciana", "name": "ルシアーナ", "work": "zenless_zone_zero", "tags": ["luciana_de_montefio"]},
-{"id": "tifa", "name": "ティファ", "work": "final_fantasy_vii", "tags": ["tifa_lockhart", "tifa"]},
-{"id": "aerith", "name": "エアリス", "work": "final_fantasy_vii", "tags": ["aerith_gainsborough", "aerith"]},
-{"id": "cloud", "name": "クラウド", "work": "final_fantasy_vii", "tags": ["cloud_strife", "cloud"]},
-{"id": "yuffie", "name": "ユフィ", "work": "final_fantasy_vii", "tags": ["yuffie_kisaragi", "yuffie"]},
-{"id": "scarlet", "name": "スカーレット", "work": "final_fantasy_vii", "tags": ["scarlet_(ff7)"]},
-{"id": "lunafreya", "name": "ルナフレーナ", "work": "final_fantasy", "tags": ["lunafreya_nox_fleuret"]},
-{"id": "gentiana", "name": "ジェンティアーナ", "work": "final_fantasy", "tags": ["gentiana_(ff15)"]},
-{"id": "iris", "name": "イリス", "work": "final_fantasy", "tags": ["iris_amicitia"]},
-{"id": "yshtola", "name": "ヤシュトラ", "work": "final_fantasy", "tags": ["y'shtola_rhul"]},
-{"id": "aether", "name": "空", "work": "genshin_impact", "tags": ["aether", "aether_(genshin_impact)"]},
-{"id": "lumine", "name": "蛍", "work": "genshin_impact", "tags": ["lumine", "lumine_(genshin_impact)"]},
-{"id": "raiden", "name": "雷電将軍", "work": "genshin_impact", "tags": ["raiden_shogun", "raiden_shogun_(genshin_impact)"]},
-{"id": "yae", "name": "八重神子", "work": "genshin_impact", "tags": ["yae_miko"]},
-{"id": "fischl", "name": "フィッシュル", "work": "genshin_impact", "tags": ["fischl", "fischl_(genshin_impact)"]},
-{"id": "mona", "name": "モナ", "work": "genshin_impact", "tags": ["mona", "mona_(genshin_impact)"]},
-{"id": "hu_tao", "name": "胡桃", "work": "genshin_impact", "tags": ["hu_tao", "hu_tao_(genshin_impact)"]},
-{"id": "eula", "name": "エウルア", "work": "genshin_impact", "tags": ["eula", "eula_(genshin_impact)"]},
-{"id": "amber", "name": "アンバー", "work": "genshin_impact", "tags": ["amber", "amber_(genshin_impact)"]},
-{"id": "arlecchino", "name": "アルレッキーノ", "work": "genshin_impact", "tags": ["arlecchino", "arlecchino_(genshin_impact)"]},
-{"id": "ganyu", "name": "甘雨", "work": "genshin_impact", "tags": ["ganyu", "ganyu_(genshin_impact)"]},
-{"id": "furina", "name": "フリーナ", "work": "genshin_impact", "tags": ["furina", "furina_(genshin_impact)"]},
-{"id": "barbara", "name": "バーバラ", "work": "genshin_impact", "tags": ["barbara", "barbara_(genshin_impact)"]},
-{"id": "keqing", "name": "刻晴", "work": "genshin_impact", "tags": ["keqing", "keqing_(genshin_impact)"]},
-{"id": "clorinde", "name": "クロリンデ", "work": "genshin_impact", "tags": ["clorinde", "clorinde_(genshin_impact)"]},
-{"id": "beidou", "name": "北斗", "work": "genshin_impact", "tags": ["beidou", "beidou_(genshin_impact)"]},
-{"id": "dehya", "name": "ディシア", "work": "genshin_impact", "tags": ["dehya", "dehya_(genshin_impact)"]},
-{"id": "lisa", "name": "リサ", "work": "genshin_impact", "tags": ["lisa", "lisa_(genshin_impact)"]},
-{"id": "citlali", "name": "シトラリ", "work": "genshin_impact", "tags": ["citlali", "citlali_(genshin_impact)"]},
-{"id": "candace", "name": "キャンディス", "work": "genshin_impact", "tags": ["candace", "candace_(genshin_impact)"]},
-{"id": "trailblazer", "name": "拓荒者", "work": "honkai_star_rail", "tags": ["trailblazer_(honkai:_star_rail)", "caelus_(honkai:_star_rail)"]},
-{"id": "eve", "name": "イブ", "work": "stellar_blade", "tags": ["eve", "eve_(stellar_blade)"]},
-{"id": "chun_li", "name": "春麗", "work": "street_fighter", "tags": ["chun-li", "chun_li", "chun-li_(street_fighter_6)"]},
-{"id": "cammy", "name": "キャミィ", "work": "street_fighter", "tags": ["cammy_white", "cammy"]},
-{"id": "juri", "name": "ハン・ジュリ", "work": "street_fighter", "tags": ["juri_han", "juri", "han_juri"]},
-{"id": "ada", "name": "エイダ・ウォン", "work": "resident_evil", "tags": ["ada_wong"]},
-{"id": "leon", "name": "レオン", "work": "resident_evil", "tags": ["leon_s._kennedy", "leon_kennedy"]},
-{"id": "ashley", "name": "アシュリー", "work": "resident_evil", "tags": ["ashley_graham"]},
-{"id": "jill", "name": "ジル", "work": "resident_evil", "tags": ["jill_valentine"]},
-{"id": "claire", "name": "クレア", "work": "resident_evil", "tags": ["claire_redfield"]},
-{"id": "bela", "name": "ベラ", "work": "resident_evil", "tags": ["bela", "bela_(resident_evil)"]},
-{"id": "lili", "name": "リリ", "work": "tekken", "tags": ["lili", "lili_(tekken)"]},
-{"id": "eliza", "name": "エリザ", "work": "tekken", "tags": ["eliza", "eliza_(tekken)"]},
-{"id": "asuka", "name": "風間飛鳥", "work": "tekken", "tags": ["kazama_asuka"]},
-{"id": "ahri", "name": "アーリ", "work": "league_of_legends", "tags": ["ahri", "ahri_(league)", "ahri_(league_of_legends)"]},
-{"id": "jinx", "name": "ジンクス", "work": "league_of_legends", "tags": ["jinx", "jinx_(league_of_legends)"]},
-{"id": "akali", "name": "アカリ", "work": "league_of_legends", "tags": ["akali", "akali_(league)"]},
-{"id": "zelda", "name": "ゼルダ", "work": "zelda", "tags": ["princess_zelda", "zelda"]},
-{"id": "link", "name": "リンク", "work": "zelda", "tags": ["link", "link_(zelda)"]},
-{"id": "urbosa", "name": "ウルボザ", "work": "zelda", "tags": ["urbosa"]},
-{"id": "samus", "name": "サムス", "work": "metroid", "tags": ["samus_aran", "samus"]},
-{"id": "lara", "name": "ララ・クロフト", "work": "tomb_raider", "tags": ["lara_croft"]},
-{"id": "mai", "name": "舞", "work": "king_of_fighters", "tags": ["shiranui_mai", "mai_shiranui"]},
-{"id": "momiji", "name": "紅葉", "work": "ninja_gaiden", "tags": ["momiji", "momiji_(ninja_gaiden)"]},
-{"id": "pyra", "name": "ホマラ", "work": "xenoblade", "tags": ["pyra", "pyra_(xenoblade)"]},
-{"id": "mythra", "name": "ヒカリ", "work": "xenoblade", "tags": ["mythra", "mythra_(xenoblade)"]},
-{"id": "marika", "name": "マリカ", "work": "elden_ring", "tags": ["queen_marika_the_eternal"]},
-{"id": "shadowheart", "name": "シャドウハート", "work": "baldurs_gate", "tags": ["shadowheart", "shadowheart_(baldur's_gate)"]},
-{"id": "psylocke", "name": "サイロック", "work": "marvel", "tags": ["psylocke"]},
-{"id": "emma", "name": "エマ・フロスト", "work": "marvel", "tags": ["emma_frost", "emma_frost_(marvel_rivals)"]},
-{"id": "black_cat", "name": "ブラックキャット", "work": "marvel", "tags": ["black_cat_(marvel)", "black_cat_(marvel_rivals)"]},
-{"id": "harley", "name": "ハーレイ・クィン", "work": "marvel", "tags": ["harley_quinn", "harley_quinn_(arkham)"]},
-{"id": "sue", "name": "スー・ストーム", "work": "marvel", "tags": ["sue_storm"]},
-{"id": "ellie", "name": "エリー", "work": "last_of_us", "tags": ["ellie", "ellie_(the_last_of_us)"]},
-{"id": "bayonetta", "name": "ベヨネッタ", "work": "bayonetta", "tags": ["bayonetta", "bayonetta_(character)"]},
-{"id": "callie", "name": "アオリ", "work": "splatoon", "tags": ["callie", "callie_(splatoon)"]},
-{"id": "hinoa", "name": "ヒノエ", "work": "monster_hunter", "tags": ["hinoa"]},
-{"id": "minoto", "name": "ミノト", "work": "monster_hunter", "tags": ["minoto"]},
-{"id": "anran", "name": "アンラン", "work": "overwatch", "tags": ["anran", "anran_(overwatch)"]},
-{"id": "soldier76", "name": "ソルジャー76", "work": "overwatch", "tags": ["soldier:_76", "soldier:_76_(overwatch)"]},
-{"id": "dmon", "name": "D.Mon", "work": "overwatch", "tags": ["d.mon", "d.mon_(overwatch)"]},
-{"id": "cass", "name": "キャス", "work": "overwatch", "tags": ["cass_hamada"]},
-{"id": "yelan", "name": "夜蘭", "work": "genshin_impact", "tags": ["yelan", "yelan_(genshin_impact)"]},
-{"id": "shenhe", "name": "申鶴", "work": "genshin_impact", "tags": ["shenhe", "shenhe_(genshin_impact)"]},
-{"id": "jean", "name": "ジン", "work": "genshin_impact", "tags": ["jean", "jean_(genshin_impact)"]},
-{"id": "firefly", "name": "ホタル", "work": "honkai_star_rail", "tags": ["firefly", "firefly_(honkai:_star_rail)"]},
-{"id": "silver_wolf", "name": "銀狼", "work": "honkai_star_rail", "tags": ["silver_wolf", "silver_wolf_(honkai:_star_rail)"]},
-{"id": "kafka", "name": "カフカ", "work": "honkai_star_rail", "tags": ["kafka", "kafka_(honkai:_star_rail)"]},
-{"id": "march", "name": "三月なのか", "work": "honkai_star_rail", "tags": ["march_7th", "march_7th_(honkai:_star_rail)"]},
-{"id": "sparkle", "name": "花火", "work": "honkai_star_rail", "tags": ["sparkle", "sparkle_(honkai:_star_rail)"]},
-{"id": "yixuan", "name": "イーシェン", "work": "zenless_zone_zero", "tags": ["yixuan", "yixuan_(zenless_zone_zero)"]},
-{"id": "alice", "name": "アリス", "work": "zenless_zone_zero", "tags": ["alice_thymefield", "alice_thymefield_(sea_of_thyme)"]},
-{"id": "jufufu", "name": "橘福福", "work": "zenless_zone_zero", "tags": ["ju_fufu"]},
-{"id": "sunna", "name": "サンナ", "work": "zenless_zone_zero", "tags": ["sunna", "sunna_(zenless_zone_zero)"]},
-{"id": "cissia", "name": "シシア", "work": "zenless_zone_zero", "tags": ["cissia", "cissia_(zenless_zone_zero)"]},
-{"id": "yidhari", "name": "イドハリ", "work": "zenless_zone_zero", "tags": ["yidhari_murphy"]},
-{"id": "vivian", "name": "ビビアン", "work": "zenless_zone_zero", "tags": ["vivian_banshee"]},
-{"id": "trigger", "name": "トリガー", "work": "zenless_zone_zero", "tags": ["trigger", "trigger_(zenless_zone_zero)"]},
-{"id": "jessie", "name": "ジェシー", "work": "final_fantasy_vii", "tags": ["jessie_rasberry"]},
-{"id": "barret", "name": "バレット", "work": "final_fantasy_vii", "tags": ["barret_wallace"]},
-{"id": "zack", "name": "ザックス", "work": "final_fantasy_vii", "tags": ["zack_fair"]},
-{"id": "aranea", "name": "アラネア", "work": "final_fantasy", "tags": ["aranea_highwind"]},
-{"id": "wol", "name": "光の戦士", "work": "final_fantasy", "tags": ["warrior_of_light", "warrior_of_light_(ff14)"]},
-{"id": "alcina", "name": "オルシーナ", "work": "resident_evil", "tags": ["alcina_dimitrescu"]},
-{"id": "chris", "name": "クリス", "work": "resident_evil", "tags": ["chris_redfield"]},
-{"id": "mrx", "name": "ミスターX", "work": "resident_evil", "tags": ["mr._x", "mr._x_(resident_evil)"]},
-{"id": "tarnished", "name": "褪せ人", "work": "elden_ring", "tags": ["tarnished", "tarnished_(elden_ring)"]},
-{"id": "melina", "name": "メリナ", "work": "elden_ring", "tags": ["melina", "melina_(elden_ring)"]},
-{"id": "ciri", "name": "シリ", "work": "witcher", "tags": ["ciri"]},
-{"id": "yennefer", "name": "イェネファー", "work": "witcher", "tags": ["yennefer_of_vengerberg"]},
-{"id": "spiderman", "name": "スパイダーマン", "work": "marvel", "tags": ["spider-man", "spider-man_(original_suit)"]},
-{"id": "jubilee", "name": "ジュビリー", "work": "marvel", "tags": ["jubilee", "jubilee_(marvel)"]},
-{"id": "magik", "name": "マジック", "work": "marvel", "tags": ["magik", "magik_(x-men)"]},
-{"id": "venom", "name": "ヴェノム", "work": "marvel", "tags": ["venom", "venom_(marvel)"]},
-{"id": "squirrel", "name": "スクイレルガール", "work": "marvel", "tags": ["squirrel_girl", "squirrel_girl_(marvel)"]},
-{"id": "rogue", "name": "ローグ", "work": "marvel", "tags": ["rogue", "rogue_(x-men)"]},
-{"id": "luna", "name": "ルナ・スノー", "work": "marvel", "tags": ["luna_snow"]},
-{"id": "reina", "name": "レイナ", "work": "tekken", "tags": ["reina", "reina_(tekken)"]},
-{"id": "josie", "name": "ジョシー", "work": "tekken", "tags": ["josie_rizal"]},
-{"id": "midna", "name": "ミドナ", "work": "zelda", "tags": ["midna", "midna_(imp)"]},
-{"id": "ganondorf", "name": "ガノンドロフ", "work": "zelda", "tags": ["ganondorf"]},
-{"id": "nia", "name": "ニア", "work": "xenoblade", "tags": ["nia", "nia_(xenoblade)"]},
-{"id": "hk416", "name": "HK416", "work": "girls_frontline", "tags": ["hk416", "hk416_(girls'_frontline)"]},
-{"id": "klukai", "name": "クルカイ", "work": "girls_frontline", "tags": ["klukai", "klukai_(girls'_frontline_2)"]},
-{"id": "ela", "name": "エラ", "work": "rainbow_six", "tags": ["ela", "ela_(rainbow_six_siege)", "ela_amano_(anna_anon)"]},
-{"id": "dokkaebi", "name": "ドッケビ", "work": "rainbow_six", "tags": ["dokkaebi", "dokkaebi_(rainbow_six_siege)"]},
-{"id": "jett", "name": "ジェット", "work": "valorant", "tags": ["jett", "jett_(valorant)"]},
-{"id": "rachel", "name": "レイチェル", "work": "life_is_strange", "tags": ["rachel_amber"]},
-{"id": "mita", "name": "ミタ", "work": "miside", "tags": ["mita", "mita_(miside)"]},
-{"id": "kara", "name": "カーラ", "work": "detroit", "tags": ["kara", "kara_(detroit)"]},
-{"id": "narmaya", "name": "ナルメア", "work": "granblue", "tags": ["narmaya", "narmaya_(granblue_fantasy)"]},
-{"id": "makoto", "name": "マコト", "work": "guilty_gear", "tags": ["makoto_nanaya"]},
-{"id": "peach", "name": "ピーチ", "work": "mario", "tags": ["princess_peach"]},
-{"id": "mario", "name": "マリオ", "work": "mario", "tags": ["mario"]},
-{"id": "foxy", "name": "フォクシー", "work": "fnaf", "tags": ["foxy", "foxy_(fnaf)"]}
-]
+    {
+      "id": "mercy",
+      "name": "マーシー",
+      "work": "overwatch",
+      "tags": [
+        "mercy",
+        "mercy_(overwatch)",
+        "formalwear_mercy",
+        "witch_mercy",
+        "captain_amari"
+      ]
+    },
+    {
+      "id": "dva",
+      "name": "D.Va",
+      "work": "overwatch",
+      "tags": [
+        "d.va",
+        "dva",
+        "d.va_(overwatch)",
+        "classic_d.va",
+        "academy_d.va",
+        "black_cat_d.va",
+        "overwatch_2_d.va",
+        "shooting_star_d.va",
+        "waveracer_d.va",
+        "cruiser_d.va",
+        "d.va_(overwatch_2_suit)"
+      ]
+    },
+    {
+      "id": "widowmaker",
+      "name": "ウィドウメイカー",
+      "work": "overwatch",
+      "tags": [
+        "widowmaker",
+        "widowmaker_(overwatch)",
+        "cote_d'azur_widowmaker"
+      ]
+    },
+    {
+      "id": "tracer",
+      "name": "トレーサー",
+      "work": "overwatch",
+      "tags": [
+        "tracer",
+        "tracer_(overwatch)"
+      ]
+    },
+    {
+      "id": "pharah",
+      "name": "ファラ",
+      "work": "overwatch",
+      "tags": [
+        "pharah",
+        "pharah_(overwatch)"
+      ]
+    },
+    {
+      "id": "kiriko",
+      "name": "キリコ",
+      "work": "overwatch",
+      "tags": [
+        "kiriko",
+        "kiriko_(overwatch)",
+        "witch_kiriko",
+        "sukajan_kiriko",
+        "athleisure_kiriko"
+      ]
+    },
+    {
+      "id": "mei",
+      "name": "メイ",
+      "work": "overwatch",
+      "tags": [
+        "mei",
+        "mei_(overwatch)"
+      ]
+    },
+    {
+      "id": "sombra",
+      "name": "ソンブラ",
+      "work": "overwatch",
+      "tags": [
+        "sombra",
+        "sombra_(overwatch)"
+      ]
+    },
+    {
+      "id": "juno",
+      "name": "ジュノ",
+      "work": "overwatch",
+      "tags": [
+        "juno",
+        "juno_(overwatch)"
+      ]
+    },
+    {
+      "id": "ashe",
+      "name": "アッシュ",
+      "work": "overwatch",
+      "tags": [
+        "ashe",
+        "ashe_(overwatch)"
+      ]
+    },
+    {
+      "id": "brigitte",
+      "name": "ブリギッテ",
+      "work": "overwatch",
+      "tags": [
+        "brigitte",
+        "brigitte_(overwatch)"
+      ]
+    },
+    {
+      "id": "ana",
+      "name": "アナ",
+      "work": "overwatch",
+      "tags": [
+        "ana",
+        "ana_(overwatch)"
+      ]
+    },
+    {
+      "id": "symmetra",
+      "name": "シンメトラ",
+      "work": "overwatch",
+      "tags": [
+        "symmetra",
+        "symmetra_(overwatch)"
+      ]
+    },
+    {
+      "id": "domina",
+      "name": "ドミナ",
+      "work": "overwatch",
+      "tags": [
+        "domina",
+        "domina_(overwatch)"
+      ]
+    },
+    {
+      "id": "2b",
+      "name": "2B",
+      "work": "nier_automata",
+      "tags": [
+        "yorha_2b",
+        "2b",
+        "2b_(nier:automata)",
+        "2b_(nier_automata)"
+      ]
+    },
+    {
+      "id": "a2",
+      "name": "A2",
+      "work": "nier_automata",
+      "tags": [
+        "yorha_a2",
+        "a2",
+        "a2_(nier:automata)"
+      ]
+    },
+    {
+      "id": "9s",
+      "name": "9S",
+      "work": "nier_automata",
+      "tags": [
+        "yorha_9s",
+        "9s",
+        "9s_(nier:automata)"
+      ]
+    },
+    {
+      "id": "commander",
+      "name": "司令官",
+      "work": "nier_automata",
+      "tags": [
+        "commander_(nier:automata)"
+      ]
+    },
+    {
+      "id": "marie_rose",
+      "name": "マリー・ローズ",
+      "work": "dead_or_alive",
+      "tags": [
+        "marie_rose",
+        "marie_rose_(doa)"
+      ]
+    },
+    {
+      "id": "honoka",
+      "name": "ほのか",
+      "work": "dead_or_alive",
+      "tags": [
+        "honoka",
+        "honoka_(doa)"
+      ]
+    },
+    {
+      "id": "kasumi",
+      "name": "かすみ",
+      "work": "dead_or_alive",
+      "tags": [
+        "kasumi",
+        "kasumi_(doa)"
+      ]
+    },
+    {
+      "id": "ayane",
+      "name": "あやね",
+      "work": "dead_or_alive",
+      "tags": [
+        "ayane",
+        "ayane_(doa)"
+      ]
+    },
+    {
+      "id": "nyotengu",
+      "name": "女天狗",
+      "work": "dead_or_alive",
+      "tags": [
+        "nyotengu",
+        "nyotengu_(doa)"
+      ]
+    },
+    {
+      "id": "christie",
+      "name": "クリスティ",
+      "work": "dead_or_alive",
+      "tags": [
+        "christie",
+        "christie_(doa)"
+      ]
+    },
+    {
+      "id": "hitomi",
+      "name": "ヒトミ",
+      "work": "dead_or_alive",
+      "tags": [
+        "hitomi",
+        "hitomi_(doa)"
+      ]
+    },
+    {
+      "id": "helena",
+      "name": "エレナ",
+      "work": "dead_or_alive",
+      "tags": [
+        "helena_douglas",
+        "helena_(doa)"
+      ]
+    },
+    {
+      "id": "tamaki",
+      "name": "たまき",
+      "work": "dead_or_alive",
+      "tags": [
+        "tamaki",
+        "tamaki_(doa)"
+      ]
+    },
+    {
+      "id": "nanami",
+      "name": "ななみ",
+      "work": "dead_or_alive",
+      "tags": [
+        "nanami",
+        "nanami_(doa)"
+      ]
+    },
+    {
+      "id": "nico",
+      "name": "ニコ",
+      "work": "dead_or_alive",
+      "tags": [
+        "nico",
+        "nico_(doa)"
+      ]
+    },
+    {
+      "id": "misaki",
+      "name": "みさき",
+      "work": "dead_or_alive",
+      "tags": [
+        "misaki",
+        "misaki_(doa)"
+      ]
+    },
+    {
+      "id": "tina",
+      "name": "ティナ",
+      "work": "dead_or_alive",
+      "tags": [
+        "tina_armstrong",
+        "tina_(doa)"
+      ]
+    },
+    {
+      "id": "lei_fang",
+      "name": "レイファン",
+      "work": "dead_or_alive",
+      "tags": [
+        "lei_fang",
+        "lei_fang_(doa)"
+      ]
+    },
+    {
+      "id": "fiona",
+      "name": "フィオナ",
+      "work": "dead_or_alive",
+      "tags": [
+        "fiona",
+        "fiona_(doa)"
+      ]
+    },
+    {
+      "id": "sayuri",
+      "name": "さゆり",
+      "work": "dead_or_alive",
+      "tags": [
+        "sayuri",
+        "sayuri_(doa)"
+      ]
+    },
+    {
+      "id": "nagisa",
+      "name": "なぎさ",
+      "work": "dead_or_alive",
+      "tags": [
+        "nagisa",
+        "nagisa_(doa)"
+      ]
+    },
+    {
+      "id": "wise",
+      "name": "ワイズ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "wise",
+        "wise_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "belle",
+      "name": "ベル",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "belle",
+        "belle_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "jane_doe",
+      "name": "ジェーン・ドゥ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "jane_doe",
+        "jane_doe_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "zhu_yuan",
+      "name": "朱鳶",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "zhu_yuan",
+        "zhu_yuan_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "burnice",
+      "name": "バーニス",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "burnice_white",
+        "burnice"
+      ]
+    },
+    {
+      "id": "caesar",
+      "name": "シーザー",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "caesar_king",
+        "caesar_king_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "aria",
+      "name": "アリア",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "aria",
+        "aria_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "cecilia",
+      "name": "セシリア",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "cecilia",
+        "cecilia_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "ellen",
+      "name": "エレン",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "ellen_joe"
+      ]
+    },
+    {
+      "id": "evelyn",
+      "name": "イヴリン",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "evelyn_chevalier"
+      ]
+    },
+    {
+      "id": "nicole",
+      "name": "ニコール",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "nicole_demara"
+      ]
+    },
+    {
+      "id": "luciana",
+      "name": "ルシアーナ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "luciana_de_montefio"
+      ]
+    },
+    {
+      "id": "tifa",
+      "name": "ティファ",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "tifa_lockhart",
+        "tifa"
+      ]
+    },
+    {
+      "id": "aerith",
+      "name": "エアリス",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "aerith_gainsborough",
+        "aerith"
+      ]
+    },
+    {
+      "id": "cloud",
+      "name": "クラウド",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "cloud_strife",
+        "cloud"
+      ]
+    },
+    {
+      "id": "yuffie",
+      "name": "ユフィ",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "yuffie_kisaragi",
+        "yuffie"
+      ]
+    },
+    {
+      "id": "scarlet",
+      "name": "スカーレット",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "scarlet_(ff7)"
+      ]
+    },
+    {
+      "id": "lunafreya",
+      "name": "ルナフレーナ",
+      "work": "final_fantasy",
+      "tags": [
+        "lunafreya_nox_fleuret"
+      ]
+    },
+    {
+      "id": "gentiana",
+      "name": "ジェンティアーナ",
+      "work": "final_fantasy",
+      "tags": [
+        "gentiana_(ff15)"
+      ]
+    },
+    {
+      "id": "iris",
+      "name": "イリス",
+      "work": "final_fantasy",
+      "tags": [
+        "iris_amicitia"
+      ]
+    },
+    {
+      "id": "yshtola",
+      "name": "ヤシュトラ",
+      "work": "final_fantasy",
+      "tags": [
+        "y'shtola_rhul"
+      ]
+    },
+    {
+      "id": "aether",
+      "name": "空",
+      "work": "genshin_impact",
+      "tags": [
+        "aether",
+        "aether_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "lumine",
+      "name": "蛍",
+      "work": "genshin_impact",
+      "tags": [
+        "lumine",
+        "lumine_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "raiden",
+      "name": "雷電将軍",
+      "work": "genshin_impact",
+      "tags": [
+        "raiden_shogun",
+        "raiden_shogun_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "yae",
+      "name": "八重神子",
+      "work": "genshin_impact",
+      "tags": [
+        "yae_miko"
+      ]
+    },
+    {
+      "id": "fischl",
+      "name": "フィッシュル",
+      "work": "genshin_impact",
+      "tags": [
+        "fischl",
+        "fischl_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "mona",
+      "name": "モナ",
+      "work": "genshin_impact",
+      "tags": [
+        "mona",
+        "mona_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "hu_tao",
+      "name": "胡桃",
+      "work": "genshin_impact",
+      "tags": [
+        "hu_tao",
+        "hu_tao_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "eula",
+      "name": "エウルア",
+      "work": "genshin_impact",
+      "tags": [
+        "eula",
+        "eula_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "amber",
+      "name": "アンバー",
+      "work": "genshin_impact",
+      "tags": [
+        "amber",
+        "amber_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "arlecchino",
+      "name": "アルレッキーノ",
+      "work": "genshin_impact",
+      "tags": [
+        "arlecchino",
+        "arlecchino_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "ganyu",
+      "name": "甘雨",
+      "work": "genshin_impact",
+      "tags": [
+        "ganyu",
+        "ganyu_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "furina",
+      "name": "フリーナ",
+      "work": "genshin_impact",
+      "tags": [
+        "furina",
+        "furina_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "barbara",
+      "name": "バーバラ",
+      "work": "genshin_impact",
+      "tags": [
+        "barbara",
+        "barbara_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "keqing",
+      "name": "刻晴",
+      "work": "genshin_impact",
+      "tags": [
+        "keqing",
+        "keqing_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "clorinde",
+      "name": "クロリンデ",
+      "work": "genshin_impact",
+      "tags": [
+        "clorinde",
+        "clorinde_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "beidou",
+      "name": "北斗",
+      "work": "genshin_impact",
+      "tags": [
+        "beidou",
+        "beidou_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "dehya",
+      "name": "ディシア",
+      "work": "genshin_impact",
+      "tags": [
+        "dehya",
+        "dehya_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "lisa",
+      "name": "リサ",
+      "work": "genshin_impact",
+      "tags": [
+        "lisa",
+        "lisa_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "citlali",
+      "name": "シトラリ",
+      "work": "genshin_impact",
+      "tags": [
+        "citlali",
+        "citlali_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "candace",
+      "name": "キャンディス",
+      "work": "genshin_impact",
+      "tags": [
+        "candace",
+        "candace_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "trailblazer",
+      "name": "拓荒者",
+      "work": "honkai_star_rail",
+      "tags": [
+        "trailblazer_(honkai:_star_rail)",
+        "caelus_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "eve",
+      "name": "イブ",
+      "work": "stellar_blade",
+      "tags": [
+        "eve",
+        "eve_(stellar_blade)"
+      ]
+    },
+    {
+      "id": "chun_li",
+      "name": "春麗",
+      "work": "street_fighter",
+      "tags": [
+        "chun-li",
+        "chun_li",
+        "chun-li_(street_fighter_6)"
+      ]
+    },
+    {
+      "id": "cammy",
+      "name": "キャミィ",
+      "work": "street_fighter",
+      "tags": [
+        "cammy_white",
+        "cammy"
+      ]
+    },
+    {
+      "id": "juri",
+      "name": "ハン・ジュリ",
+      "work": "street_fighter",
+      "tags": [
+        "juri_han",
+        "juri",
+        "han_juri"
+      ]
+    },
+    {
+      "id": "ada",
+      "name": "エイダ・ウォン",
+      "work": "resident_evil",
+      "tags": [
+        "ada_wong"
+      ]
+    },
+    {
+      "id": "leon",
+      "name": "レオン",
+      "work": "resident_evil",
+      "tags": [
+        "leon_s._kennedy",
+        "leon_kennedy"
+      ]
+    },
+    {
+      "id": "ashley",
+      "name": "アシュリー",
+      "work": "resident_evil",
+      "tags": [
+        "ashley_graham"
+      ]
+    },
+    {
+      "id": "jill",
+      "name": "ジル",
+      "work": "resident_evil",
+      "tags": [
+        "jill_valentine"
+      ]
+    },
+    {
+      "id": "claire",
+      "name": "クレア",
+      "work": "resident_evil",
+      "tags": [
+        "claire_redfield"
+      ]
+    },
+    {
+      "id": "bela",
+      "name": "ベラ",
+      "work": "resident_evil",
+      "tags": [
+        "bela",
+        "bela_(resident_evil)"
+      ]
+    },
+    {
+      "id": "lili",
+      "name": "リリ",
+      "work": "tekken",
+      "tags": [
+        "lili",
+        "lili_(tekken)"
+      ]
+    },
+    {
+      "id": "eliza",
+      "name": "エリザ",
+      "work": "tekken",
+      "tags": [
+        "eliza",
+        "eliza_(tekken)"
+      ]
+    },
+    {
+      "id": "asuka",
+      "name": "風間飛鳥",
+      "work": "tekken",
+      "tags": [
+        "kazama_asuka"
+      ]
+    },
+    {
+      "id": "ahri",
+      "name": "アーリ",
+      "work": "league_of_legends",
+      "tags": [
+        "ahri",
+        "ahri_(league)",
+        "ahri_(league_of_legends)"
+      ]
+    },
+    {
+      "id": "jinx",
+      "name": "ジンクス",
+      "work": "league_of_legends",
+      "tags": [
+        "jinx",
+        "jinx_(league_of_legends)"
+      ]
+    },
+    {
+      "id": "akali",
+      "name": "アカリ",
+      "work": "league_of_legends",
+      "tags": [
+        "akali",
+        "akali_(league)"
+      ]
+    },
+    {
+      "id": "zelda",
+      "name": "ゼルダ",
+      "work": "zelda",
+      "tags": [
+        "princess_zelda",
+        "zelda"
+      ]
+    },
+    {
+      "id": "link",
+      "name": "リンク",
+      "work": "zelda",
+      "tags": [
+        "link",
+        "link_(zelda)"
+      ]
+    },
+    {
+      "id": "urbosa",
+      "name": "ウルボザ",
+      "work": "zelda",
+      "tags": [
+        "urbosa"
+      ]
+    },
+    {
+      "id": "samus",
+      "name": "サムス",
+      "work": "metroid",
+      "tags": [
+        "samus_aran",
+        "samus"
+      ]
+    },
+    {
+      "id": "lara",
+      "name": "ララ・クロフト",
+      "work": "tomb_raider",
+      "tags": [
+        "lara_croft"
+      ]
+    },
+    {
+      "id": "mai",
+      "name": "舞",
+      "work": "king_of_fighters",
+      "tags": [
+        "shiranui_mai",
+        "mai_shiranui"
+      ]
+    },
+    {
+      "id": "momiji",
+      "name": "紅葉",
+      "work": "ninja_gaiden",
+      "tags": [
+        "momiji",
+        "momiji_(ninja_gaiden)"
+      ]
+    },
+    {
+      "id": "pyra",
+      "name": "ホマラ",
+      "work": "xenoblade",
+      "tags": [
+        "pyra",
+        "pyra_(xenoblade)"
+      ]
+    },
+    {
+      "id": "mythra",
+      "name": "ヒカリ",
+      "work": "xenoblade",
+      "tags": [
+        "mythra",
+        "mythra_(xenoblade)"
+      ]
+    },
+    {
+      "id": "marika",
+      "name": "マリカ",
+      "work": "elden_ring",
+      "tags": [
+        "queen_marika_the_eternal"
+      ]
+    },
+    {
+      "id": "shadowheart",
+      "name": "シャドウハート",
+      "work": "baldurs_gate",
+      "tags": [
+        "shadowheart",
+        "shadowheart_(baldur's_gate)"
+      ]
+    },
+    {
+      "id": "psylocke",
+      "name": "サイロック",
+      "work": "marvel",
+      "tags": [
+        "psylocke"
+      ]
+    },
+    {
+      "id": "emma",
+      "name": "エマ・フロスト",
+      "work": "marvel",
+      "tags": [
+        "emma_frost",
+        "emma_frost_(marvel_rivals)"
+      ]
+    },
+    {
+      "id": "black_cat",
+      "name": "ブラックキャット",
+      "work": "marvel",
+      "tags": [
+        "black_cat_(marvel)",
+        "black_cat_(marvel_rivals)"
+      ]
+    },
+    {
+      "id": "harley",
+      "name": "ハーレイ・クィン",
+      "work": "marvel",
+      "tags": [
+        "harley_quinn",
+        "harley_quinn_(arkham)"
+      ]
+    },
+    {
+      "id": "sue",
+      "name": "スー・ストーム",
+      "work": "marvel",
+      "tags": [
+        "sue_storm"
+      ]
+    },
+    {
+      "id": "ellie",
+      "name": "エリー",
+      "work": "last_of_us",
+      "tags": [
+        "ellie",
+        "ellie_(the_last_of_us)"
+      ]
+    },
+    {
+      "id": "bayonetta",
+      "name": "ベヨネッタ",
+      "work": "bayonetta",
+      "tags": [
+        "bayonetta",
+        "bayonetta_(character)"
+      ]
+    },
+    {
+      "id": "callie",
+      "name": "アオリ",
+      "work": "splatoon",
+      "tags": [
+        "callie",
+        "callie_(splatoon)"
+      ]
+    },
+    {
+      "id": "hinoa",
+      "name": "ヒノエ",
+      "work": "monster_hunter",
+      "tags": [
+        "hinoa"
+      ]
+    },
+    {
+      "id": "minoto",
+      "name": "ミノト",
+      "work": "monster_hunter",
+      "tags": [
+        "minoto"
+      ]
+    },
+    {
+      "id": "anran",
+      "name": "アンラン",
+      "work": "overwatch",
+      "tags": [
+        "anran",
+        "anran_(overwatch)"
+      ]
+    },
+    {
+      "id": "soldier76",
+      "name": "ソルジャー76",
+      "work": "overwatch",
+      "tags": [
+        "soldier:_76",
+        "soldier:_76_(overwatch)"
+      ]
+    },
+    {
+      "id": "dmon",
+      "name": "D.Mon",
+      "work": "overwatch",
+      "tags": [
+        "d.mon",
+        "d.mon_(overwatch)"
+      ]
+    },
+    {
+      "id": "cass",
+      "name": "キャス",
+      "work": "overwatch",
+      "tags": [
+        "cass_hamada"
+      ]
+    },
+    {
+      "id": "yelan",
+      "name": "夜蘭",
+      "work": "genshin_impact",
+      "tags": [
+        "yelan",
+        "yelan_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "shenhe",
+      "name": "申鶴",
+      "work": "genshin_impact",
+      "tags": [
+        "shenhe",
+        "shenhe_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "jean",
+      "name": "ジン",
+      "work": "genshin_impact",
+      "tags": [
+        "jean",
+        "jean_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "firefly",
+      "name": "ホタル",
+      "work": "honkai_star_rail",
+      "tags": [
+        "firefly",
+        "firefly_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "silver_wolf",
+      "name": "銀狼",
+      "work": "honkai_star_rail",
+      "tags": [
+        "silver_wolf",
+        "silver_wolf_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "kafka",
+      "name": "カフカ",
+      "work": "honkai_star_rail",
+      "tags": [
+        "kafka",
+        "kafka_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "march",
+      "name": "三月なのか",
+      "work": "honkai_star_rail",
+      "tags": [
+        "march_7th",
+        "march_7th_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "sparkle",
+      "name": "花火",
+      "work": "honkai_star_rail",
+      "tags": [
+        "sparkle",
+        "sparkle_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "yixuan",
+      "name": "イーシェン",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "yixuan",
+        "yixuan_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "alice",
+      "name": "アリス",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "alice_thymefield",
+        "alice_thymefield_(sea_of_thyme)"
+      ]
+    },
+    {
+      "id": "jufufu",
+      "name": "橘福福",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "ju_fufu"
+      ]
+    },
+    {
+      "id": "sunna",
+      "name": "サンナ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "sunna",
+        "sunna_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "cissia",
+      "name": "シシア",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "cissia",
+        "cissia_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "yidhari",
+      "name": "イドハリ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "yidhari_murphy"
+      ]
+    },
+    {
+      "id": "vivian",
+      "name": "ビビアン",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "vivian_banshee"
+      ]
+    },
+    {
+      "id": "trigger",
+      "name": "トリガー",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "trigger",
+        "trigger_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "jessie",
+      "name": "ジェシー",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "jessie_rasberry"
+      ]
+    },
+    {
+      "id": "barret",
+      "name": "バレット",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "barret_wallace"
+      ]
+    },
+    {
+      "id": "zack",
+      "name": "ザックス",
+      "work": "final_fantasy_vii",
+      "tags": [
+        "zack_fair"
+      ]
+    },
+    {
+      "id": "aranea",
+      "name": "アラネア",
+      "work": "final_fantasy",
+      "tags": [
+        "aranea_highwind"
+      ]
+    },
+    {
+      "id": "wol",
+      "name": "光の戦士",
+      "work": "final_fantasy",
+      "tags": [
+        "warrior_of_light",
+        "warrior_of_light_(ff14)"
+      ]
+    },
+    {
+      "id": "alcina",
+      "name": "オルシーナ",
+      "work": "resident_evil",
+      "tags": [
+        "alcina_dimitrescu"
+      ]
+    },
+    {
+      "id": "chris",
+      "name": "クリス",
+      "work": "resident_evil",
+      "tags": [
+        "chris_redfield"
+      ]
+    },
+    {
+      "id": "mrx",
+      "name": "ミスターX",
+      "work": "resident_evil",
+      "tags": [
+        "mr._x",
+        "mr._x_(resident_evil)"
+      ]
+    },
+    {
+      "id": "tarnished",
+      "name": "褪せ人",
+      "work": "elden_ring",
+      "tags": [
+        "tarnished",
+        "tarnished_(elden_ring)"
+      ]
+    },
+    {
+      "id": "melina",
+      "name": "メリナ",
+      "work": "elden_ring",
+      "tags": [
+        "melina",
+        "melina_(elden_ring)"
+      ]
+    },
+    {
+      "id": "ciri",
+      "name": "シリ",
+      "work": "witcher",
+      "tags": [
+        "ciri"
+      ]
+    },
+    {
+      "id": "yennefer",
+      "name": "イェネファー",
+      "work": "witcher",
+      "tags": [
+        "yennefer_of_vengerberg"
+      ]
+    },
+    {
+      "id": "spiderman",
+      "name": "スパイダーマン",
+      "work": "marvel",
+      "tags": [
+        "spider-man",
+        "spider-man_(original_suit)"
+      ]
+    },
+    {
+      "id": "jubilee",
+      "name": "ジュビリー",
+      "work": "marvel",
+      "tags": [
+        "jubilee",
+        "jubilee_(marvel)"
+      ]
+    },
+    {
+      "id": "magik",
+      "name": "マジック",
+      "work": "marvel",
+      "tags": [
+        "magik",
+        "magik_(x-men)"
+      ]
+    },
+    {
+      "id": "venom",
+      "name": "ヴェノム",
+      "work": "marvel",
+      "tags": [
+        "venom",
+        "venom_(marvel)"
+      ]
+    },
+    {
+      "id": "squirrel",
+      "name": "スクイレルガール",
+      "work": "marvel",
+      "tags": [
+        "squirrel_girl",
+        "squirrel_girl_(marvel)"
+      ]
+    },
+    {
+      "id": "rogue",
+      "name": "ローグ",
+      "work": "marvel",
+      "tags": [
+        "rogue",
+        "rogue_(x-men)"
+      ]
+    },
+    {
+      "id": "luna",
+      "name": "ルナ・スノー",
+      "work": "marvel",
+      "tags": [
+        "luna_snow"
+      ]
+    },
+    {
+      "id": "reina",
+      "name": "レイナ",
+      "work": "tekken",
+      "tags": [
+        "reina",
+        "reina_(tekken)"
+      ]
+    },
+    {
+      "id": "josie",
+      "name": "ジョシー",
+      "work": "tekken",
+      "tags": [
+        "josie_rizal"
+      ]
+    },
+    {
+      "id": "midna",
+      "name": "ミドナ",
+      "work": "zelda",
+      "tags": [
+        "midna",
+        "midna_(imp)"
+      ]
+    },
+    {
+      "id": "ganondorf",
+      "name": "ガノンドロフ",
+      "work": "zelda",
+      "tags": [
+        "ganondorf"
+      ]
+    },
+    {
+      "id": "nia",
+      "name": "ニア",
+      "work": "xenoblade",
+      "tags": [
+        "nia",
+        "nia_(xenoblade)"
+      ]
+    },
+    {
+      "id": "hk416",
+      "name": "HK416",
+      "work": "girls_frontline",
+      "tags": [
+        "hk416",
+        "hk416_(girls'_frontline)"
+      ]
+    },
+    {
+      "id": "klukai",
+      "name": "クルカイ",
+      "work": "girls_frontline",
+      "tags": [
+        "klukai",
+        "klukai_(girls'_frontline_2)"
+      ]
+    },
+    {
+      "id": "ela",
+      "name": "エラ",
+      "work": "rainbow_six",
+      "tags": [
+        "ela",
+        "ela_(rainbow_six_siege)",
+        "ela_amano_(anna_anon)"
+      ]
+    },
+    {
+      "id": "dokkaebi",
+      "name": "ドッケビ",
+      "work": "rainbow_six",
+      "tags": [
+        "dokkaebi",
+        "dokkaebi_(rainbow_six_siege)"
+      ]
+    },
+    {
+      "id": "jett",
+      "name": "ジェット",
+      "work": "valorant",
+      "tags": [
+        "jett",
+        "jett_(valorant)"
+      ]
+    },
+    {
+      "id": "rachel",
+      "name": "レイチェル",
+      "work": "life_is_strange",
+      "tags": [
+        "rachel_amber"
+      ]
+    },
+    {
+      "id": "mita",
+      "name": "ミタ",
+      "work": "miside",
+      "tags": [
+        "mita",
+        "mita_(miside)"
+      ]
+    },
+    {
+      "id": "kara",
+      "name": "カーラ",
+      "work": "detroit",
+      "tags": [
+        "kara",
+        "kara_(detroit)"
+      ]
+    },
+    {
+      "id": "narmaya",
+      "name": "ナルメア",
+      "work": "granblue",
+      "tags": [
+        "narmaya",
+        "narmaya_(granblue_fantasy)"
+      ]
+    },
+    {
+      "id": "makoto",
+      "name": "マコト",
+      "work": "guilty_gear",
+      "tags": [
+        "makoto_nanaya"
+      ]
+    },
+    {
+      "id": "peach",
+      "name": "ピーチ",
+      "work": "mario",
+      "tags": [
+        "princess_peach"
+      ]
+    },
+    {
+      "id": "mario",
+      "name": "マリオ",
+      "work": "mario",
+      "tags": [
+        "mario"
+      ]
+    },
+    {
+      "id": "foxy",
+      "name": "フォクシー",
+      "work": "fnaf",
+      "tags": [
+        "foxy",
+        "foxy_(fnaf)"
+      ]
+    },
+    {
+      "id": "ayaka",
+      "name": "神里綾華",
+      "work": "genshin_impact",
+      "tags": [
+        "kamisato_ayaka"
+      ]
+    },
+    {
+      "id": "ningguang",
+      "name": "凝光",
+      "work": "genshin_impact",
+      "tags": [
+        "ningguang",
+        "ningguang_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "navia",
+      "name": "ナヴィア",
+      "work": "genshin_impact",
+      "tags": [
+        "navia",
+        "navia_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "signora",
+      "name": "シニョーラ",
+      "work": "genshin_impact",
+      "tags": [
+        "signora",
+        "signora_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "venti",
+      "name": "ウェンティ",
+      "work": "genshin_impact",
+      "tags": [
+        "venti",
+        "venti_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "columbina",
+      "name": "コロンビーナ",
+      "work": "genshin_impact",
+      "tags": [
+        "columbina",
+        "columbina_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "yoimiya",
+      "name": "宵宮",
+      "work": "genshin_impact",
+      "tags": [
+        "yoimiya",
+        "yoimiya_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "nilou",
+      "name": "ニィロウ",
+      "work": "genshin_impact",
+      "tags": [
+        "nilou",
+        "nilou_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "xiangling",
+      "name": "香菱",
+      "work": "genshin_impact",
+      "tags": [
+        "xiangling",
+        "xiangling_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "varesa",
+      "name": "ヴァレサ",
+      "work": "genshin_impact",
+      "tags": [
+        "varesa",
+        "varesa_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "mavuika",
+      "name": "マーヴィカ",
+      "work": "genshin_impact",
+      "tags": [
+        "mavuika",
+        "mavuika_(genshin_impact)"
+      ]
+    },
+    {
+      "id": "shion",
+      "name": "シオン",
+      "work": "overwatch",
+      "tags": [
+        "shion",
+        "shion_(overwatch)"
+      ]
+    },
+    {
+      "id": "doomfist",
+      "name": "ドゥームフィスト",
+      "work": "overwatch",
+      "tags": [
+        "doomfist",
+        "doomfist_(overwatch)"
+      ]
+    },
+    {
+      "id": "cassidy",
+      "name": "キャスディ",
+      "work": "overwatch",
+      "tags": [
+        "cassidy",
+        "cassidy_(overwatch)"
+      ]
+    },
+    {
+      "id": "hanzo",
+      "name": "ハンゾー",
+      "work": "overwatch",
+      "tags": [
+        "hanzo",
+        "hanzo_(overwatch)"
+      ]
+    },
+    {
+      "id": "genji",
+      "name": "ゲンジ",
+      "work": "overwatch",
+      "tags": [
+        "genji",
+        "genji_(overwatch)"
+      ]
+    },
+    {
+      "id": "reaper",
+      "name": "リーパー",
+      "work": "overwatch",
+      "tags": [
+        "reaper",
+        "reaper_(overwatch)"
+      ]
+    },
+    {
+      "id": "freja",
+      "name": "フレイヤ",
+      "work": "overwatch",
+      "tags": [
+        "freja",
+        "freja_(overwatch)"
+      ]
+    },
+    {
+      "id": "yuzuha",
+      "name": "浮波柚葉",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "ukinami_yuzuha"
+      ]
+    },
+    {
+      "id": "miyabi",
+      "name": "星見雅",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "hoshimi_miyabi"
+      ]
+    },
+    {
+      "id": "astra",
+      "name": "アストラ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "astra_yao"
+      ]
+    },
+    {
+      "id": "seth",
+      "name": "セス",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "seth_lowell"
+      ]
+    },
+    {
+      "id": "pulchra",
+      "name": "プルクラ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "pulchra_fellini"
+      ]
+    },
+    {
+      "id": "piper",
+      "name": "パイパー",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "piper_wheel"
+      ]
+    },
+    {
+      "id": "qingyi",
+      "name": "青衣",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "qingyi",
+        "qingyi_(zenless_zone_zero)"
+      ]
+    },
+    {
+      "id": "anby",
+      "name": "アンビー",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "anby_demara"
+      ]
+    },
+    {
+      "id": "yanagi",
+      "name": "月城柳",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "tsukishiro_yanagi"
+      ]
+    },
+    {
+      "id": "koleda",
+      "name": "クレダ",
+      "work": "zenless_zone_zero",
+      "tags": [
+        "koleda_belobog"
+      ]
+    },
+    {
+      "id": "topaz",
+      "name": "トパーズ",
+      "work": "honkai_star_rail",
+      "tags": [
+        "topaz",
+        "topaz_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "evernight",
+      "name": "長夜月",
+      "work": "honkai_star_rail",
+      "tags": [
+        "evernight",
+        "evernight_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "cipher",
+      "name": "サフェル",
+      "work": "honkai_star_rail",
+      "tags": [
+        "cipher",
+        "cipher_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "robin",
+      "name": "ロビン",
+      "work": "honkai_star_rail",
+      "tags": [
+        "robin",
+        "robin_(honkai:_star_rail)"
+      ]
+    },
+    {
+      "id": "hilda",
+      "name": "ヒルダ",
+      "work": "fire_emblem",
+      "tags": [
+        "hilda_valentine_goneril"
+      ]
+    },
+    {
+      "id": "lysithea",
+      "name": "リシテア",
+      "work": "fire_emblem",
+      "tags": [
+        "lysithea_von_ordelia"
+      ]
+    },
+    {
+      "id": "marianne",
+      "name": "マリアンヌ",
+      "work": "fire_emblem",
+      "tags": [
+        "marianne_von_edmund"
+      ]
+    },
+    {
+      "id": "rhea",
+      "name": "レア",
+      "work": "fire_emblem",
+      "tags": [
+        "rhea",
+        "rhea_(fire_emblem)"
+      ]
+    },
+    {
+      "id": "byleth",
+      "name": "ベレト",
+      "work": "fire_emblem",
+      "tags": [
+        "male_byleth",
+        "male_byleth_(fire_emblem)"
+      ]
+    },
+    {
+      "id": "camilla",
+      "name": "カミラ",
+      "work": "fire_emblem",
+      "tags": [
+        "camilla",
+        "camilla_(fire_emblem)"
+      ]
+    },
+    {
+      "id": "leonie",
+      "name": "レオニー",
+      "work": "fire_emblem",
+      "tags": [
+        "leonie_pinelli"
+      ]
+    },
+    {
+      "id": "ren",
+      "name": "ジョーカー",
+      "work": "persona",
+      "tags": [
+        "amamiya_ren"
+      ]
+    },
+    {
+      "id": "makoto_p3",
+      "name": "真田明彦",
+      "work": "persona",
+      "tags": [
+        "yuuki_makoto_(persona_3)"
+      ]
+    },
+    {
+      "id": "naoto",
+      "name": "直斗",
+      "work": "persona",
+      "tags": [
+        "shirogane_naoto"
+      ]
+    },
+    {
+      "id": "rise",
+      "name": "りせ",
+      "work": "persona",
+      "tags": [
+        "kujikawa_rise"
+      ]
+    },
+    {
+      "id": "chie",
+      "name": "千枝",
+      "work": "persona",
+      "tags": [
+        "satonaka_chie"
+      ]
+    },
+    {
+      "id": "yu",
+      "name": "鳴上悠",
+      "work": "persona",
+      "tags": [
+        "narukami_yu"
+      ]
+    },
+    {
+      "id": "yukiko",
+      "name": "天城雪子",
+      "work": "persona",
+      "tags": [
+        "amagi_yukiko"
+      ]
+    },
+    {
+      "id": "mitsuru",
+      "name": "桐条美鶴",
+      "work": "persona",
+      "tags": [
+        "kirijou_mitsuru"
+      ]
+    },
+    {
+      "id": "peter",
+      "name": "ピーター",
+      "work": "marvel",
+      "tags": [
+        "peter_parker"
+      ]
+    },
+    {
+      "id": "gwen",
+      "name": "グウェン",
+      "work": "marvel",
+      "tags": [
+        "gwen_stacy",
+        "spider-gwen"
+      ]
+    },
+    {
+      "id": "widow",
+      "name": "ブラック・ウィドウ",
+      "work": "marvel",
+      "tags": [
+        "black_widow",
+        "natasha_romanoff"
+      ]
+    },
+    {
+      "id": "peni",
+      "name": "ペニ",
+      "work": "marvel",
+      "tags": [
+        "peni_parker"
+      ]
+    },
+    {
+      "id": "reed",
+      "name": "リード",
+      "work": "marvel",
+      "tags": [
+        "reed_richards"
+      ]
+    },
+    {
+      "id": "loki",
+      "name": "ロキ",
+      "work": "marvel",
+      "tags": [
+        "loki",
+        "loki_(marvel)",
+        "lady_loki"
+      ]
+    },
+    {
+      "id": "raven",
+      "name": "レイヴン",
+      "work": "dc",
+      "tags": [
+        "raven",
+        "raven_(dc)"
+      ]
+    },
+    {
+      "id": "triss",
+      "name": "トリス",
+      "work": "witcher",
+      "tags": [
+        "triss_merigold"
+      ]
+    },
+    {
+      "id": "anna_h",
+      "name": "アンナ",
+      "work": "witcher",
+      "tags": [
+        "anna_henrietta"
+      ]
+    },
+    {
+      "id": "ranni",
+      "name": "ラニ",
+      "work": "elden_ring",
+      "tags": [
+        "ranni_the_witch"
+      ]
+    },
+    {
+      "id": "eunie",
+      "name": "ユーニ",
+      "work": "xenoblade",
+      "tags": [
+        "eunie",
+        "eunie_(xenoblade)"
+      ]
+    },
+    {
+      "id": "dp12",
+      "name": "DP-12",
+      "work": "girls_frontline",
+      "tags": [
+        "dp-12",
+        "dp-12_(girls'_frontline)"
+      ]
+    },
+    {
+      "id": "helen",
+      "name": "ヘレン",
+      "work": "girls_frontline",
+      "tags": [
+        "helen_(girls'_frontline_2)"
+      ]
+    },
+    {
+      "id": "spas12",
+      "name": "SPAS-12",
+      "work": "girls_frontline",
+      "tags": [
+        "spas-12",
+        "spas-12_(girls'_frontline)"
+      ]
+    },
+    {
+      "id": "sabrina",
+      "name": "サブリナ",
+      "work": "girls_frontline",
+      "tags": [
+        "sabrina_(girls'_frontline_2)"
+      ]
+    },
+    {
+      "id": "irelia",
+      "name": "イレリア",
+      "work": "league_of_legends",
+      "tags": [
+        "irelia",
+        "irelia_(league)"
+      ]
+    },
+    {
+      "id": "evelynn",
+      "name": "イブリン",
+      "work": "league_of_legends",
+      "tags": [
+        "evelynn",
+        "evelynn_(league)"
+      ]
+    },
+    {
+      "id": "seraphine",
+      "name": "セラフィーン",
+      "work": "league_of_legends",
+      "tags": [
+        "seraphine",
+        "seraphine_(league)"
+      ]
+    },
+    {
+      "id": "nina",
+      "name": "ニーナ",
+      "work": "tekken",
+      "tags": [
+        "nina_williams"
+      ]
+    },
+    {
+      "id": "kazumi",
+      "name": "風間一美",
+      "work": "tekken",
+      "tags": [
+        "mishima_kazumi",
+        "mishima_kazumi_(tekken)"
+      ]
+    },
+    {
+      "id": "jun",
+      "name": "風間準",
+      "work": "tekken",
+      "tags": [
+        "kazama_jun"
+      ]
+    },
+    {
+      "id": "marie_s",
+      "name": "ホタル",
+      "work": "splatoon",
+      "tags": [
+        "marie",
+        "marie_(splatoon)"
+      ]
+    },
+    {
+      "id": "lily",
+      "name": "リリー",
+      "work": "stellar_blade",
+      "tags": [
+        "lily_artemis_ii",
+        "lily_artemis_ii_(stellar_blade)"
+      ]
+    },
+    {
+      "id": "adam",
+      "name": "アダム",
+      "work": "stellar_blade",
+      "tags": [
+        "adam",
+        "adam_(stellar_blade)"
+      ]
+    },
+    {
+      "id": "raven_sb",
+      "name": "レイヴン",
+      "work": "stellar_blade",
+      "tags": [
+        "raven",
+        "raven_(stellar_blade)"
+      ]
+    },
+    {
+      "id": "chloe_d",
+      "name": "クロエ",
+      "work": "detroit",
+      "tags": [
+        "chloe",
+        "chloe_(detroit)"
+      ]
+    },
+    {
+      "id": "chloe_p",
+      "name": "クロエ",
+      "work": "life_is_strange",
+      "tags": [
+        "chloe_price"
+      ]
+    },
+    {
+      "id": "max",
+      "name": "マックス",
+      "work": "life_is_strange",
+      "tags": [
+        "max_caulfield"
+      ]
+    },
+    {
+      "id": "shepard",
+      "name": "シェパード",
+      "work": "mass_effect",
+      "tags": [
+        "commander_shepard",
+        "commander_shepard_(female)"
+      ]
+    },
+    {
+      "id": "liara",
+      "name": "リアラ",
+      "work": "mass_effect",
+      "tags": [
+        "liara_t'soni"
+      ]
+    },
+    {
+      "id": "baltimore",
+      "name": "ボルチモア",
+      "work": "azur_lane",
+      "tags": [
+        "baltimore",
+        "baltimore_(azur_lane)"
+      ]
+    },
+    {
+      "id": "reisalin",
+      "name": "ライザ",
+      "work": "granblue",
+      "tags": [
+        "reisalin_stout"
+      ]
+    },
+    {
+      "id": "sin",
+      "name": "シン",
+      "work": "guilty_gear",
+      "tags": [
+        "sin_kiske"
+      ]
+    },
+    {
+      "id": "sol",
+      "name": "ソル",
+      "work": "guilty_gear",
+      "tags": [
+        "sol_badguy"
+      ]
+    },
+    {
+      "id": "quiet",
+      "name": "クワイエット",
+      "work": "metal_gear",
+      "tags": [
+        "quiet",
+        "quiet_(metal_gear)"
+      ]
+    },
+    {
+      "id": "io",
+      "name": "イオ",
+      "work": "code_vein",
+      "tags": [
+        "io",
+        "io_(code_vein)"
+      ]
+    },
+    {
+      "id": "miyoshino",
+      "name": "御夜篠",
+      "work": "nioh",
+      "tags": [
+        "miyoshino",
+        "miyoshino_(nioh)"
+      ]
+    },
+    {
+      "id": "vaultgirl",
+      "name": "Vault Girl",
+      "work": "fallout",
+      "tags": [
+        "vault_girl"
+      ]
+    },
+    {
+      "id": "freddy",
+      "name": "フレディ",
+      "work": "fnaf",
+      "tags": [
+        "freddy_fazbear"
+      ]
+    },
+    {
+      "id": "chica",
+      "name": "チカ",
+      "work": "fnaf",
+      "tags": [
+        "chica"
+      ]
+    },
+    {
+      "id": "isabella",
+      "name": "イザベラ",
+      "work": "soulcalibur",
+      "tags": [
+        "isabella_valentine"
+      ]
+    },
+    {
+      "id": "rumi",
+      "name": "ルミ",
+      "work": "kpop_demon_hunters",
+      "tags": [
+        "rumi",
+        "rumi_(kpop_demon_hunters)"
+      ]
+    },
+    {
+      "id": "mira",
+      "name": "ミラ",
+      "work": "kpop_demon_hunters",
+      "tags": [
+        "mira",
+        "mira_(kpop_demon_hunters)"
+      ]
+    },
+    {
+      "id": "zoey",
+      "name": "ゾーイ",
+      "work": "kpop_demon_hunters",
+      "tags": [
+        "zoey",
+        "zoey_(kpop_demon_hunters)"
+      ]
+    },
+    {
+      "id": "lobelia",
+      "name": "ロベリア",
+      "work": "dead_or_alive",
+      "tags": [
+        "lobelia",
+        "lobelia_(doa)"
+      ]
+    },
+    {
+      "id": "kanna",
+      "name": "カンナ",
+      "work": "dead_or_alive",
+      "tags": [
+        "kanna",
+        "kanna_(doa)"
+      ]
+    },
+    {
+      "id": "yukino",
+      "name": "ユキノ",
+      "work": "dead_or_alive",
+      "tags": [
+        "yukino",
+        "yukino_(doa)"
+      ]
+    },
+    {
+      "id": "elise",
+      "name": "エリゼ",
+      "work": "dead_or_alive",
+      "tags": [
+        "elise",
+        "elise_(doa)"
+      ]
+    },
+    {
+      "id": "ethan",
+      "name": "イーサン",
+      "work": "resident_evil",
+      "tags": [
+        "ethan_winters"
+      ]
+    },
+    {
+      "id": "jote",
+      "name": "ヨテ",
+      "work": "final_fantasy",
+      "tags": [
+        "jote",
+        "jote_(ff16)"
+      ]
+    },
+    {
+      "id": "clive",
+      "name": "クライヴ",
+      "work": "final_fantasy",
+      "tags": [
+        "clive_rosfield"
+      ]
+    },
+    {
+      "id": "serah",
+      "name": "セラ",
+      "work": "final_fantasy",
+      "tags": [
+        "serah_farron"
+      ]
+    },
+    {
+      "id": "cindy",
+      "name": "シンディ",
+      "work": "final_fantasy",
+      "tags": [
+        "cindy_aurum"
+      ]
+    },
+    {
+      "id": "kaine",
+      "name": "カイネ",
+      "work": "nier_automata",
+      "tags": [
+        "kaine",
+        "kaine_(nier)"
+      ]
+    },
+    {
+      "id": "pascal",
+      "name": "パスカル",
+      "work": "nier_automata",
+      "tags": [
+        "pascal",
+        "pascal_(nier:automata)"
+      ]
+    },
+    {
+      "id": "loba",
+      "name": "ローバ",
+      "work": "apex",
+      "tags": [
+        "loba",
+        "loba_(apex_legends)"
+      ]
+    },
+    {
+      "id": "panam",
+      "name": "パナム",
+      "work": "cyberpunk",
+      "tags": [
+        "panam_palmer"
+      ]
+    },
+    {
+      "id": "korra",
+      "name": "コラ",
+      "work": "avatar",
+      "tags": [
+        "korra"
+      ]
+    },
+    {
+      "id": "azula",
+      "name": "アズーラ",
+      "work": "avatar",
+      "tags": [
+        "azula"
+      ]
+    },
+    {
+      "id": "ahsoka",
+      "name": "アソーカ",
+      "work": "star_wars",
+      "tags": [
+        "ahsoka_tano"
+      ]
+    },
+    {
+      "id": "clementine",
+      "name": "クレメンタイン",
+      "work": "walking_dead",
+      "tags": [
+        "clementine",
+        "clementine_(the_walking_dead)"
+      ]
+    },
+    {
+      "id": "shantae",
+      "name": "シャンティ",
+      "work": "shantae",
+      "tags": [
+        "shantae"
+      ]
+    },
+    {
+      "id": "juliet",
+      "name": "ジュリエット",
+      "work": "lollipop",
+      "tags": [
+        "juliet_starling"
+      ]
+    },
+    {
+      "id": "bunny",
+      "name": "バニー",
+      "work": "first_descendant",
+      "tags": [
+        "bunny",
+        "bunny_(the_first_descendant)"
+      ]
+    },
+    {
+      "id": "karlach",
+      "name": "カーラック",
+      "work": "baldurs_gate",
+      "tags": [
+        "karlach"
+      ]
+    },
+    {
+      "id": "laezel",
+      "name": "レイゼル",
+      "work": "baldurs_gate",
+      "tags": [
+        "lae'zel"
+      ]
+    },
+    {
+      "id": "rouge",
+      "name": "ルージュ",
+      "work": "sonic",
+      "tags": [
+        "rouge_the_bat"
+      ]
+    },
+    {
+      "id": "ryu",
+      "name": "リュウ",
+      "work": "street_fighter",
+      "tags": [
+        "ryu",
+        "ryu_(street_fighter)"
+      ]
+    },
+    {
+      "id": "rio",
+      "name": "リオ",
+      "work": "blue_archive",
+      "tags": [
+        "rio",
+        "rio_(blue_archive)"
+      ]
+    },
+    {
+      "id": "asuna_ba",
+      "name": "アスナ",
+      "work": "blue_archive",
+      "tags": [
+        "asuna",
+        "asuna_(blue_archive)"
+      ]
+    }
+  ]
 }
