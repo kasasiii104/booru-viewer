@@ -56,14 +56,23 @@ UA = "booru-viewer/1.0"
 STEP = 10
 
 
-def get(url):
+def get(url, retries=3):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    try:
-        with urllib.request.urlopen(req, timeout=40) as res:
-            return json.loads(res.read().decode("utf-8"))
-    except Exception as exc:
-        print(f"request failed: {exc}")
-        return None
+    last = "unknown"
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(req, timeout=40) as res:
+                raw = res.read().decode("utf-8", "replace").strip()
+            if not raw:
+                last = "empty response"
+                time.sleep(2 + attempt * 2)
+                continue
+            return json.loads(raw)
+        except Exception as exc:
+            last = str(exc)
+            time.sleep(2 + attempt * 2)
+    print(f"request failed: {last}")
+    return None
 
 
 def words_of(tags):
@@ -270,14 +279,21 @@ def gelbooru_like(name, endpoint, user_key, api_key, state):
         done = False
         failed = False
         for pid in sorted(pages):
+            if name == "gelbooru" and int(pid) > 200:
+                done = True
+                break
             params = {
                 "page": "dapi", "s": "post", "q": "index", "json": 1,
                 "tags": tags, "limit": 100, "pid": pid,
                 "user_id": user, "api_key": key,
             }
             payload = get(endpoint + "?" + urllib.parse.urlencode(params))
-            time.sleep(0.6)
+            time.sleep(1.5 if name == "gelbooru" else 0.6)
             if payload is None:
+                if name == "gelbooru" and int(pid) >= 200:
+                    print(f"{name} {tags}: page {pid} ended history")
+                    done = True
+                    break
                 failed = True
                 break
             rows = payload if isinstance(payload, list) else payload.get("post", [])
