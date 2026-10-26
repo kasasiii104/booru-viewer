@@ -16,21 +16,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: check secrets
-        env:
-          DANBOORU_LOGIN: ${{ secrets.DANBOORU_LOGIN }}
-          DANBOORU_API_KEY: ${{ secrets.DANBOORU_API_KEY }}
-          GELBOORU_USER_ID: ${{ secrets.GELBOORU_USER_ID }}
-          GELBOORU_API_KEY: ${{ secrets.GELBOORU_API_KEY }}
-          RULE34_USER_ID: ${{ secrets.RULE34_USER_ID }}
-          RULE34_API_KEY: ${{ secrets.RULE34_API_KEY }}
-        run: |
-          echo "DANBOORU_LOGIN set=$([ -n \"$DANBOORU_LOGIN\" ] && echo yes || echo no)"
-          echo "DANBOORU_API_KEY set=$([ -n \"$DANBOORU_API_KEY\" ] && echo yes || echo no)"
-          echo "GELBOORU_USER_ID set=$([ -n \"$GELBOORU_USER_ID\" ] && echo yes || echo no)"
-          echo "GELBOORU_API_KEY set=$([ -n \"$GELBOORU_API_KEY\" ] && echo yes || echo no)"
-          echo "RULE34_USER_ID set=$([ -n \"$RULE34_USER_ID\" ] && echo yes || echo no)"
-          echo "RULE34_API_KEY set=$([ -n \"$RULE34_API_KEY\" ] && echo yes || echo no)"
       - name: fetch metadata
         env:
           DANBOORU_LOGIN: ${{ secrets.DANBOORU_LOGIN }}
