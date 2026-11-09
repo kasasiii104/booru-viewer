@@ -50,7 +50,7 @@ window.addEventListener("scroll", () => {
   if (document.body.classList.contains("is-open")) return;
   if (window.innerHeight + window.scrollY < document.body.offsetHeight - 900) return;
   const all = filtered();
-  if ((state.visible || 240) >= all.length) return;
+  if ((state.visible || 240) >= all.length) { loadMoreParts(); return; }
   state.visible += 240;
   renderGrid();
 }, { passive: true });

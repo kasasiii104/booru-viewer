@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Viewer</title>
-  <link rel="stylesheet" href="css/style.css?v=27">
-  <link rel="stylesheet" href="css/title.css?v=27">
+  <link rel="stylesheet" href="css/style.css?v=28">
+  <link rel="stylesheet" href="css/title.css?v=28">
 </head>
 <body>
   <header class="top">
@@ -28,6 +28,12 @@
   </section>
   <main>
     <p id="count" class="count">読み込み中</p>
+    <div id="loadstate" class="loadstate" hidden>
+      <span id="load-message" role="status" aria-live="polite"></span>
+      <button id="load-more" type="button">続きを読み込む</button>
+      <button id="load-all" type="button">すべて読み込む</button>
+      <button id="load-retry" type="button" hidden>失敗分を再試行</button>
+    </div>
     <div id="grid" class="grid"></div>
     <p id="empty" class="empty" hidden>該当する作品がありません。</p>
   </main>
@@ -46,9 +52,10 @@
     </div>
     <button type="button" id="close-bar" class="close-bar">閉じる</button>
   </div>
-  <script src="js/app.js?v=27"></script>
-  <script src="js/search.js?v=27"></script>
-  <script src="js/more.js?v=27"></script>
-  <script src="js/gelbooru.js?v=27"></script>
+  <script src="js/loader.js?v=28"></script>
+  <script src="js/app.js?v=28"></script>
+  <script src="js/search.js?v=28"></script>
+  <script src="js/more.js?v=28"></script>
+  <script src="js/gelbooru.js?v=28"></script>
 </body>
 </html>

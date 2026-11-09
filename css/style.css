@@ -49,3 +49,7 @@ button, input { font: inherit; }
 .tag { border: 0; background: #272727; color: white; border-radius: 8px; padding: 7px 10px; cursor: pointer; }
 .empty { color: var(--muted); padding: 20px 12px; }
 @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.loadstate { margin: 0 0 16px; font-size: 14px; line-height: 1.7; }
+.loadstate button { margin: 4px; padding: 6px 10px; cursor: pointer; }
+.loadstate button:disabled { cursor: wait; opacity: .6; }

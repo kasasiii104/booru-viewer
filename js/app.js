@@ -274,28 +274,77 @@ $("close").onclick = (event) => { event.stopPropagation(); closeWatch(); };
 $("close-bar").onclick = (event) => { event.stopPropagation(); closeWatch(); };
 $("modal").onclick = (event) => { if (event.target === $("modal")) closeWatch(); };
 window.addEventListener("load", () => { if (document.activeElement) document.activeElement.blur(); });
+let partLoader = null;
+let catalogCount = 0;
+let loadingParts = false;
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("HTTP " + response.status);
+  return response.json();
+}
+function renderLoadState() {
+  if (!partLoader) return;
+  const status = partLoader.status(), busy = loadingParts || status.busy;
+  $("loadstate").hidden = false;
+  $("load-message").textContent = "全 " + status.total + " パート中 " + status.loaded +
+    " パート読込済み（約 " + state.items.length.toLocaleString() + " 件 / 全 " + catalogCount.toLocaleString() +
+    " 件）。検索・件数は読込済みデータが対象です。" + (busy ? " 読込中…" : "") +
+    (status.failed.length ? " " + status.failed.length + " パートの読込に失敗" : "");
+  ["load-more", "load-all"].forEach(id => { $(id).hidden = !status.pending; $(id).disabled = busy; });
+  $("load-retry").hidden = !status.failed.length;
+  $("load-retry").disabled = busy;
+}
+function appendPart(part) {
+  if (!part) return;
+  state.items = state.items.concat(part.items);
+  $("empty").textContent = "該当する作品がありません。";
+  state.shelf = null;
+  render();
+  renderLoadState();
+}
+async function loadMoreParts(mode = "next") {
+  if (!partLoader || loadingParts) return;
+  loadingParts = true;
+  renderLoadState();
+  try {
+    if (mode === "all") await partLoader.loadAll(appendPart);
+    else if (mode === "retry") await partLoader.retryFailed(appendPart);
+    else appendPart(await partLoader.loadNext());
+  } finally { loadingParts = false; renderLoadState(); }
+}
+$("load-more").onclick = () => loadMoreParts();
+$("load-all").onclick = () => loadMoreParts("all");
+$("load-retry").onclick = () => loadMoreParts("retry");
 async function loadItems() {
   const stamp = Date.now();
-  $("count").textContent = "読み込み中";
-  const catalog = await fetch("data/catalog.json?v=" + stamp).then((r) => r.ok ? r.json() : { parts: ["videos.json"] });
-  const parts = catalog.parts && catalog.parts.length ? catalog.parts : ["videos.json"];
-  const loadPart = (name) => fetch("data/" + name + "?v=" + stamp).then((r) => r.json());
-  const first = await Promise.all(parts.slice(0, 2).map(loadPart));
-  return { items: first.flat(), rest: parts.slice(2).map(loadPart) };
-}
-loadItems().then(async ({ items, rest }) => {
-  state.items = Array.isArray(items) ? items : [];
+  const catalog = await fetchJson("data/catalog.json?v=" + stamp);
+  if (!Array.isArray(catalog.parts) || !catalog.parts.length) throw new Error("Empty catalog");
+  catalogCount = catalog.count || 0;
+  partLoader = createPartLoader({ parts: catalog.parts, versions: catalog.versions || {}, stamp, fetchJson });
+  loadingParts = true;
+  renderLoadState();
+  const first = await partLoader.loadFirst();
   const [taxonomy, names] = await Promise.all([
-    fetch("data/taxonomy.json?v=" + Date.now()).then((r) => r.json()),
-    fetch("data/tag-names.json?v=" + Date.now()).then((r) => r.json())
+    fetchJson("data/taxonomy.json?v=" + stamp),
+    fetchJson("data/tag-names.json?v=" + stamp).catch(() => ({}))
   ]);
+  state.items = first ? first.items : [];
   state.taxonomy = taxonomy;
   state.names = names || {};
-  taxonomy.works.forEach((work) => { state.names[work.id] = work.name; work.tags.forEach((tag) => { state.names[tag] = work.name; }); });
-  taxonomy.characters.forEach((character) => { state.names[character.id] = character.name; character.tags.forEach((tag) => { state.names[tag] = character.name; }); });
+  taxonomy.works.forEach(work => { state.names[work.id] = work.name; work.tags.forEach(tag => { state.names[tag] = work.name; }); });
+  taxonomy.characters.forEach(character => { state.names[character.id] = character.name; character.tags.forEach(tag => { state.names[tag] = character.name; }); });
+  if (!first) throw new Error("No readable parts");
+  loadingParts = false;
   render();
-  if (!rest.length) return;
-  const groups = await Promise.all(rest);
-  state.items = state.items.concat(groups.flat());
-  render();
-}).catch(() => { $("empty").hidden = false; $("empty").textContent = "データを読めませんでした。"; });
+  renderLoadState();
+}
+loadItems().catch(() => {
+  loadingParts = false;
+  partLoader = null;
+  state.items = [];
+  state.shelf = null;
+  $("loadstate").hidden = true;
+  ["load-more", "load-all", "load-retry"].forEach(id => { $(id).disabled = true; });
+  $("empty").hidden = false;
+  $("empty").textContent = "データを読めませんでした。再読み込みしてください。";
+});

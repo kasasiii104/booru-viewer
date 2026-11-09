@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Fetch current and historical erotic 3D videos. Saves Gelbooru thumbnails only."""
 
+import hashlib
 import json
 import os
+import sys
 import time
 import urllib.parse
 import urllib.request
@@ -95,7 +97,7 @@ def wanted(tags, rating=""):
 
 def load():
     items = []
-    parts = sorted(DATA.glob("videos-*.json"))
+    parts = sorted(DATA.glob("videos-*.json"), key=lambda path: int(path.stem.split("-")[-1]))
     if parts:
         for part in parts:
             items.extend(json.loads(part.read_text()))
@@ -129,30 +131,47 @@ def slim(item):
 
 
 def save(items, state):
+    changed = []
+
+    def write_if_changed(path, content):
+        encoded = content.encode("utf-8")
+        if not path.exists() or path.read_bytes() != encoded:
+            path.write_bytes(encoded)
+            changed.append(path.name)
+
     names = []
     cards = []
+    versions = {}
     chunks = range(0, max(len(items), 1), PART)
     for index, start in enumerate(chunks, 1):
         chunk = items[start:start + PART]
         name = f"videos-{index}.json"
         card = f"cards-{index}.json"
-        (DATA / name).write_text(json.dumps(chunk, ensure_ascii=False))
-        (DATA / card).write_text(json.dumps([slim(item) for item in chunk], ensure_ascii=False))
+        write_if_changed(DATA / name, json.dumps(chunk, ensure_ascii=False))
+        card_content = json.dumps([slim(item) for item in chunk], ensure_ascii=False)
+        write_if_changed(DATA / card, card_content)
+        versions[card] = hashlib.sha1(card_content.encode("utf-8")).hexdigest()[:12]
         names.append(name)
         cards.append(card)
     for path in DATA.glob("videos-*.json"):
         if path.name not in names:
             path.unlink()
+            changed.append(path.name)
     for path in DATA.glob("cards-*.json"):
         if path.name not in cards:
             path.unlink()
+            changed.append(path.name)
     if VIDEOS.exists():
         VIDEOS.unlink()
-    (DATA / "catalog.json").write_text(json.dumps({"parts": cards, "count": len(items)}, ensure_ascii=False))
-    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2))
+        changed.append(VIDEOS.name)
+    write_if_changed(DATA / "catalog.json", json.dumps({"parts": cards, "count": len(items), "versions": versions}, ensure_ascii=False))
+    write_if_changed(STATE, json.dumps(state, ensure_ascii=False, indent=2))
+    return changed
 
 
-def cache_thumbs(items, limit=1500):
+def cache_thumbs(items, limit=1500, budget=600):
+    started = time.monotonic()
+    attempts = 0
     thumbs = DATA / "thumbs"
     thumbs.mkdir(exist_ok=True)
     saved = 0
@@ -166,6 +185,10 @@ def cache_thumbs(items, limit=1500):
         if dest.exists() and dest.stat().st_size > 200:
             item["preview_url"] = rel
             continue
+        if time.monotonic() - started > budget:
+            print(f"thumb budget exhausted after {attempts} attempts")
+            break
+        attempts += 1
         url = item.get("preview_url") or ""
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://gelbooru.com/"})
         try:
@@ -212,10 +235,10 @@ def danbooru_page(tags, page, login, key):
         params["api_key"] = key
     rows = get("https://danbooru.donmai.us/posts.json?" + urllib.parse.urlencode(params))
     time.sleep(0.6)
-    return rows or []
+    return rows if isinstance(rows, list) else None
 
 
-def danbooru(state):
+def danbooru(state, stats=None):
     login = os.environ.get("DANBOORU_LOGIN", "")
     key = os.environ.get("DANBOORU_API_KEY", "")
     cursors = state["history"].setdefault("danbooru", {})
@@ -226,8 +249,12 @@ def danbooru(state):
         if cursor != "done":
             pages.update(range(int(cursor), int(cursor) + STEP))
         done = False
+        failed = False
         for page in sorted(pages):
             rows = danbooru_page(tags, page, login, key)
+            if rows is None:
+                failed = True
+                break
             if not rows:
                 done = True
                 break
@@ -254,18 +281,25 @@ def danbooru(state):
                     "post_url": f"https://danbooru.donmai.us/posts/{row['id']}",
                     "created_at": row.get("created_at"),
                 })
+        if failed:
+            record_result(stats, "danbooru", "failed")
+            print(f"danbooru {tags}: request failed, cursor kept")
+            continue
+        record_result(stats, "danbooru", "ok")
         cursors[tags] = "done" if done or cursor == "done" else int(cursor) + STEP
     return found
 
 
-def gelbooru_like(name, endpoint, user_key, api_key, state):
+def gelbooru_like(name, endpoint, user_key, api_key, state, stats=None):
     user = os.environ.get(user_key, "")
     key = os.environ.get(api_key, "")
+    tags_list = GEL_TAGS if name == "gelbooru" else (QUERY,)
     if not user or not key:
+        for tags in tags_list:
+            record_result(stats, name, "skipped")
         print(f"skip {name}: missing API credentials")
         return []
     host = "rule34.xxx" if name == "rule34" else "gelbooru.com"
-    tags_list = GEL_TAGS if name == "gelbooru" else (QUERY,)
     cursors = state["history"].setdefault(name, {})
     if not isinstance(cursors, dict):
         cursors = {}
@@ -328,23 +362,49 @@ def gelbooru_like(name, endpoint, user_key, api_key, state):
                     "created_at": row.get("created_at") or row.get("change"),
                 })
         if failed:
+            record_result(stats, name, "failed")
             print(f"{name} {tags}: request failed, cursor kept")
             continue
+        record_result(stats, name, "ok")
         cursors[tags] = "done" if done or cursor == "done" else int(cursor) + STEP
     return found
 
 
+def record_result(stats, source, result):
+    if stats is not None:
+        stats[source][result] += 1
+
+
+def summarize(stats):
+    table = ["| Source | ok | failed | skipped |", "| --- | ---: | ---: | ---: |"]
+    for source, counts in stats.items():
+        print(f"{source}: ok={counts['ok']} failed={counts['failed']} skipped={counts['skipped']}")
+        table.append(f"| {source} | {counts['ok']} | {counts['failed']} | {counts['skipped']} |")
+        if counts["failed"] or counts["skipped"]:
+            print(f"::warning::{source}: failed={counts['failed']} skipped={counts['skipped']}")
+    summary = os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary, "a", encoding="utf-8") as stream:
+            stream.write("\n" + "\n".join(table) + "\n")
+
+
 def main():
     items, state = load()
+    stats = {source: dict(ok=0, failed=0, skipped=0) for source in ("danbooru", "gelbooru", "rule34")}
     fresh = []
-    fresh.extend(danbooru(state))
-    fresh.extend(gelbooru_like("gelbooru", "https://gelbooru.com/index.php", "GELBOORU_USER_ID", "GELBOORU_API_KEY", state))
-    fresh.extend(gelbooru_like("rule34", "https://api.rule34.xxx/index.php", "RULE34_USER_ID", "RULE34_API_KEY", state))
+    fresh.extend(danbooru(state, stats))
+    fresh.extend(gelbooru_like("gelbooru", "https://gelbooru.com/index.php", "GELBOORU_USER_ID", "GELBOORU_API_KEY", state, stats))
+    fresh.extend(gelbooru_like("rule34", "https://api.rule34.xxx/index.php", "RULE34_USER_ID", "RULE34_API_KEY", state, stats))
     merged = [item for item in keep_best(items + fresh) if wanted(item.get("tags") or [], item.get("rating"))]
     cache_thumbs(merged)
-    save(merged, state)
+    changed = save(merged, state)
+    filenames = ", ".join(changed[:30]) + (", …" if len(changed) > 30 else "")
+    print(f"saved {len(changed)} changed files: {filenames}")
     print(f"catalog {len(merged)} items, added batch {len(fresh)}")
     print("history", json.dumps(state.get("history"), ensure_ascii=False))
+    summarize(stats)
+    if not any(counts["ok"] for counts in stats.values()):
+        sys.exit(1)
 
 
 if __name__ == "__main__":
