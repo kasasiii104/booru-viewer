@@ -5,7 +5,16 @@ class Element {
   set innerHTML(v) {this.children=[];} get innerHTML() {return '';}
   append(...v) {this.children.push(...v);} appendChild(v) {this.append(v);}
   addEventListener() {} cloneNode() {return new Element();} replaceWith() {}
-  querySelector() {return null;} blur() {}
+  querySelector(selector) {
+    const matches = node => String(node.className || '').split(/\s+/).includes(selector.slice(1));
+    for (const child of this.children) {
+      if (matches(child)) return child;
+      const found = child.querySelector(selector);
+      if (found) return found;
+    }
+    return null;
+  }
+  remove() {} play() {} pause() {} blur() {}
 }
 (async () => {
   const taxonomyFail = process.argv.includes('--taxonomy-fail');
@@ -31,6 +40,47 @@ class Element {
   assert.deepEqual(scripts,['js/loader.js','js/app.js','js/search.js','js/more.js','js/gelbooru.js']);
   scripts.forEach(file=>vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file}));
   const flush=()=>new Promise(resolve=>setImmediate(resolve)); await flush();
+  if (process.argv.includes('--gelbooru-boundaries')) {
+    const opened=[], previewed=[];
+    window.open=(...args)=>opened.push(args);
+    context.previewed=previewed;
+    vm.runInContext('playPreview = item => previewed.push(item)', context);
+    const check = (count, favOnly, mixed, visible=240) => {
+      // Reverse input order so assertions also exercise the filtered sort order.
+      const items=Array.from({length:count}, (_, i)=>({...row(i), score:count-i,
+        source:mixed && i % 2 === 0 ? 'danbooru' : 'gelbooru',
+        file_url:`https://media.example/${i}.mp4`, post_url:`https://posts.example/${i}`,
+        preview_url:i % 2 ? `https://thumbs.example/${i}.jpg` : ''}));
+      context.testItems=[...items].reverse(); context.testFavOnly=favOnly; context.testVisible=visible;
+      context.localStorage.getItem=()=>JSON.stringify(items.map(item=>item.md5));
+      vm.runInContext('state.items=testItems; state.favOnly=testFavOnly; state.visible=testVisible; renderGrid()',context);
+      const cards=get('grid').children;
+      assert.equal(cards.length, favOnly && visible===240 ? count : Math.min(count,visible));
+      for (const index of [...new Set([0,238,239,240,241,478,479,480,cards.length-1])].filter(i=>i>=0 && i<cards.length)) {
+        const item=items[index], card=cards[index];
+        for (const selector of ['.thumb','.title']) {
+          opened.length=0; previewed.length=0;
+          card.querySelector(selector).onclick();
+          const label=`${count} favorites=${favOnly} mixed=${mixed} visible=${visible} card=${index+1} ${selector}`;
+          if (item.source==='gelbooru') {
+            assert.deepEqual(opened,[[item.post_url,'_blank','noopener']],label);
+            assert.equal(previewed.length,0,label);
+          } else {
+            assert.equal(opened.length,0,label);
+            if (selector==='.thumb') assert.equal(previewed[0],item,label);
+            else assert.equal(vm.runInContext('state.current',context),item,label);
+          }
+        }
+      }
+    };
+    for (const count of [240,241,481]) check(count,true,false);
+    check(481,true,true);
+    check(481,false,false);
+    check(481,false,true);
+    check(481,false,true,480);
+    check(481,false,true,720);
+    return;
+  }
   if (allFail || taxonomyFail || catalogFail) {
     assert.equal(get('empty').hidden, false);
     assert.equal(get('empty').textContent, 'データを読めませんでした。再読み込みしてください。');
