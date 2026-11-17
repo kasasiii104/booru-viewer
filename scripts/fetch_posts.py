@@ -15,6 +15,7 @@ DATA = ROOT / "data"
 VIDEOS = DATA / "videos.json"
 STATE = DATA / "state.json"
 PART = 10000
+K = 3000
 
 NG = (
     "futanari", "futa", "dickgirl", "newhalf",
@@ -211,11 +212,17 @@ def cache_thumbs(items, limit=1500, budget=600):
     print(f"gelbooru thumbs saved {saved}")
 
 
-def keep_best(items):
+def post_key(item):
+    return item.get("md5") or f"{item['source']}:{item['source_id']}"
+
+
+def keep_best(items, frozen_keys=frozenset()):
     best = {}
     for item in items:
-        key = item.get("md5") or f"{item['source']}:{item['source_id']}"
+        key = post_key(item)
         current = best.get(key)
+        if current is not None and key in frozen_keys:
+            continue
         if current is None or (item.get("score") or 0) > (current.get("score") or 0):
             for field in ("copyright_tags", "character_tags", "duration"):
                 if current and current.get(field) and not item.get(field):
@@ -390,12 +397,30 @@ def summarize(stats):
 
 def main():
     items, state = load()
+    n = len(items)
+    start = PART * (max(n - K, 0) // PART)
+    frozen_keys = {post_key(item) for item in items[:start]}
+    existing = {}
+    for item in items:
+        existing.setdefault(post_key(item), item)
+    duplicates = n - len(existing)
     stats = {source: dict(ok=0, failed=0, skipped=0) for source in ("danbooru", "gelbooru", "rule34")}
     fresh = []
     fresh.extend(danbooru(state, stats))
     fresh.extend(gelbooru_like("gelbooru", "https://gelbooru.com/index.php", "GELBOORU_USER_ID", "GELBOORU_API_KEY", state, stats))
     fresh.extend(gelbooru_like("rule34", "https://api.rule34.xxx/index.php", "RULE34_USER_ID", "RULE34_API_KEY", state, stats))
-    merged = [item for item in keep_best(items + fresh) if wanted(item.get("tags") or [], item.get("rating"))]
+    skipped = [item for item in fresh if post_key(item) in frozen_keys]
+    higher_score = sum((item.get("score") or 0) >
+                       (existing[post_key(item)].get("score") or 0) for item in skipped)
+    best = keep_best(items + fresh, frozen_keys)
+    merged = [item for item in best if wanted(item.get("tags") or [], item.get("rating"))]
+    unwanted = sum(post_key(item) in existing for item in best) - sum(
+        post_key(item) in existing for item in merged)
+    print(f"window n={n} start={start} saved={len(merged)}")
+    print(f"frozen skipped={len(skipped)} higher_score={higher_score}")
+    print(f"existing removed: duplicates={duplicates} unwanted={unwanted}")
+    if duplicates or unwanted:
+        print(f"::warning::existing removed: duplicates={duplicates} unwanted={unwanted}")
     cache_thumbs(merged)
     changed = save(merged, state)
     filenames = ", ".join(changed[:30]) + (", …" if len(changed) > 30 else "")
