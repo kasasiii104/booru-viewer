@@ -1,3 +1,14 @@
+const GELBOORU_PROXY = "https://gelbooru-proxy.kasasiii104.workers.dev/?url=";
+function mediaUrl(url) {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === "https:" && (parsed.hostname === "gelbooru.com" || parsed.hostname.endsWith(".gelbooru.com"))) {
+      return GELBOORU_PROXY + encodeURIComponent(url);
+    }
+  } catch {}
+  return url;
+}
+
 const state = { items: [], taxonomy: { works: [], characters: [] }, names: {}, work: "all", character: "", tag: "", sort: "score", q: "", panel: "", panelQ: "", favOnly: false, loop: true, current: null, preview: null };
 const TOOLS = ["source_filmmaker", "sfm", "blender", "blender_(medium)", "mmd", "mikumikudance", "daz_studio", "koikatsu", "honey_select", "xps", "xnalara", "cinema_4d"];
 const $ = (id) => document.getElementById(id);
@@ -83,7 +94,7 @@ function playPreview(item, thumb) {
   video.muted = true;
   video.controls = false;
   video.preload = "metadata";
-  video.src = item.file_url + "#t=0,6";
+  video.src = mediaUrl(item.file_url) + "#t=0,6";
   video.ontimeupdate = () => { if (video.currentTime >= 6) video.currentTime = 0; };
   video.onerror = () => { video.remove(); if (state.preview === video) state.preview = null; };
   thumb.querySelector(".play")?.remove();
@@ -213,8 +224,8 @@ function openItem(item) {
   video.playsInline = true;
   video.loop = state.loop;
   video.preload = "none";
-  video.poster = item.preview_url || "";
-  video.src = item.file_url;
+  video.poster = mediaUrl(item.preview_url || "");
+  video.src = mediaUrl(item.file_url);
   const play = document.createElement("span");
   play.className = "play";
   play.textContent = "▶";

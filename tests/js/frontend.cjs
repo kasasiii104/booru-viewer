@@ -27,7 +27,7 @@ class Element {
   document.body.offsetHeight=1000;
   const window={addEventListener:(name, fn)=>events[name]=fn, innerHeight:1000, scrollY:0};
   const row = n => ({md5:String(n), score:n, tags:['tag'], copyright_tags:['work'], character_tags:[], source:'danbooru'});
-  const context=vm.createContext({document,window, console, Date, setTimeout:()=>0, clearTimeout(){},
+  const context=vm.createContext({document,window, console, Date, URL, setTimeout:()=>0, clearTimeout(){},
     localStorage:{getItem:()=>null}, fetch:async url=> {
       calls.push(url); const path=url.split('?')[0];
       const data={ 'data/catalog.json':{parts:['cards-1.json','cards-2.json','cards-3.json'],count:3},
@@ -40,6 +40,82 @@ class Element {
   assert.deepEqual(scripts,['js/loader.js','js/app.js','js/search.js','js/more.js','js/gelbooru.js']);
   scripts.forEach(file=>vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file}));
   const flush=()=>new Promise(resolve=>setImmediate(resolve)); await flush();
+  if (process.argv.includes('--proxy-urls')) {
+    const proxy='https://gelbooru-proxy.kasasiii104.workers.dev/?url=';
+    const gel='https://img4.gelbooru.com/images/test.mp4';
+    const cases=[
+      [gel, proxy+'https%3A%2F%2Fimg4.gelbooru.com%2Fimages%2Ftest.mp4'],
+      ['https://IMG4.GELBOORU.COM/images/a.mp4', proxy+encodeURIComponent('https://IMG4.GELBOORU.COM/images/a.mp4')],
+      ['https://img4.gelbooru.com/images/a.mp4?x=1&y=2#frag', proxy+'https%3A%2F%2Fimg4.gelbooru.com%2Fimages%2Fa.mp4%3Fx%3D1%26y%3D2%23frag'],
+      ['https://gelbooru.com/test.mp4', proxy+'https%3A%2F%2Fgelbooru.com%2Ftest.mp4'],
+      ...['https://cdn.donmai.us/test.mp4','https://api-cdn-mp4.rule34.xxx/test.mp4',
+        'data/thumbs/x.jpg','','https://gelbooru.com.evil.example/test.mp4',
+        'https://notgelbooru.com/test.mp4','http://img4.gelbooru.com/test.mp4',
+        'not a URL',undefined,null].map(url=>[url,url])
+    ];
+    for (const [url,expected] of cases) {
+      context.testUrl=url;
+      assert.equal(vm.runInContext('mediaUrl(testUrl)',context),expected,String(url));
+    }
+    const opened=[];
+    window.open=(...args)=>opened.push(args);
+    for (const [source,file,poster] of [
+      ['gelbooru',gel,'https://img4.gelbooru.com/thumbs/test.jpg'],
+      ['gelbooru',gel,'data/thumbs/x.jpg'],
+      ['danbooru','https://cdn.donmai.us/test.mp4','https://cdn.donmai.us/test.jpg'],
+      ['rule34','https://api-cdn-mp4.rule34.xxx/test.mp4','data/thumbs/x.jpg'],
+      ['gelbooru',gel,undefined],
+      ['gelbooru',gel,null]
+    ]) {
+      const item=Object.freeze({...row(1),source,file_url:file,preview_url:poster,
+        post_url:'https://posts.example/1'});
+      context.testItem=item;
+      const originalIds=vm.runInContext('JSON.stringify(ids(testItem))',context);
+      const expected=file===gel ? proxy+encodeURIComponent(file) : file;
+      vm.runInContext('openItem(testItem)',context);
+      const video=get('stage').children[0];
+      assert.equal(video.src,expected);
+      assert.equal(video.poster,poster && poster.startsWith('https://img4.gelbooru.com/') ? proxy+encodeURIComponent(poster) : poster || '');
+      assert.equal(get('origin').href,item.post_url);
+      assert.equal(get('origin').textContent,'元のページで開く');
+      assert.equal(vm.runInContext('state.current',context),item);
+      context.testThumb=new Element();
+      vm.runInContext('playPreview(testItem,testThumb)',context);
+      assert.equal(context.testThumb.children[0].src,expected+'#t=0,6');
+      assert.equal(vm.runInContext('JSON.stringify(ids(testItem))',context),originalIds);
+      assert.equal(item.file_url,file);
+      assert.equal(item.preview_url,poster);
+    }
+    // Reverse input order so the card indices depend on filtered() sorting by score.
+    const items=Array.from({length:481}, (_, i)=>({...row(i), score:481-i,
+      source:i % 2 === 0 ? 'gelbooru' : 'danbooru',
+      file_url:`https://${i % 2 === 0 ? 'img4.gelbooru.com' : 'cdn.donmai.us'}/images/${i}.mp4`,
+      preview_url:`data/thumbs/${i}.jpg`, post_url:`https://posts.example/${i}`}));
+    context.testItems=[...items].reverse();
+    vm.runInContext('state.items=testItems; state.visible=480; renderGrid()',context);
+    const cards=get('grid').children;
+    assert.equal(cards.length,480);
+    for (const index of [0,240,479]) {
+      const item=items[index], card=cards[index];
+      const expected=item.source==='gelbooru' ? proxy+encodeURIComponent(item.file_url) : item.file_url;
+      const thumb=card.querySelector('.thumb');
+      const before=thumb.children.length;
+      thumb.onclick();
+      assert.equal(thumb.children.length,before+1,`card ${index} preview video added`);
+      assert.equal(thumb.children[before].src,expected+'#t=0,6',`card ${index} preview src`);
+      assert.equal(vm.runInContext('state.preview',context),thumb.children[before]);
+      assert.equal(opened.length,0,`card ${index} thumb`);
+      card.querySelector('.title').onclick();
+      assert.equal(get('stage').children[0].src,expected,`card ${index} stage src`);
+      assert.equal(vm.runInContext('state.current',context),item,`card ${index} sorted item`);
+      assert.equal(opened.length,0,`card ${index} title`);
+    }
+    assert.equal(opened.length,0);
+    const literals=fs.readdirSync('js').filter(name=>name.endsWith('.js') && !['player-patch.js','preview.js'].includes(name))
+      .reduce((count,name)=>count+fs.readFileSync('js/'+name,'utf8').split(proxy).length-1,0);
+    assert.equal(literals,1);
+    return;
+  }
   if (process.argv.includes('--gelbooru-boundaries')) {
     const opened=[], previewed=[];
     window.open=(...args)=>opened.push(args);
@@ -62,14 +138,9 @@ class Element {
           opened.length=0; previewed.length=0;
           card.querySelector(selector).onclick();
           const label=`${count} favorites=${favOnly} mixed=${mixed} visible=${visible} card=${index+1} ${selector}`;
-          if (item.source==='gelbooru') {
-            assert.deepEqual(opened,[[item.post_url,'_blank','noopener']],label);
-            assert.equal(previewed.length,0,label);
-          } else {
-            assert.equal(opened.length,0,label);
-            if (selector==='.thumb') assert.equal(previewed[0],item,label);
-            else assert.equal(vm.runInContext('state.current',context),item,label);
-          }
+          assert.equal(opened.length,0,label);
+          if (selector==='.thumb') assert.equal(previewed[0],item,label);
+          else assert.equal(vm.runInContext('state.current',context),item,label);
         }
       }
     };

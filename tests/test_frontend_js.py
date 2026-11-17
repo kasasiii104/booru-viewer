@@ -22,6 +22,9 @@ class FrontendTests(unittest.TestCase):
     def test_F1_script_chain(self):
         self.node("tests/js/frontend.cjs")
 
+    def test_proxy_urls(self):
+        self.node("tests/js/frontend.cjs", "--proxy-urls")
+
     def test_gelbooru_favorite_boundaries(self):
         self.node("tests/js/frontend.cjs", "--gelbooru-boundaries")
 
